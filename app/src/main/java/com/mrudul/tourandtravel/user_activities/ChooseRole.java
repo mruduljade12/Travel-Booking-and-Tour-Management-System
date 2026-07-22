@@ -1,9 +1,12 @@
 package com.mrudul.tourandtravel.user_activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -11,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.mrudul.tourandtravel.R;
 
 public class ChooseRole extends AppCompatActivity {
+
+    private CardView customer,driver,tourGuide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,37 @@ public class ChooseRole extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        customer = findViewById(R.id.customerRole);
+        driver = findViewById(R.id.driverRole);
+        tourGuide = findViewById(R.id.tourGuideRole);
+
+        customer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //code for navigate to customer page
+
+                Intent intent = new Intent(ChooseRole.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        driver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //code for navigate to driver page
+            }
+        });
+
+
+        tourGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //code for navigate to tour guide page
+            }
         });
     }
 }

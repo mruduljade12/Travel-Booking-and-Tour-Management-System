@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
+                // id declare
                 int id = menuItem.getItemId();
                 int home = R.id.user_home;
                 int search = R.id.user_search;
