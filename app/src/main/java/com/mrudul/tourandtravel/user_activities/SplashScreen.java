@@ -1,4 +1,4 @@
-package com.mrudul.tourandtravel.activities;
+package com.mrudul.tourandtravel.user_activities;
 
 import android.content.Intent;
 import android.os.Bundle;

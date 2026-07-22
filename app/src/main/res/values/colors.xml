@@ -2,4 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="app_bg_start">#FF000000</color>
+    <color name="app_bg_end">#FFFFFFFF</color>
+
+    <color name="customer_ic">#5F9AA6</color>
+    <color name="customer_ic_start">#A7DEC7</color>
+    <color name="customer_ic_mid">#C1BE7E</color>
+    <color name="customer_ic_end">#6BA3A9</color>
+
+    <color name="driver_ic">#388180</color>
+    <color name="driver_ic_start">#A3CCBD</color>
+    <color name="driver_ic_end">#688977</color>
+
+    <color name="tour_guide_ic">#6597AD</color>
+    <color name="tour_guide_ic_start">#D1B6D0</color>
+    <color name="tour_guide_ic_end">#855F7F</color>
 </resources>

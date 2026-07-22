@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/user_home"
+        android:title="Home"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/user_search"
+        android:title="Search"
+        android:icon="@drawable/ic_search"/>
+
+    <item
+        android:id="@+id/user_map"
+        android:title="Map"
+        android:icon="@drawable/ic_map"/>
+
+    <item
+        android:id="@+id/ai_assistant"
+        android:title="Assistant"
+        android:icon="@drawable/ic_ai_assistant"/>
+
+    <item
+        android:id="@+id/user_profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"/>
+</menu>
