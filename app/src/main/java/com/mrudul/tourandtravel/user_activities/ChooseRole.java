@@ -37,7 +37,7 @@ public class ChooseRole extends AppCompatActivity {
             public void onClick(View view) {
                 //code for navigate to customer page
 
-                Intent intent = new Intent(ChooseRole.this, MainActivity.class);
+                Intent intent = new Intent(ChooseRole.this, Login.class);
                 startActivity(intent);
                 finish();
             }

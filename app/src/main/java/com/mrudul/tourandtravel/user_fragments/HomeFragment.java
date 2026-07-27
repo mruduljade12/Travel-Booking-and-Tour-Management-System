@@ -2,13 +2,22 @@ package com.mrudul.tourandtravel.user_fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.user_adapters.RecentTourAdapter;
+import com.mrudul.tourandtravel.user_adapters.UserTourPackageAdapter;
+import com.mrudul.tourandtravel.user_models.UserTourPackages;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +25,11 @@ import com.mrudul.tourandtravel.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    RecyclerView popRecyclerView,recentTourRecyclerView;
+    ArrayList<UserTourPackages> popList,recentList;
+    UserTourPackageAdapter adapter;
+    RecentTourAdapter recentAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +76,36 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        popRecyclerView = view.findViewById(R.id.popRecyclerView);
+        recentTourRecyclerView = view.findViewById(R.id.recentTourRecyclerView);
+
+        popRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        recentTourRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        popList = new ArrayList<>();
+
+        popList.add(new UserTourPackages(R.drawable.site1,"mahabaleshwar",5.5f,4.5f));
+        popList.add(new UserTourPackages(R.drawable.site1,"mahabaleshwar",5.5f,4.5f));
+        popList.add(new UserTourPackages(R.drawable.site1,"mahabaleshwar",5.5f,4.5f));
+        popList.add(new UserTourPackages(R.drawable.site1,"mahabaleshwar",5.5f,4.5f));
+        popList.add(new UserTourPackages(R.drawable.site1,"mahabaleshwar",5.5f,4.5f));
+
+        adapter = new UserTourPackageAdapter(view.getContext(),popList);
+        popRecyclerView.setAdapter(adapter);
+
+
+        recentList = new ArrayList<>();
+        recentList.add(new UserTourPackages(R.drawable.site1,"mahabalessasas",68f,3.3f));
+        recentList.add(new UserTourPackages(R.drawable.site1,"mahabalessasas",68f,3.3f));
+
+        recentAdapter = new RecentTourAdapter(view.getContext(),recentList);
+        recentTourRecyclerView.setAdapter(recentAdapter);
     }
 }

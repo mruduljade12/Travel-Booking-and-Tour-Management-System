@@ -4,8 +4,8 @@
     <color name="white">#FFFFFFFF</color>
 
     //app bg
-    <color name="app_bg_start">#FFFFFF</color>
-    <color name="app_bg_end">#FFDDF2</color>
+    <color name="app_bg_start">#A0DCE2</color>
+    <color name="app_bg_end">#C8B131</color>
 
     //color for link
     <color name="link_color">#00E5FF</color>
@@ -36,4 +36,14 @@
     <color name="tour_guide_ic">#6597AD</color>
     <color name="tour_guide_ic_start">#D1B6D0</color>
     <color name="tour_guide_ic_end">#855F7F</color>
+
+    //popular tour colors
+    <color name="pop_start_col">#BDD8E2</color>
+    <color name="pop_end_col">#96CBA1</color>
+    <color name="pop_text_col">#1E293B</color>
+
+    //event card colors
+    <color name="event_bg_col">#D9D9D9</color>
+    <color name="event_text_col">#635231</color>
+
 </resources>

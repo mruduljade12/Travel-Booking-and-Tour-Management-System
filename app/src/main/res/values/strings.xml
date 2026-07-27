@@ -26,4 +26,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+    //home page strings
+    <string name="popular">Popular</string>
+    <string name="place_name">Place Name</string>
+    <string name="duration">Duration</string>
+    <string name="rating">Rating</string>
+    <string name="day">days</string>
+    <string name="recent">Recent</string>
+    <string name="popular_item_recycler_view">Popular Item Recycler View</string>
+    <string name="recent_item_recycler_view">Recent Item Recycler View</string>
+
+
+    //map page strings
+    <string name="map_description">Map to track the location of driver and tour guide</string>
+    <string name="event">Events</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+
 </resources>

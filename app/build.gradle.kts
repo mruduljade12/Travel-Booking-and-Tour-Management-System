@@ -40,6 +40,8 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.fragment)
     implementation(libs.material)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
