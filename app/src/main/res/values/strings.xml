@@ -43,5 +43,10 @@
     <string name="event">Events</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="phone_number">phone number</string>
+    <string name="address">address</string>
+    <string name="search">search</string>
+    <string name="price">price</string>
+    <string name="tour_name">tour name</string>
 
 </resources>

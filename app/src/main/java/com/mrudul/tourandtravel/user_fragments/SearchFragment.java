@@ -2,13 +2,23 @@ package com.mrudul.tourandtravel.user_fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.user_adapters.SearchToutAdapter;
+import com.mrudul.tourandtravel.user_models.SearchTourModel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +26,13 @@ import com.mrudul.tourandtravel.R;
  * create an instance of this fragment.
  */
 public class SearchFragment extends Fragment {
+
+    EditText searchEditText;
+    ImageButton searchBtn;
+    RecyclerView searchItemRecyclerView;
+    ArrayList<SearchTourModel> tourList;
+    SearchToutAdapter adapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +79,20 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        searchBtn = view.findViewById(R.id.searchBtn);
+        searchEditText = view.findViewById(R.id.searchEditText);
+        searchItemRecyclerView = view.findViewById(R.id.searchItemRecyclerView);
+        searchItemRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2));
+
+        tourList = new ArrayList<>();
+        tourList.add(new SearchTourModel("sbdh","hsuh",59,56,56));
+        adapter = new SearchToutAdapter(view.getContext(),tourList);
+        searchItemRecyclerView.setAdapter(adapter);
     }
 }

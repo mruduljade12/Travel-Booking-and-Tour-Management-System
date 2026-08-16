@@ -2,11 +2,17 @@ package com.mrudul.tourandtravel.user_fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mrudul.tourandtravel.R;
 
@@ -16,6 +22,13 @@ import com.mrudul.tourandtravel.R;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    EditText pUserNameEdit,pPhoneEdit,pEmailEdit,pAddressEdit;
+    TextView pUserNameText;
+    ImageView pUserImg,editBtn;
+    AppCompatButton saveBtn;
+
+    boolean onEdit = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +75,63 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        pUserImg = view.findViewById(R.id.userProfileImage);
+        pUserNameEdit = view.findViewById(R.id.userProfileUserNameEditText);
+        pUserNameText = view.findViewById(R.id.userProfileName);
+        pEmailEdit = view.findViewById(R.id.userProfileEmailEditText);
+        pPhoneEdit = view.findViewById(R.id.userProfilePhoneEditText);
+        pAddressEdit = view.findViewById(R.id.userProfileAddressEditText);
+        saveBtn = view.findViewById(R.id.profileSaveBtn);
+        editBtn = view.findViewById(R.id.userProfileEditBtn);
+
+
+        editTextEditableOrNot(false);
+
+
+
+
+        saveBtn.setOnClickListener(v->{
+
+            String name = pUserNameEdit.getText().toString().trim();
+            String email = pEmailEdit.getText().toString().trim();
+            String phone = pPhoneEdit.getText().toString().trim();
+            String address = pAddressEdit.getText().toString().trim();
+
+
+
+            editTextEditableOrNot(false);
+            onEdit = false;
+        });
+
+
+
+
+        editBtn.setOnClickListener(v->{
+
+            if (onEdit){
+                editTextEditableOrNot(false);
+                onEdit = false;
+            }else {
+                editTextEditableOrNot(true);
+                onEdit = true;
+            }
+
+        });
+
+    }
+
+
+    private void editTextEditableOrNot(boolean isEditable){
+        pUserNameEdit.setEnabled(isEditable);
+        pAddressEdit.setEnabled(isEditable);
+        pEmailEdit.setEnabled(isEditable);
+        pPhoneEdit.setEnabled(isEditable);
     }
 }

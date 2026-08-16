@@ -3,6 +3,10 @@
 
     <gradient
         android:startColor="@color/user_start"
+        android:centerColor="@color/user_mid"
         android:endColor="@color/user_end"
-        android:angle="15"/>
+        android:angle="45"
+        android:type="linear" />
+
+    <corners android:radius="50dp" />
 </shape>

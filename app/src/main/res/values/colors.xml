@@ -3,9 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    //app bg
-    <color name="app_bg_start">#A0DCE2</color>
-    <color name="app_bg_end">#C8B131</color>
+    <!-- App background -->
+    <color name="app_bg_start">#E0F2FE</color>
+    <color name="app_bg_mid">#CFFAFE</color>
+    <color name="app_bg_end">#DFF7F0</color>
 
     //color for link
     <color name="link_color">#00E5FF</color>
@@ -17,33 +18,41 @@
     <color name="login_btn_start">#A7EDD1</color>
     <color name="login_btn_end">#728A92</color>
 
-    //user icon bg
-    <color name="user_start">#FFDDF2</color>
-    <color name="user_end">#6597AD</color>
+    <!-- User icon -->
+    <color name="user_start">#D6E8E8</color>
+    <color name="user_mid">#AFCFD0</color>
+    <color name="user_end">#7FA9B0</color>
 
-    //customer icon bg
-    <color name="customer_ic">#5F9AA6</color>
-    <color name="customer_ic_start">#A7DEC7</color>
-    <color name="customer_ic_mid">#C1BE7E</color>
-    <color name="customer_ic_end">#6BA3A9</color>
+    <!-- Customer icon -->
+    <color name="customer_ic">#2563EB</color>
+    <color name="customer_ic_start">#60A5FA</color>
+    <color name="customer_ic_mid">#38BDF8</color>
+    <color name="customer_ic_end">#0EA5A4</color>
 
-    //driver icon bg
-    <color name="driver_ic">#388180</color>
-    <color name="driver_ic_start">#A3CCBD</color>
-    <color name="driver_ic_end">#688977</color>
 
-    //tour guide icon bg
-    <color name="tour_guide_ic">#6597AD</color>
-    <color name="tour_guide_ic_start">#D1B6D0</color>
-    <color name="tour_guide_ic_end">#855F7F</color>
-
-    //popular tour colors
-    <color name="pop_start_col">#BDD8E2</color>
-    <color name="pop_end_col">#96CBA1</color>
-    <color name="pop_text_col">#1E293B</color>
+    <!-- Popular Tour -->
+    <color name="pop_start_col">#D6E8EC</color>
+    <color name="pop_end_col">#B8D8CF</color>
+    <color name="pop_text_col">#334E52</color>
 
     //event card colors
     <color name="event_bg_col">#D9D9D9</color>
     <color name="event_text_col">#635231</color>
+
+
+    <!-- Profile page colors -->
+    <color name="profile_top_start">#2563EB</color>
+    <color name="profile_top_end">#06B6D4</color>
+
+    <color name="profile_body_start">#EFF6FF</color>
+    <color name="profile_body_end">#DFF7F5</color>
+
+    <!-- Search Tour Card -->
+    <color name="tour_card_start">#E5F2F3</color>
+    <color name="tour_card_mid">#D1E7E3</color>
+    <color name="tour_card_end">#BFD9D2</color>
+
+    <color name="tour_card_text">#29474B</color>
+    <color name="tour_card_secondary_text">#60777A</color>
 
 </resources>
