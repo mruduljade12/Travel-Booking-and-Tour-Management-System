@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_shape"
-    tools:context=".driver_fragments.DriverAssignPackageFragment">
+    tools:context=".tour_guide_fragments.TourGuideScheduleFragment">
 
     <TextView
-        android:id="@+id/tvHeaderPackage"
+        android:id="@+id/tvGuideScheduleHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Assigned Tour Packages"
+        android:text="Assigned Guided Tours"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAssignedPackages"
+        android:id="@+id/rvGuideTours"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderPackage"
-        tools:listitem="@layout/driver_assign_package_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/tvGuideScheduleHeader"
+        tools:listitem="@layout/item_tour_guide_assignment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

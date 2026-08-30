@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_screen_bg"
+    tools:context=".driver_activities.DriverLoginActivity">
+
+    <!-- Header Title -->
+    <TextView
+        android:id="@+id/tvDriverLoginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Driver Login"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Driver ID / Username Input Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDriverUsername"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDriverLoginTitle">
+
+        <EditText
+            android:id="@+id/etDriverUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/input_text_shape_login"
+            android:ems="10"
+            android:hint="Driver ID / Username"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/text_hint"
+            android:textSize="22sp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Driver Password Input Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDriverPassword"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardDriverUsername">
+
+        <EditText
+            android:id="@+id/etDriverPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/input_text_shape_login"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingStart="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/text_hint"
+            android:textSize="22sp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Login & Cancel Buttons -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDriverLogin"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/login_btn_shape"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnDriverCancel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardDriverPassword" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDriverCancel"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/login_btn_shape"
+        android:text="@string/cancel"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnDriverLogin"
+        app:layout_constraintTop_toBottomOf="@+id/cardDriverPassword" />
+
+    <!-- Register Navigation Link -->
+    <TextView
+        android:id="@+id/tvDriverRegisterLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Driver? Register Here"
+        android:textColor="@color/link_color"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDriverLogin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

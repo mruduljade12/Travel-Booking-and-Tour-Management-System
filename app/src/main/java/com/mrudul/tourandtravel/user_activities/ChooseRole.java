@@ -12,6 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.driver_activities.DriverLoginActivity;
+import com.mrudul.tourandtravel.tour_guide_activities.TourGuideLoginActivity;
 
 public class ChooseRole extends AppCompatActivity {
 
@@ -48,6 +50,10 @@ public class ChooseRole extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //code for navigate to driver page
+
+                Intent intent = new Intent(ChooseRole.this, DriverLoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -56,6 +62,10 @@ public class ChooseRole extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //code for navigate to tour guide page
+
+                Intent intent = new Intent(ChooseRole.this, TourGuideLoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
