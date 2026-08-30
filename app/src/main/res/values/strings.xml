@@ -48,5 +48,7 @@
     <string name="search">search</string>
     <string name="price">price</string>
     <string name="tour_name">tour name</string>
+    <string name="home">Home</string>
+    <string name="tour_and_travel_registered_driver">Tour and Travel Registered Driver</string>
 
 </resources>
