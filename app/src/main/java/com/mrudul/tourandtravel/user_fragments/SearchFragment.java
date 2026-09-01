@@ -91,7 +91,12 @@ public class SearchFragment extends Fragment {
         searchItemRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2));
 
         tourList = new ArrayList<>();
-        tourList.add(new SearchTourModel("sbdh","hsuh",59,56,56));
+        tourList.add(new SearchTourModel("TP001", "Goa Sun & Beach Retreat", 12500, 4.5f, 4.8f));
+        tourList.add(new SearchTourModel("TP002", "Manali Snow Peak Adventure", 18000, 6.0f, 4.6f));
+        tourList.add(new SearchTourModel("TP003", "Kerala Houseboat & Spice Hills", 22000, 5.0f, 4.9f));
+        tourList.add(new SearchTourModel("TP004", "Jaipur Royal Heritage Tour", 14500, 3.5f, 4.5f));
+        tourList.add(new SearchTourModel("TP005", "Leh Ladakh Bike Expedition", 32000, 8.0f, 4.7f));
+        tourList.add(new SearchTourModel("TP006", "Ooty & Coorg Nature Escape", 11000, 4.0f, 4.4f));
         adapter = new SearchToutAdapter(view.getContext(),tourList);
         searchItemRecyclerView.setAdapter(adapter);
     }

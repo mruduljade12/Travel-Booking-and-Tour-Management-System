@@ -2,13 +2,21 @@ package com.mrudul.tourandtravel.driver_fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.driver_adapter.DriverAssignPackageAdapter;
+import com.mrudul.tourandtravel.driver_models.DriverAssignPackageModel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +24,10 @@ import com.mrudul.tourandtravel.R;
  * create an instance of this fragment.
  */
 public class DriverAssignPackageFragment extends Fragment {
+
+    RecyclerView rvAssignedPackages;
+    ArrayList<DriverAssignPackageModel> packageList;
+    DriverAssignPackageAdapter packageAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +74,22 @@ public class DriverAssignPackageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_driver_assign_package, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvAssignedPackages = view.findViewById(R.id.rvAssignedPackages);
+        packageList = new ArrayList<>();
+        packageList.add(new DriverAssignPackageModel("Golden Triangle Tour", 4, "Terminal 3, IGIA, Delhi", "Ramesh Kumar"));
+        packageList.add(new DriverAssignPackageModel("Kerala Backwaters Escape", 2, "Cochin International Airport", "Anil Nair"));
+        packageList.add(new DriverAssignPackageModel("Goa Beach & Heritage", 6, "Madgaon Railway Station", "Maria D'Souza"));
+        packageList.add(new DriverAssignPackageModel("Himachal Mountain Trek", 3, "ISBT Kashmiri Gate, Delhi", "Vikram Singh"));
+        packageList.add(new DriverAssignPackageModel("Rajasthan Royal Safari", 5, "Jaipur Junction Railway Station", "Sanjay Sharma"));
+        packageAdapter = new DriverAssignPackageAdapter(view.getContext(),packageList);
+
+        rvAssignedPackages.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rvAssignedPackages.setAdapter(packageAdapter);
     }
 }
