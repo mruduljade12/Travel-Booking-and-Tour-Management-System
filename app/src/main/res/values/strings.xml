@@ -52,5 +52,13 @@
     <string name="tour_and_travel_registered_driver">Tour and Travel Registered Driver</string>
     <string name="schedule">Schedule</string>
     <string name="profile">Profile</string>
+    <string name="gender">Gender</string>
+    <string name="phone_number_10_digits">Phone Number (10 digits)</string>
+    <string name="email_address">Email Address</string>
+    <string name="full_name">Full Name</string>
+    <string name="join_tripora_to_start_exploring">Join Tripora to start exploring</string>
+    <string name="create_account">Create Account</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
 </resources>
