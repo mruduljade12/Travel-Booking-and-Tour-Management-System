@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_shape"
-    tools:context=".driver_fragments.DriverAssignPackageFragment">
+    tools:context=".driver.driver_fragments.DriverAssignPackageFragment">
 
     <TextView
         android:id="@+id/tvHeaderPackage"

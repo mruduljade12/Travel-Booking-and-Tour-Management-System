@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_shape"
-    tools:context=".user_activities.ChooseRole">
+    tools:context=".app_common_activities.ChooseRole">
 
     <TextView
         android:id="@+id/textView"

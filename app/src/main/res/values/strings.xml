@@ -60,5 +60,6 @@
     <string name="create_account">Create Account</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="book_now">Book Now</string>
 
 </resources>

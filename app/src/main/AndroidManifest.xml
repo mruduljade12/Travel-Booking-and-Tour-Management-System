@@ -21,11 +21,11 @@
             android:value="AIzaSyDc-B2qS8MdTNBM1Hl1ACGz2jDJshBAOnU" />
 
         <activity
-            android:name=".user_activities.MainActivity"
+            android:name=".user.user_activities.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".user_activities.SplashScreen"
+            android:name=".app_common_activities.SplashScreen"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -35,31 +35,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".user_activities.Login"
+            android:name=".user.user_activities.Login"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".user_activities.ChooseRole"
+            android:name=".app_common_activities.ChooseRole"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".user_activities.UserRegisteration"
+            android:name=".user.user_activities.UserRegisteration"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".driver_activities.DriverMainPage"
+            android:name=".driver.driver_activities.DriverMainPage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".tour_guide_activities.TourGuidePage"
+            android:name=".tour_guide.tour_guide_activities.TourGuidePage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".driver_activities.DriverLoginActivity"
+            android:name=".driver.driver_activities.DriverLoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".tour_guide_activities.TourGuideLoginActivity"
+            android:name=".tour_guide.tour_guide_activities.TourGuideLoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

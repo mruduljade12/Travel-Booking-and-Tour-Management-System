@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_shape"
     android:fillViewport="true"
-    tools:context=".user_activities.UserRegisteration">
+    tools:context=".user.user_activities.UserRegisteration">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

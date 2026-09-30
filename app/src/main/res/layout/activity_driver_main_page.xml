@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".driver_activities.DriverMainPage">
+    tools:context=".driver.driver_activities.DriverMainPage">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView14"
@@ -65,7 +65,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/driverFragmentContainer"
-        android:name="com.mrudul.tourandtravel.driver_fragments.DriverHomeFragment"
+        android:name="com.mrudul.tourandtravel.driver.driver_fragments.DriverHomeFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

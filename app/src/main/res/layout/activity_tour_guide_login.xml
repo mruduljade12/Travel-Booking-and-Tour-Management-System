@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_screen_bg"
-    tools:context=".tour_guide_activities.TourGuideLoginActivity">
+    tools:context=".tour_guide.tour_guide_activities.TourGuideLoginActivity">
 
     <!-- Header Title -->
     <TextView

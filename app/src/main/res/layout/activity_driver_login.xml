@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_screen_bg"
-    tools:context=".driver_activities.DriverLoginActivity">
+    tools:context=".driver.driver_activities.DriverLoginActivity">
 
     <!-- Header Title -->
     <TextView

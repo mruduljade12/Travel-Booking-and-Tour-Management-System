@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_shape"
-    tools:context=".user_fragments.AssistantFragment">
+    tools:context=".user.user_fragments.AssistantFragment">
 
     <!-- Header Section -->
     <androidx.cardview.widget.CardView

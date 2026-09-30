@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tour_guide_fragments.TourGuideHomeFragment">
+    tools:context=".tour_guide.tour_guide_fragments.TourGuideHomeFragment">
 
     <!-- Google Maps Fragment -->
     <androidx.fragment.app.FragmentContainerView

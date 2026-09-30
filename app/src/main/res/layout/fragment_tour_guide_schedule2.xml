@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_shape"
-    tools:context=".tour_guide_fragments.TourGuideScheduleFragment">
+    tools:context=".tour_guide.tour_guide_fragments.TourGuideScheduleFragment">
 
     <TextView
         android:id="@+id/tvGuideScheduleHeader"
