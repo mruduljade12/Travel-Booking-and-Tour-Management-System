@@ -51,7 +51,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".tour_guide.tour_guide_activities.TourGuidePage"
+            android:name=".tour_guide.tour_guide_activities.TourGuideMainPage"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity

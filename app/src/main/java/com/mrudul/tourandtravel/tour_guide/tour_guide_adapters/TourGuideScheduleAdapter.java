@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.tour_guide.tour_guide_interfaces.TourGuidePackageClickListener;
 import com.mrudul.tourandtravel.tour_guide.tour_guide_models.TourGuideScheduleModel;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class TourGuideScheduleAdapter extends RecyclerView.Adapter<TourGuideSche
 
     Context context;
     ArrayList<TourGuideScheduleModel> packageList;
+    TourGuidePackageClickListener listener;
 
     public TourGuideScheduleAdapter(Context context,ArrayList<TourGuideScheduleModel> packageList){
         this.context = context;
@@ -40,6 +42,11 @@ public class TourGuideScheduleAdapter extends RecyclerView.Adapter<TourGuideSche
         holder.dateAndTime.setText(tourModel.getDateAndTime());
         holder.groupDetails.setText(tourModel.getGroupDetails());
         holder.driverName.setText(tourModel.getDriverName());
+
+
+        holder.itemView.setOnClickListener(v->{
+            listener.onTourGuidePackageClick(tourModel);
+        });
     }
 
     @Override

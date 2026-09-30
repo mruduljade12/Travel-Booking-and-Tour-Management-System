@@ -2,6 +2,8 @@ package com.mrudul.tourandtravel.driver.driver_activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +16,8 @@ import com.mrudul.tourandtravel.R;
 
 public class DriverLoginActivity extends AppCompatActivity {
 
-    AppCompatButton btnDriverLogin;
+    AppCompatButton driverLoginBtn;
+    EditText nameEditText,passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +30,15 @@ public class DriverLoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        btnDriverLogin = findViewById(R.id.btnDriverLogin);
+        driverLoginBtn = findViewById(R.id.driverLoginBtn);
+        nameEditText = findViewById(R.id.driverLoginUserName);
+        passwordEditText = findViewById(R.id.driverPassword);
 
-        btnDriverLogin.setOnClickListener(v->{
+        driverLoginBtn.setOnClickListener(v->{
+
+            String name = nameEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+
             Intent intent = new Intent(DriverLoginActivity.this, DriverMainPage.class);
             startActivity(intent);
             finish();

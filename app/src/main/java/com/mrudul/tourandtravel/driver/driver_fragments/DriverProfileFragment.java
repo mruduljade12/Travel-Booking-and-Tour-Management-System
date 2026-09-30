@@ -2,11 +2,16 @@ package com.mrudul.tourandtravel.driver.driver_fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mrudul.tourandtravel.R;
 
@@ -16,6 +21,11 @@ import com.mrudul.tourandtravel.R;
  * create an instance of this fragment.
  */
 public class DriverProfileFragment extends Fragment {
+
+    ImageView driverImage;
+    TextView driverName,driverPhone,driverEmail,licenseNumber,vehicleModel,vehicleNumber;
+    AppCompatButton editBtn,logoutBtn;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +72,20 @@ public class DriverProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_driver_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        driverImage = view.findViewById(R.id.driverProfilePic);
+        driverName = view.findViewById(R.id.driverProfileName);
+        driverPhone = view.findViewById(R.id.driverPhone);
+        driverEmail = view.findViewById(R.id.driverEmail);
+        licenseNumber = view.findViewById(R.id.driverLicenseNumber);
+        vehicleModel = view.findViewById(R.id.driverVehicle);
+        vehicleNumber = view.findViewById(R.id.driverVehicleNumber);
+        editBtn = view.findViewById(R.id.driverProfileEditBtn);
+        logoutBtn = view.findViewById(R.id.driverLogoutBtn);
     }
 }

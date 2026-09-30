@@ -16,10 +16,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mrudul.tourandtravel.R;
 import com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideHomeFragment;
+import com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideLeaveFragment;
 import com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideProfileFragment;
-import com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideScheduleFragment;
 
-public class TourGuidePage extends AppCompatActivity {
+public class TourGuideMainPage extends AppCompatActivity {
     FragmentContainerView fragmentView;
     BottomNavigationView bottomNavigation;
 
@@ -43,8 +43,8 @@ public class TourGuidePage extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.tourGuideHome){
                     navigate("tour guide home page",new TourGuideHomeFragment());
                     return true;
-                } else if (menuItem.getItemId() == R.id.tourGuideSchedule){
-                    navigate("tour guide schedule page",new TourGuideScheduleFragment());
+                } else if (menuItem.getItemId() == R.id.tourGuideLeave){
+                    navigate("tour guide schedule page",new TourGuideLeaveFragment());
                     return true;
                 } else if (menuItem.getItemId() == R.id.tourGuideProfile) {
                     navigate("toue guide profile page",new TourGuideProfileFragment());

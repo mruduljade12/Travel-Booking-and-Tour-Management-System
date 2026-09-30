@@ -16,8 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mrudul.tourandtravel.R;
-import com.mrudul.tourandtravel.driver.driver_fragments.DriverAssignPackageFragment;
 import com.mrudul.tourandtravel.driver.driver_fragments.DriverHomeFragment;
+import com.mrudul.tourandtravel.driver.driver_fragments.DriverLeaveFragment;
 import com.mrudul.tourandtravel.driver.driver_fragments.DriverProfileFragment;
 
 public class DriverMainPage extends AppCompatActivity {
@@ -52,11 +52,11 @@ public class DriverMainPage extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.driverHome){
                     navigate("Home",new DriverHomeFragment());
                     return true;
-                } else if (menuItem.getItemId() == R.id.driverAssignPackage) {
-                    navigate("Package Assign",new DriverAssignPackageFragment());
-                    return true;
                 } else if (menuItem.getItemId() == R.id.driverProfile) {
                     navigate("Profile",new DriverProfileFragment());
+                    return true;
+                } else if (menuItem.getItemId() == R.id.driverLeave){
+                    navigate("Leave",new DriverLeaveFragment());
                     return true;
                 }
 

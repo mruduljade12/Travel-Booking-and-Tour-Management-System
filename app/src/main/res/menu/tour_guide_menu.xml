@@ -7,9 +7,9 @@
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:id="@+id/tourGuideSchedule"
+        android:id="@+id/tourGuideLeave"
         android:title="@string/schedule"
-        android:icon="@drawable/ic_package"/>
+        android:icon="@drawable/ic_leave"/>
 
 
     <item

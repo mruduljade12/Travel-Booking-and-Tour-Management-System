@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tour_guide.tour_guide_activities.TourGuidePage">
+    tools:context=".tour_guide.tour_guide_activities.TourGuideMainPage">
 
     <!-- Top Header Card -->
     <androidx.cardview.widget.CardView
@@ -60,7 +60,7 @@
     <!-- Fragment Container View -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/tourGuideFragmentContainer"
-        android:name="com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideHomeFragment"
+        android:name="com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

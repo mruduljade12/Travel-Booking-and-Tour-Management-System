@@ -30,7 +30,7 @@ public class TourGuideLoginActivity extends AppCompatActivity {
         btnGuideLogin = findViewById(R.id.btnGuideLogin);
 
         btnGuideLogin.setOnClickListener(v->{
-            Intent intent = new Intent(TourGuideLoginActivity.this, TourGuidePage.class);
+            Intent intent = new Intent(TourGuideLoginActivity.this, TourGuideMainPage.class);
             startActivity(intent);
             finish();
         });

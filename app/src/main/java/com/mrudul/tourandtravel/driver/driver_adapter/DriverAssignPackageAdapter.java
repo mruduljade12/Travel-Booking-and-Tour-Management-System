@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.driver.driver_interfaces.DriverPackageClickListener;
 import com.mrudul.tourandtravel.driver.driver_models.DriverAssignPackageModel;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class DriverAssignPackageAdapter extends RecyclerView.Adapter<DriverAssig
 
     Context context;
     ArrayList<DriverAssignPackageModel> packageList;
+    DriverPackageClickListener listener;
 
     public DriverAssignPackageAdapter(Context context,ArrayList<DriverAssignPackageModel> packageList){
         this.context = context;
@@ -40,6 +42,11 @@ public class DriverAssignPackageAdapter extends RecyclerView.Adapter<DriverAssig
         holder.noOfPassenger.setText("Passengers : "+ packageModel.getNoOfPassenger());
         holder.pickUpAddress.setText(packageModel.getPickUpAddress());
         holder.guideName.setText(packageModel.getGuideName());
+
+
+        holder.itemView.setOnClickListener(v->{
+            listener.onClickDriverPackage(packageModel);
+        });
     }
 
     @Override

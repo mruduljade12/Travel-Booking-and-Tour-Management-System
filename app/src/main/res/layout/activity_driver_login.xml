@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDriverLoginTitle">
 
         <EditText
-            android:id="@+id/etDriverUsername"
+            android:id="@+id/driverLoginUserName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/input_text_shape_login"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardDriverUsername">
 
         <EditText
-            android:id="@+id/etDriverPassword"
+            android:id="@+id/driverPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/input_text_shape_login"
@@ -78,7 +78,7 @@
 
     <!-- Login & Cancel Buttons -->
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnDriverLogin"
+        android:id="@+id/driverLoginBtn"
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:layout_marginTop="60dp"
@@ -86,13 +86,13 @@
         android:text="@string/login"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnDriverCancel"
+        app:layout_constraintEnd_toStartOf="@+id/driverCancelBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardDriverPassword" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnDriverCancel"
+        android:id="@+id/driverCancelBtn"
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:layout_marginTop="60dp"
@@ -102,7 +102,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnDriverLogin"
+        app:layout_constraintStart_toEndOf="@+id/driverLoginBtn"
         app:layout_constraintTop_toBottomOf="@+id/cardDriverPassword" />
 
     <!-- Register Navigation Link -->
@@ -116,6 +116,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDriverLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/driverLoginBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

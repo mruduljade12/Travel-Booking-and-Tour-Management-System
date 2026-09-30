@@ -10,13 +10,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/dialog_details_bg"
         android:padding="20dp">
 
         <!-- Close Button -->
         <ImageView
-            android:id="@+id/ivCloseDetails"
+            android:id="@+id/dialogCancelBtn"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/ivPackageIcon"
+                android:id="@+id/dialogPackageThumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/header_shape"
@@ -48,7 +48,7 @@
 
         <!-- Package Name -->
         <TextView
-            android:id="@+id/tvDetailPackageName"
+            android:id="@+id/dialogPackageName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -56,23 +56,12 @@
             android:textColor="#0F172A"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/ivCloseDetails"
+            app:layout_constraintEnd_toStartOf="@+id/dialogCancelBtn"
             app:layout_constraintStart_toEndOf="@+id/cardPackageImage"
             app:layout_constraintTop_toTopOf="@+id/cardPackageImage"
             tools:text="Goa Beach &amp; Heritage Tour" />
 
         <!-- Package ID Badge -->
-        <TextView
-            android:id="@+id/tvDetailPackageId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:textColor="#64748B"
-            android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@+id/cardPackageImage"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailPackageName"
-            tools:text="ID: PKG_10928" />
 
         <View
             android:id="@+id/divider"
@@ -115,7 +104,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tvDetailDuration"
+                    android:id="@+id/dialogPackageDuration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -157,7 +146,7 @@
                         app:tint="#D97706" />
 
                     <TextView
-                        android:id="@+id/tvDetailRating"
+                        android:id="@+id/dialogPackageRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
@@ -207,17 +196,27 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvPriceLabel"
-                    tools:text="₹12,499" />
+                    tools:text="@string/rupee" />
+
+                <TextView
+                    android:id="@+id/dialogPackagePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="1225"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDetailPrice"
+                    app:layout_constraintStart_toEndOf="@+id/tvDetailPrice"
+                    app:layout_constraintTop_toTopOf="@+id/tvDetailPrice" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Action Buttons -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBookTour"
+            android:id="@+id/dialogPackageBookBtn"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/login_btn_shape"
             android:text="@string/book_now"
             android:textAllCaps="false"
@@ -227,7 +226,142 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardPrice" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/status"
+            app:layout_constraintStart_toEndOf="@+id/cardPackageImage"
+            app:layout_constraintTop_toBottomOf="@+id/dialogPackageName" />
+
+        <TextView
+            android:id="@+id/dialogPackageStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/active"
+            app:layout_constraintBottom_toBottomOf="@+id/textView9"
+            app:layout_constraintStart_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardPrice">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/days" />
+
+                <TextView
+                    android:id="@+id/dialogPackageDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/night" />
+
+                <TextView
+                    android:id="@+id/dialogPackageNights"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="3" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/remainging_seats" />
+
+            <TextView
+                android:id="@+id/dialogPackageRemainingSeats"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/description" />
+
+            <TextView
+                android:id="@+id/dialogPackageDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/details" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -94,12 +94,35 @@ public class SearchFragment extends Fragment implements SearchItemClick {
         searchItemRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2));
 
         tourList = new ArrayList<>();
-        tourList.add(new SearchTourModel("TP001",R.drawable.tour_travel_logo, "Goa Sun & Beach Retreat", 12500, 4.5f, 4.8f));
-        tourList.add(new SearchTourModel("TP002",R.drawable.tour_travel_logo, "Manali Snow Peak Adventure", 18000, 6.0f, 4.6f));
-        tourList.add(new SearchTourModel("TP003",R.drawable.tour_travel_logo, "Kerala Houseboat & Spice Hills", 22000, 5.0f, 4.9f));
-        tourList.add(new SearchTourModel("TP004",R.drawable.tour_travel_logo, "Jaipur Royal Heritage Tour", 14500, 3.5f, 4.5f));
-        tourList.add(new SearchTourModel("TP005",R.drawable.tour_travel_logo, "Leh Ladakh Bike Expedition", 32000, 8.0f, 4.7f));
-        tourList.add(new SearchTourModel("TP006",R.drawable.tour_travel_logo, "Ooty & Coorg Nature Escape", 11000, 4.0f, 4.4f));
+        tourList.add(new SearchTourModel(
+                "TOUR001", R.drawable.site1, "Goa Beach Tour",
+                "Available", 4.5f, 15000, 4, 3, 20,
+                "Enjoy beautiful beaches and nightlife in Goa."
+        ));
+
+        tourList.add(new SearchTourModel(
+                "TOUR002", R.drawable.site1, "Manali Adventure",
+                "Available", 4.8f, 25000, 6, 5, 15,
+                "Explore the mountains and enjoy adventure activities."
+        ));
+
+        tourList.add(new SearchTourModel(
+                "TOUR003", R.drawable.site1, "Kerala Backwaters",
+                "Available", 4.7f, 18000, 5, 4, 12,
+                "Experience the beauty of Kerala's backwaters."
+        ));
+
+        tourList.add(new SearchTourModel(
+                "TOUR004", R.drawable.site1, "Mumbai City Tour",
+                "Unavailable", 4.2f, 8000, 2, 1, 25,
+                "Discover famous landmarks and attractions in Mumbai."
+        ));
+
+        tourList.add(new SearchTourModel(
+                "TOUR005", R.drawable.site1, "Kashmir Valley Tour",
+                "Available", 4.9f, 35000, 7, 6, 10,
+                "Explore the beautiful valleys and lakes of Kashmir."
+        ));
         adapter = new SearchToutAdapter(view.getContext(),tourList, this);
         searchItemRecyclerView.setAdapter(adapter);
     }
@@ -109,19 +132,23 @@ public class SearchFragment extends Fragment implements SearchItemClick {
         Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(R.layout.search_item_dialog);
 
-        ImageView img = dialog.findViewById(R.id.ivPackageIcon);
-        ImageView closeBtn = dialog.findViewById(R.id.ivCloseDetails);
-        TextView packageName = dialog.findViewById(R.id.tvDetailPackageName);
-        TextView packageId = dialog.findViewById(R.id.tvDetailPackageId);
-        TextView duration = dialog.findViewById(R.id.tvDetailDuration);
-        TextView rating = dialog.findViewById(R.id.tvDetailRating);
-        TextView price = dialog.findViewById(R.id.tvDetailPrice);
-        AppCompatButton bookTourBtn = dialog.findViewById(R.id.btnBookTour);
+        ImageView img = dialog.findViewById(R.id.dialogPackageThumbnail);
+        ImageView closeBtn = dialog.findViewById(R.id.dialogCancelBtn);
+        TextView packageName = dialog.findViewById(R.id.dialogPackageName);
+        TextView packageStatus = dialog.findViewById(R.id.dialogPackageStatus);
+        TextView duration = dialog.findViewById(R.id.dialogPackageDuration);
+        TextView rating = dialog.findViewById(R.id.dialogPackageRating);
+        TextView price = dialog.findViewById(R.id.dialogPackagePrice);
+        TextView days = dialog.findViewById(R.id.dialogPackageDays);
+        TextView nights = dialog.findViewById(R.id.dialogPackageNights);
+        TextView remainingSeats = dialog.findViewById(R.id.dialogPackageRemainingSeats);
+        TextView description = dialog.findViewById(R.id.dialogPackageDescription);
+        AppCompatButton bookTourBtn = dialog.findViewById(R.id.dialogPackageBookBtn);
 
 
         //setting image
         Glide.with(dialog.getContext())
-                .load(tourModel.getTourImageUri())
+                .load(tourModel.getPack_thumbnail())
                 .error(R.drawable.ic_default_image)
                 .placeholder(R.drawable.ic_default_image)
                 .into(img);
@@ -134,11 +161,15 @@ public class SearchFragment extends Fragment implements SearchItemClick {
         );
 
 
-        packageName.setText(tourModel.getToutPackageName());
-        packageId.setText(tourModel.getTourPackageId());
-        duration.setText(String.valueOf(tourModel.getTourPackageDuration()));
+        packageName.setText(tourModel.getPack_name());
+        packageStatus.setText(tourModel.getPack_status());
+        duration.setText(String.valueOf(tourModel.getPack_duration_day()));
         rating.setText(String.valueOf(tourModel.getTourPackageRating()));
-        price.setText(String.valueOf(tourModel.getTourPackagePrice()));
+        price.setText(String.valueOf(tourModel.getPack_price()));
+        days.setText(String.valueOf(tourModel.getPack_duration_day()));
+        nights.setText(String.valueOf(tourModel.getPack_duration_night()));
+        remainingSeats.setText(String.valueOf(tourModel.getPack_max_capacity()-5));
+        description.setText(tourModel.getPack_description());
 
 
         bookTourBtn.setOnClickListener(v->{

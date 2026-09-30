@@ -3,23 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".driver.driver_fragments.DriverHomeFragment">
+    android:layout_height="match_parent">
 
     <!-- Google Maps Fragment -->
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/driverMapView"
+        android:id="@+id/tourGuideMapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/activeTripCard"
+        app:layout_constraintBottom_toTopOf="@+id/activeTourCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Driver Duty Status Switch Overlay -->
+    <!-- Guide Status Switch Overlay -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/dutyStatusCard"
+        android:id="@+id/guideDutyCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -41,26 +40,26 @@
             android:paddingBottom="8dp">
 
             <TextView
-                android:id="@+id/dutyStatusText"
+                android:id="@+id/guideStatusText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Online"
+                android:text="Available"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/dutySwitch"
+                android:id="@+id/guideDutySwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Bottom Active Trip Card -->
+    <!-- Bottom Active Tour Summary Card -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/activeTripCard"
+        android:id="@+id/activeTourCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
@@ -77,10 +76,10 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/tvTripTitle"
+                android:id="@+id/tvTourGroupTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current Assignment"
+                android:text="Active Tour Group"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -88,42 +87,42 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvTourDestination"
+                android:id="@+id/tvCurrentStop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Destination: Gateway of India"
+                android:text="Current Spot: Historic Fort Ruins"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTripTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTourGroupTitle" />
 
             <TextView
-                android:id="@+id/tvGuideStatus"
+                android:id="@+id/tvAssignedDriver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Tour Guide: Assigned"
+                android:text="Driver: John Doe (Innova MH-08)"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTourDestination" />
+                app:layout_constraintTop_toBottomOf="@+id/tvCurrentStop" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnNavigate"
+                android:id="@+id/btnNextDestination"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/login_btn_shape"
-                android:text="Start Navigation"
+                android:text="Proceed To Next Spot"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvGuideStatus" />
+                app:layout_constraintTop_toBottomOf="@+id/tvAssignedDriver" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

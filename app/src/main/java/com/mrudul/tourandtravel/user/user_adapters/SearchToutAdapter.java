@@ -48,13 +48,13 @@ public class SearchToutAdapter extends RecyclerView.Adapter<SearchToutAdapter.Vi
 
         SearchTourModel searchModel = tourList.get(position);
 
-        holder.tourName.setText(searchModel.getToutPackageName());
-        holder.tourPrice.setText(String.valueOf(searchModel.getTourPackagePrice()));
-        holder.tourDuration.setText(String.valueOf(searchModel.getTourPackageDuration()));
-        holder.tourRating.setText(String.valueOf(searchModel.getTourPackageRating()));
+        holder.tourName.setText(searchModel.getPack_name());
+        holder.tourPrice.setText(String.valueOf(searchModel.getPack_price()));
+        holder.tourDuration.setText(String.valueOf(searchModel.getPack_duration_day()));
+        holder.tourRating.setText(String.valueOf(searchModel.getPack_rating()));
 
         Glide.with(context)
-                        .load(searchModel.getTourImageUri())
+                        .load(searchModel.getPack_thumbnail())
                                 .error(R.drawable.advertize)
                                         .placeholder(R.drawable.advertize)
                                                 .into(holder.tourImage);

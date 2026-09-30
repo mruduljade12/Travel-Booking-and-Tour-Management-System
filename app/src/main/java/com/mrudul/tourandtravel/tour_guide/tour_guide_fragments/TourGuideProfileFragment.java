@@ -2,12 +2,17 @@ package com.mrudul.tourandtravel.tour_guide.tour_guide_fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mrudul.tourandtravel.R;
 
 /**
@@ -16,6 +21,11 @@ import com.mrudul.tourandtravel.R;
  * create an instance of this fragment.
  */
 public class TourGuideProfileFragment extends Fragment {
+
+    private ImageView guideProfilePic;
+    private TextView tvGuideProfileName, tvGuideBadge;
+    private TextView tvGuideExperience, tvLanguages, tvSpecialization;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +72,34 @@ public class TourGuideProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tour_guide_profile, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        guideProfilePic = view.findViewById(R.id.guideProfilePic);
+        tvGuideProfileName = view.findViewById(R.id.tvGuideProfileName);
+        tvGuideBadge = view.findViewById(R.id.tvGuideBadge);
+        tvGuideExperience = view.findViewById(R.id.tvGuideExperience);
+        tvLanguages = view.findViewById(R.id.tvLanguages);
+        tvSpecialization = view.findViewById(R.id.tvSpecialization);
+
+
+
+        // Set profile image
+        Glide.with(this)
+                .load(R.drawable.tour_guide_ic)
+                .placeholder(R.drawable.tour_guide_ic)
+                .error(R.drawable.tour_guide_ic)
+                .into(guideProfilePic);
+
+        // Set text
+        tvGuideProfileName.setText("Mrudul Jade");
+        tvGuideBadge.setText("Certified Professional Tour Guide");
+        tvGuideExperience.setText("Experience: 3 Years");
+        tvLanguages.setText("Languages: English, Hindi, Marathi");
+        tvSpecialization.setText("Specialization: Historical & Eco Tours");
     }
 }

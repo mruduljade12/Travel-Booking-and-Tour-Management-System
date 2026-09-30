@@ -1,21 +1,29 @@
 package com.mrudul.tourandtravel.tour_guide.tour_guide_fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.tour_guide.tour_guide_interfaces.TourGuidePackageClickListener;
+import com.mrudul.tourandtravel.tour_guide.tour_guide_models.TourGuideScheduleModel;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TourGuideHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TourGuideHomeFragment extends Fragment {
+public class TourGuideHomeFragment extends Fragment implements TourGuidePackageClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +70,68 @@ public class TourGuideHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tour_guide_home, container, false);
+    }
+
+    @Override
+    public void onTourGuidePackageClick(TourGuideScheduleModel model) {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.tour_guide_package_dialog);
+
+        dialog.setCancelable(false);
+
+        // Initialize views
+        SwitchCompat guideDutySwitch =
+                dialog.findViewById(R.id.guideDutySwitch);
+
+        TextView guideStatusText =
+                dialog.findViewById(R.id.guideStatusText);
+
+        TextView currentStop =
+                dialog.findViewById(R.id.tvCurrentStop);
+
+        TextView assignedDriver =
+                dialog.findViewById(R.id.tvAssignedDriver);
+
+        AppCompatButton nextDestination =
+                dialog.findViewById(R.id.btnNextDestination);
+
+        // Set initial data
+        currentStop.setText("Current Spot: Historic Fort Ruins");
+        assignedDriver.setText("Driver: John Doe (Innova MH-08)");
+
+        // Duty switch listener
+        guideDutySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                guideStatusText.setText("Available");
+            } else {
+                guideStatusText.setText("Unavailable");
+            }
+        });
+
+        // Next destination button
+        nextDestination.setOnClickListener(v -> {
+            Toast.makeText(requireContext(),
+                    "Proceeding to next destination",
+                    Toast.LENGTH_SHORT).show();
+
+            // Add your next destination logic here.
+        });
+
+        // Show dialog
+        dialog.show();
+
+        // Set dialog size
+        Window window = dialog.getWindow();
+
+        if (window != null) {
+            window.setBackgroundDrawableResource(
+                    android.R.color.transparent
+            );
+
+            window.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+            );
+        }
     }
 }
