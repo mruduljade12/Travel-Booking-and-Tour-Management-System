@@ -36,12 +36,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDriverLoginTitle">
 
         <EditText
-            android:id="@+id/driverLoginUserName"
+            android:id="@+id/driverEmailInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/input_text_shape_login"
             android:ems="10"
-            android:hint="Driver ID / Username"
+            android:hint="Driver ID / Email"
             android:inputType="text"
             android:paddingStart="16dp"
             android:textColor="@color/black"

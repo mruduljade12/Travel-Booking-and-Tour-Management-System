@@ -1,7 +1,11 @@
 package com.mrudul.tourandtravel.user.user_activities;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,18 +17,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.network.ApiService;
+import com.mrudul.tourandtravel.network.RetrofitClient;
 import com.mrudul.tourandtravel.user.user_fragments.AssistantFragment;
 import com.mrudul.tourandtravel.user.user_fragments.HomeFragment;
 import com.mrudul.tourandtravel.user.user_fragments.MapFragment;
 import com.mrudul.tourandtravel.user.user_fragments.ProfileFragment;
 import com.mrudul.tourandtravel.user.user_fragments.SearchFragment;
+import com.mrudul.tourandtravel.user.user_models.CustomerResponse;
+import com.mrudul.tourandtravel.utils.SessionManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+    TextView username;
+    ImageView userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +53,72 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        userImage = findViewById(R.id.mainUserImage);
+        username = findViewById(R.id.mainUserName);
+
+        SessionManager sessionManager = new SessionManager(this);
+        ApiService apiService = RetrofitClient.getApiService();
+
+        int custId = sessionManager.getCustomerId();
+
+        if (custId == -1) {
+
+            Toast.makeText(
+                    this,
+                    "Customer not logged in",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+
+        Call<CustomerResponse> call = apiService.getCustomer(custId);
+
+        call.enqueue(new Callback<CustomerResponse>() {
+
+            @Override
+            public void onResponse(
+                    Call<CustomerResponse> call,
+                    Response<CustomerResponse> response) {
+
+                if (response.isSuccessful()
+                        && response.body() != null) {
+
+                    CustomerResponse customer = response.body();
+
+                    username.setText(customer.getCustName());
+                    if (customer.getImageUrl() != null && !customer.getImageUrl().isEmpty()) {
+
+                        Glide.with(MainActivity.this)
+                                .load(customer.getImageUrl())
+                                .placeholder(R.drawable.ic_default_image)
+                                .error(R.drawable.ic_default_image)
+                                .into(userImage);
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                            MainActivity.this,
+                            "Failed to load profile",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<CustomerResponse> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        MainActivity.this,
+                        "Network error: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

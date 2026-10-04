@@ -1,7 +1,10 @@
 package com.mrudul.tourandtravel.user.user_fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -13,8 +16,21 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.network.ApiService;
+import com.mrudul.tourandtravel.network.RetrofitClient;
+import com.mrudul.tourandtravel.user.user_models.CustomerResponse;
+import com.mrudul.tourandtravel.user.user_models.CustomerUpdateRequest;
+import com.mrudul.tourandtravel.utils.SessionManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,12 +39,29 @@ import com.mrudul.tourandtravel.R;
  */
 public class ProfileFragment extends Fragment {
 
+    private ApiService apiService;
+    private SessionManager sessionManager;
+
+
     TextView userName;
     EditText pPhoneEdit,pEmailEdit,pAddressEdit;
     ImageView pUserImg,editBtn;
     AppCompatButton saveBtn,logoutBtn;
-
     boolean onEdit = false;
+
+
+    private Uri selectedImageUri;
+    private String currentImageUrl;
+    private final ActivityResultLauncher<String> imagePicker =
+            registerForActivityResult(
+                    new ActivityResultContracts.GetContent(),
+                    uri -> {
+                        if (uri != null) {
+                            selectedImageUri = uri;
+                            pUserImg.setImageURI(uri);
+                        }
+                    });
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -90,10 +123,16 @@ public class ProfileFragment extends Fragment {
         saveBtn = view.findViewById(R.id.userProfileSave);
         editBtn = view.findViewById(R.id.ivEditProfile);
         logoutBtn = view.findViewById(R.id.userLogout);
-
-
+        apiService = RetrofitClient.getApiService();
+        sessionManager = new SessionManager(requireContext());
         editTextEditableOrNot(false);
+        loadCustomerProfile();
 
+
+
+        pUserImg.setOnClickListener(v->{
+            imagePicker.launch("image/*");
+        });
 
 
 
@@ -102,6 +141,32 @@ public class ProfileFragment extends Fragment {
             String email = pEmailEdit.getText().toString().trim();
             String phone = pPhoneEdit.getText().toString().trim();
             String address = pAddressEdit.getText().toString().trim();
+
+            if (email.isEmpty()) {
+                pEmailEdit.setError("Enter email");
+                pEmailEdit.requestFocus();
+                return;
+            }
+
+            if (phone.isEmpty()) {
+                pPhoneEdit.setError("Enter phone number");
+                pPhoneEdit.requestFocus();
+                return;
+            }
+
+            if (phone.length() != 10) {
+                pPhoneEdit.setError("Enter valid 10 digit phone number");
+                pPhoneEdit.requestFocus();
+                return;
+            }
+
+            if (address.isEmpty()) {
+                pAddressEdit.setError("Enter address");
+                pAddressEdit.requestFocus();
+                return;
+            }
+
+            updateCustomerRequest(email, phone, address);
 
 
 
@@ -124,6 +189,261 @@ public class ProfileFragment extends Fragment {
 
         });
 
+    }
+
+    private void updateCustomerRequest(
+            String email,
+            String phone,
+            String address) {
+
+        int custId = sessionManager.getCustomerId();
+
+        if (custId == -1) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "Customer not logged in",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        saveBtn.setEnabled(false);
+
+        // New image selected
+        if (selectedImageUri != null) {
+
+            FirebaseStorage storage =
+                    FirebaseStorage.getInstance();
+
+            StorageReference imageReference =
+                    storage.getReference()
+                            .child("customer_profiles")
+                            .child("customer_" + custId + ".jpg");
+
+            imageReference.putFile(selectedImageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+
+                        imageReference.getDownloadUrl()
+                                .addOnSuccessListener(uri -> {
+
+                                    String imageUrl =
+                                            uri.toString();
+
+                                    updateCustomerOnServer(
+                                            custId,
+                                            email,
+                                            phone,
+                                            address,
+                                            imageUrl
+                                    );
+                                })
+                                .addOnFailureListener(e -> {
+
+                                    saveBtn.setEnabled(true);
+
+                                    Toast.makeText(
+                                            requireContext(),
+                                            "Failed to get image URL",
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+
+                        saveBtn.setEnabled(true);
+
+                        Toast.makeText(
+                                requireContext(),
+                                "Image upload failed: "
+                                        + e.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    });
+
+        } else {
+
+            // No new image selected.
+            // Keep the existing Firebase image URL.
+
+            updateCustomerOnServer(
+                    custId,
+                    email,
+                    phone,
+                    address,
+                    currentImageUrl
+            );
+        }
+    }
+
+
+    private void updateCustomerOnServer(
+            int custId,
+            String email,
+            String phone,
+            String address,
+            String imageUrl) {
+
+        CustomerUpdateRequest request =
+                new CustomerUpdateRequest(
+                        email,
+                        phone,
+                        address,
+                        imageUrl
+                );
+
+        Call<CustomerResponse> call =
+                apiService.updateCustomer(
+                        custId,
+                        request
+                );
+
+        call.enqueue(new Callback<CustomerResponse>() {
+
+            @Override
+            public void onResponse(
+                    Call<CustomerResponse> call,
+                    Response<CustomerResponse> response) {
+
+                saveBtn.setEnabled(true);
+
+                if (response.isSuccessful()
+                        && response.body() != null) {
+
+                    CustomerResponse customer =
+                            response.body();
+
+                    pEmailEdit.setText(
+                            customer.getCustEmail()
+                    );
+
+                    pPhoneEdit.setText(
+                            customer.getCustPhone()
+                    );
+
+                    pAddressEdit.setText(
+                            customer.getCustAddress()
+                    );
+
+                    currentImageUrl = customer.getImageUrl();
+
+                    Glide.with(requireContext())
+                            .load(customer.getImageUrl())
+                            .placeholder(
+                                    R.drawable.ic_default_image
+                            )
+                            .error(
+                                    R.drawable.ic_default_image
+                            )
+                            .into(pUserImg);
+
+                    // Clear selected image because
+                    // it has already been uploaded.
+                    selectedImageUri = null;
+
+                    editTextEditableOrNot(false);
+                    onEdit = false;
+
+                    Toast.makeText(
+                            requireContext(),
+                            "Profile updated successfully",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                } else {
+
+                    Toast.makeText(
+                            requireContext(),
+                            "Failed to update profile",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<CustomerResponse> call,
+                    Throwable t) {
+
+                saveBtn.setEnabled(true);
+
+                Toast.makeText(
+                        requireContext(),
+                        "Network error: "
+                                + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
+
+    private void loadCustomerProfile() {
+
+        int custId = sessionManager.getCustomerId();
+
+        if (custId == -1) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "Customer not logged in",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        Call<CustomerResponse> call = apiService.getCustomer(custId);
+
+        call.enqueue(new Callback<CustomerResponse>() {
+
+            @Override
+            public void onResponse(
+                    Call<CustomerResponse> call,
+                    Response<CustomerResponse> response) {
+
+                if (response.isSuccessful()
+                        && response.body() != null) {
+
+                    CustomerResponse customer = response.body();
+
+                    userName.setText(customer.getCustName());
+                    pEmailEdit.setText(customer.getCustEmail());
+                    pPhoneEdit.setText(customer.getCustPhone());
+                    pAddressEdit.setText(customer.getCustAddress());
+                    if (customer.getImageUrl() != null
+                            && !customer.getImageUrl().isEmpty()) {
+
+                        Glide.with(requireContext())
+                                .load(customer.getImageUrl())
+                                .placeholder(R.drawable.ic_default_image)
+                                .error(R.drawable.ic_default_image)
+                                .into(pUserImg);
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                            requireContext(),
+                            "Failed to load profile",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<CustomerResponse> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        requireContext(),
+                        "Network error: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
     }
 
 

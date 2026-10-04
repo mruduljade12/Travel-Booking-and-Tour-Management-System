@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,12 +14,24 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.mrudul.tourandtravel.R;
 import com.mrudul.tourandtravel.driver.driver_fragments.DriverHomeFragment;
 import com.mrudul.tourandtravel.driver.driver_fragments.DriverLeaveFragment;
 import com.mrudul.tourandtravel.driver.driver_fragments.DriverProfileFragment;
+import com.mrudul.tourandtravel.driver.driver_models.DriverLoginResponse;
+import com.mrudul.tourandtravel.network.ApiService;
+import com.mrudul.tourandtravel.network.RetrofitClient;
+import com.mrudul.tourandtravel.user.user_activities.MainActivity;
+import com.mrudul.tourandtravel.user.user_models.CustomerResponse;
+import com.mrudul.tourandtravel.utils.DriverSessionManager;
+import com.mrudul.tourandtravel.utils.SessionManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DriverMainPage extends AppCompatActivity {
 
@@ -42,6 +55,70 @@ public class DriverMainPage extends AppCompatActivity {
         driverName = findViewById(R.id.driverName);
 
 
+        DriverSessionManager driverSessionManager = new DriverSessionManager(DriverMainPage.this);
+        ApiService apiService = RetrofitClient.getApiService();
+
+        int driverId = driverSessionManager.getDriverId();
+
+        if (driverId == -1) {
+
+            Toast.makeText(
+                    this,
+                    "Driver not logged in",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+
+        Call<DriverLoginResponse> call = apiService.getDriver(driverId);
+
+        call.enqueue(new Callback<DriverLoginResponse>() {
+
+            @Override
+            public void onResponse(
+                    Call<DriverLoginResponse> call,
+                    Response<DriverLoginResponse> response) {
+
+                if (response.isSuccessful()
+                        && response.body() != null) {
+
+                    DriverLoginResponse driver = response.body();
+
+                    driverName.setText(driver.getDriverName());
+                    if (driver.getProfileImageUrl() != null && !driver.getProfileImageUrl().isEmpty()) {
+
+                        Glide.with(DriverMainPage.this)
+                                .load(driver.getProfileImageUrl())
+                                .placeholder(R.drawable.ic_default_image)
+                                .error(R.drawable.ic_default_image)
+                                .into(driverImage);
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                            DriverMainPage.this,
+                            "Failed to load profile",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<DriverLoginResponse> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        DriverMainPage.this,
+                        "Network error: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+
 
 
 
@@ -55,7 +132,7 @@ public class DriverMainPage extends AppCompatActivity {
                 } else if (menuItem.getItemId() == R.id.driverProfile) {
                     navigate("Profile",new DriverProfileFragment());
                     return true;
-                } else if (menuItem.getItemId() == R.id.driverLeave){
+                } else if (menuItem.getItemId() == R.id.driverAssignPackage){
                     navigate("Leave",new DriverLeaveFragment());
                     return true;
                 }

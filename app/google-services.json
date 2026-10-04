@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "871932120199",
+    "firebase_url": "https://storage-database-91a01-default-rtdb.firebaseio.com",
+    "project_id": "storage-database-91a01",
+    "storage_bucket": "storage-database-91a01.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871932120199:android:4378c2b886e556f8977c22",
+        "android_client_info": {
+          "package_name": "com.mrudul.tourandtravel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXobttZhPUzI9Bw84GxBEGXDkHWoUgBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871932120199:android:c2ea0e308da0cd8c977c22",
+        "android_client_info": {
+          "package_name": "com.mrudul.tourandtraveladmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXobttZhPUzI9Bw84GxBEGXDkHWoUgBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

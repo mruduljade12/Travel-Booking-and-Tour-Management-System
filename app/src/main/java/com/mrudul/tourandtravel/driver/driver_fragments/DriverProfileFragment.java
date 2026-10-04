@@ -1,5 +1,6 @@
 package com.mrudul.tourandtravel.driver.driver_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.driver.driver_activities.DriverLoginActivity;
+import com.mrudul.tourandtravel.driver.driver_activities.DriverMainPage;
+import com.mrudul.tourandtravel.driver.driver_models.DriverLoginResponse;
+import com.mrudul.tourandtravel.network.ApiService;
+import com.mrudul.tourandtravel.network.RetrofitClient;
+import com.mrudul.tourandtravel.user.user_models.CustomerResponse;
+import com.mrudul.tourandtravel.utils.DriverSessionManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,8 +37,8 @@ import com.mrudul.tourandtravel.R;
 public class DriverProfileFragment extends Fragment {
 
     ImageView driverImage;
-    TextView driverName,driverPhone,driverEmail,licenseNumber,vehicleModel,vehicleNumber;
-    AppCompatButton editBtn,logoutBtn;
+    TextView driverName,driverPhone,driverEmail,licenseNumber;
+    AppCompatButton logoutBtn;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -83,9 +97,117 @@ public class DriverProfileFragment extends Fragment {
         driverPhone = view.findViewById(R.id.driverPhone);
         driverEmail = view.findViewById(R.id.driverEmail);
         licenseNumber = view.findViewById(R.id.driverLicenseNumber);
-        vehicleModel = view.findViewById(R.id.driverVehicle);
-        vehicleNumber = view.findViewById(R.id.driverVehicleNumber);
-        editBtn = view.findViewById(R.id.driverProfileEditBtn);
         logoutBtn = view.findViewById(R.id.driverLogoutBtn);
+
+        loadDriverProfile();
+
+
+        logoutBtn.setOnClickListener(v->{
+            logoutDriver();
+        });
+
+    }
+
+
+    private void loadDriverProfile() {
+
+        DriverSessionManager driverSessionManager = new DriverSessionManager(requireContext());
+        ApiService apiService = RetrofitClient.getApiService();
+
+        int driverId = driverSessionManager.getDriverId();
+
+        if (driverId == -1) {
+
+            Toast.makeText(
+                    requireContext(),
+                    "Driver not logged in",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        Call<DriverLoginResponse> call = apiService.getDriver(driverId);
+
+        call.enqueue(new Callback<DriverLoginResponse>() {
+
+            @Override
+            public void onResponse(
+                    Call<DriverLoginResponse> call,
+                    Response<DriverLoginResponse> response) {
+
+                if (response.isSuccessful()
+                        && response.body() != null) {
+
+                    DriverLoginResponse driverLoginResponse = response.body();
+
+                    driverName.setText(driverLoginResponse.getDriverName());
+                    driverEmail.setText(driverLoginResponse.getDriverEmail());
+                    driverPhone.setText(driverLoginResponse.getDriverPhone());
+                    licenseNumber.setText(driverLoginResponse.getLicenseNumber());
+
+
+
+                    if (driverLoginResponse.getProfileImageUrl() != null
+                            && !driverLoginResponse.getProfileImageUrl().isEmpty()) {
+
+                        Glide.with(requireContext())
+                                .load(driverLoginResponse.getProfileImageUrl())
+                                .placeholder(R.drawable.ic_default_image)
+                                .error(R.drawable.ic_default_image)
+                                .into(driverImage);
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                            requireContext(),
+                            "Failed to load profile",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<DriverLoginResponse> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        requireContext(),
+                        "Network error: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
+    private void logoutDriver() {
+
+        DriverSessionManager driverSessionManager = new DriverSessionManager(requireContext());
+
+        // Clear driver session
+        driverSessionManager.logout();
+
+        Toast.makeText(
+                requireContext(),
+                "Logged out successfully",
+                Toast.LENGTH_SHORT
+        ).show();
+
+        // Go back to driver login
+        Intent intent = new Intent(
+                requireContext(),
+                DriverLoginActivity.class
+        );
+
+        // Prevent going back to MainPage using back button
+        intent.setFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+        );
+
+        startActivity(intent);
+        requireActivity().finish();
     }
 }
