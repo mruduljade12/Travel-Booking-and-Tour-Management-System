@@ -52,28 +52,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSearchHeaderSubtitle">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:background="@drawable/search_edit_text_shape"
-                android:paddingHorizontal="12dp">
-
-                <ImageView
-                    android:id="@+id/ivSearchIcon"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_email"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="#0F766E" />
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <EditText
                     android:id="@+id/etSearchTourQuery"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
                     android:background="@null"
                     android:hint="Search tour destination or package..."
                     android:imeOptions="actionSearch"
@@ -81,24 +73,20 @@
                     android:maxLines="1"
                     android:textColor="#0F172A"
                     android:textColorHint="#64748B"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@+id/ivClearTourSearch"
-                    app:layout_constraintStart_toEndOf="@+id/ivSearchIcon" />
+                    android:textSize="15sp" />
 
                 <ImageView
-                    android:id="@+id/ivClearTourSearch"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:id="@+id/userPackageSearchBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_back_arrow"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="#64748B"
-                    tools:visibility="visible" />
+                    android:src="@drawable/ic_search"
+                    android:visibility="visible"
+                    app:tint="#64748B" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

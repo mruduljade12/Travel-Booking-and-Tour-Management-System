@@ -1,6 +1,5 @@
 package com.mrudul.tourandtravel.user.user_activities;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -25,7 +24,6 @@ import com.mrudul.tourandtravel.network.ApiService;
 import com.mrudul.tourandtravel.network.RetrofitClient;
 import com.mrudul.tourandtravel.user.user_fragments.AssistantFragment;
 import com.mrudul.tourandtravel.user.user_fragments.HomeFragment;
-import com.mrudul.tourandtravel.user.user_fragments.MapFragment;
 import com.mrudul.tourandtravel.user.user_fragments.ProfileFragment;
 import com.mrudul.tourandtravel.user.user_fragments.SearchFragment;
 import com.mrudul.tourandtravel.user.user_models.CustomerResponse;
@@ -128,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
                 int home = R.id.user_home;
                 int search = R.id.user_search;
-                int map = R.id.user_map;
                 int ai = R.id.ai_assistant;
                 int profile = R.id.user_profile;
 
@@ -141,11 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
                     //navigate to home fragment.
                     changeFragment(new SearchFragment());
-                    return true;
-                } else if (id == map){
-
-                    //navigate to home fragment.
-                    changeFragment(new MapFragment());
                     return true;
                 } else if (id == ai){
 

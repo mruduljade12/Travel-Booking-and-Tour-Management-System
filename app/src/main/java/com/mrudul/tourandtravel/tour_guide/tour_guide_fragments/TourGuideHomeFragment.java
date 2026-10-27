@@ -1,29 +1,72 @@
 package com.mrudul.tourandtravel.tour_guide.tour_guide_fragments;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.network.DirectionsResponse;
+import com.mrudul.tourandtravel.network.DirectionsRetrofitClient;
+import com.mrudul.tourandtravel.network.RetrofitClient;
+import com.mrudul.tourandtravel.tour_guide.tour_guide_adapters.TourGuideScheduleAdapter;
 import com.mrudul.tourandtravel.tour_guide.tour_guide_interfaces.TourGuidePackageClickListener;
 import com.mrudul.tourandtravel.tour_guide.tour_guide_models.TourGuideScheduleModel;
+import com.mrudul.tourandtravel.user.user_adapters.EventListAdapter;
+import com.mrudul.tourandtravel.user.user_interfaces.HomeTourClicked;
+import com.mrudul.tourandtravel.user.user_models.PackageDestinationResponse;
+import com.mrudul.tourandtravel.user.user_models.TourPackageResponse;
+import com.mrudul.tourandtravel.utils.DriverSessionManager;
+import com.mrudul.tourandtravel.utils.TourGuideSessionManger;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TourGuideHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TourGuideHomeFragment extends Fragment implements TourGuidePackageClickListener {
+public class TourGuideHomeFragment extends Fragment implements HomeTourClicked {
+
+
+    MapView mapView;
+    GoogleMap googleMap;
+    FusedLocationProviderClient fusedLocationClient;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,66 +115,344 @@ public class TourGuideHomeFragment extends Fragment implements TourGuidePackageC
         return inflater.inflate(R.layout.fragment_tour_guide_home, container, false);
     }
 
+
     @Override
-    public void onTourGuidePackageClick(TourGuideScheduleModel model) {
-        Dialog dialog = new Dialog(requireContext());
-        dialog.setContentView(R.layout.tour_guide_package_dialog);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        dialog.setCancelable(false);
+        RecyclerView rvGuideTours = view.findViewById(R.id.rvGuideTours);
+        rvGuideTours.setLayoutManager(new LinearLayoutManager(requireContext()));
+        ArrayList<TourPackageResponse> list = new ArrayList<>();
+        TourGuideScheduleAdapter adapter = new TourGuideScheduleAdapter(requireContext(),list,this);
+        rvGuideTours.setAdapter(adapter);
 
-        // Initialize views
-        SwitchCompat guideDutySwitch =
-                dialog.findViewById(R.id.guideDutySwitch);
 
-        TextView guideStatusText =
-                dialog.findViewById(R.id.guideStatusText);
+        Call<List<TourPackageResponse>> call = RetrofitClient.getApiService().getTourPackage();
+        call.enqueue(new Callback<List<TourPackageResponse>>() {
+            @Override
+            public void onResponse(Call<List<TourPackageResponse>> call, Response<List<TourPackageResponse>> response) {
+                TourGuideSessionManger manger = new TourGuideSessionManger(requireContext());
+                list.clear();;
 
-        TextView currentStop =
-                dialog.findViewById(R.id.tvCurrentStop);
+                if (response.isSuccessful() && response != null){
 
-        TextView assignedDriver =
-                dialog.findViewById(R.id.tvAssignedDriver);
+                    for (TourPackageResponse data:response.body()){
+                        if (data.getGuide().getGuideId().equals(manger.getGuideId())){
+                            list.add(data);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
 
-        AppCompatButton nextDestination =
-                dialog.findViewById(R.id.btnNextDestination);
-
-        // Set initial data
-        currentStop.setText("Current Spot: Historic Fort Ruins");
-        assignedDriver.setText("Driver: John Doe (Innova MH-08)");
-
-        // Duty switch listener
-        guideDutySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                guideStatusText.setText("Available");
-            } else {
-                guideStatusText.setText("Unavailable");
+            @Override
+            public void onFailure(Call<List<TourPackageResponse>> call, Throwable t) {
+                Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Next destination button
-        nextDestination.setOnClickListener(v -> {
-            Toast.makeText(requireContext(),
-                    "Proceeding to next destination",
-                    Toast.LENGTH_SHORT).show();
+    }
 
-            // Add your next destination logic here.
-        });
 
-        // Show dialog
+    @Override
+    public void onHomeTourClicked(TourPackageResponse response) {
+
+    }
+
+    @Override
+    public void onRecentHomeItemClicked(TourPackageResponse response) {
+        Dialog dialog = new Dialog(requireContext());
+
+        dialog.setContentView(R.layout.dialog_tour_event);
+
+        mapView = dialog.findViewById(R.id.customerMapView);
+        ImageView cancelBtn = dialog.findViewById(R.id.homeDialogMapCancelBtn);
+
+
+        RecyclerView eventRecyclerView = dialog.findViewById(R.id.eventRecyclerView);
+        eventRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        ArrayList<PackageDestinationResponse> destinationList = new ArrayList<>();
+        for (PackageDestinationResponse data : response.getDestinations()) {
+            destinationList.add(data);
+        }
+        EventListAdapter eventListAdapter = new EventListAdapter(requireContext(),destinationList,this);
+        eventRecyclerView.setAdapter(eventListAdapter);
+
+
+
+
         dialog.show();
 
-        // Set dialog size
-        Window window = dialog.getWindow();
-
-        if (window != null) {
-            window.setBackgroundDrawableResource(
-                    android.R.color.transparent
-            );
-
-            window.setLayout(
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
         }
+
+
+        mapView = dialog.findViewById(R.id.customerMapView);
+
+        mapView.onCreate(null);
+        mapView.onResume();
+
+        mapView.getMapAsync(map -> {
+            googleMap = map;
+        });
+
+
+
+        cancelBtn.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+    }
+
+    @Override
+    public void onMapEventClicked(PackageDestinationResponse response) {
+        TourGuideSessionManger sessionManager = new TourGuideSessionManger(requireContext());
+
+        if (googleMap == null) {
+            Toast.makeText(requireContext(),
+                    "Map is not ready",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double destinationLat = Double.parseDouble(response.getLatitude());
+        double destinationLng = Double.parseDouble(response.getLongitude());
+
+        // Emulator starting location
+        double userLat = 18.5204;
+        double userLng = 73.8567;
+
+        LatLng userLocation = new LatLng(userLat, userLng);
+        LatLng destination = new LatLng(destinationLat, destinationLng);
+
+        googleMap.clear();
+
+        String userImageUrl = sessionManager.getKeyGuideImage();
+
+        Glide.with(requireContext())
+                .asBitmap()
+                .load(userImageUrl)
+                .into(new CustomTarget<Bitmap>() {
+
+                    @Override
+                    public void onResourceReady(
+                            @NonNull Bitmap bitmap,
+                            Transition<? super Bitmap> transition) {
+
+                        Bitmap userMarker = createMarkerBitmap(
+                                bitmap,
+                                Color.rgb(50, 180, 90)
+                        );
+
+                        googleMap.addMarker(
+                                new MarkerOptions()
+                                        .position(userLocation)
+                                        .title("Your Location")
+                                        .icon(BitmapDescriptorFactory.fromBitmap(userMarker))
+                        );
+                    }
+
+                    @Override
+                    public void onLoadCleared(Drawable placeholder) {
+                    }
+                });
+
+        Log.d("IMAGE_TEST", "Destination image = " + response.getImage());
+
+        Glide.with(requireContext())
+                .asBitmap()
+                .load(response.getImage())
+                .placeholder(R.drawable.ic_default_image)
+                .error(R.drawable.ic_default_image)
+                .into(new CustomTarget<Bitmap>() {
+
+                    @Override
+                    public void onResourceReady(
+                            @NonNull Bitmap bitmap,
+                            Transition<? super Bitmap> transition) {
+
+                        Bitmap destinationMarker = createMarkerBitmap(bitmap, Color.RED);
+
+                        googleMap.addMarker(
+                                new MarkerOptions()
+                                        .position(destination)
+                                        .title(response.getName())
+                                        .icon(BitmapDescriptorFactory.fromBitmap(destinationMarker))
+                                        .anchor(0.5f, 1f)
+                        );
+                    }
+
+                    @Override
+                    public void onLoadCleared(Drawable placeholder) {
+                    }
+                });
+
+        getRoute(userLat, userLng, destinationLat, destinationLng);
+    }
+
+
+    private void getRoute(double startLat, double startLng,
+                          double endLat, double endLng) {
+
+        String origin = startLat + "," + startLng;
+        String destination = endLat + "," + endLng;
+        String apiKey = "AIzaSyDc-B2qS8MdTNBM1Hl1ACGz2jDJshBAOnU";
+
+        Call<DirectionsResponse> call = DirectionsRetrofitClient
+                .getApiService()
+                .getDirections(origin, destination, "driving", apiKey);
+
+        call.enqueue(new Callback<DirectionsResponse>() {
+
+            @Override
+            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+
+                if (response.isSuccessful()
+                        && response.body() != null
+                        && response.body().getRoutes() != null
+                        && !response.body().getRoutes().isEmpty()) {
+
+                    DirectionsResponse.Route route = response.body().getRoutes().get(0);
+                    String encodedPoints = route.getOverview_polyline().getPoints();
+                    List<LatLng> routePoints = decodePolyline(encodedPoints);
+
+                    googleMap.addPolyline(new PolylineOptions().addAll(routePoints).width(10).color(Color.BLUE).geodesic(true));
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+                    for (LatLng point : routePoints) {
+                        builder.include(point);
+                    }
+
+                    builder.include(new LatLng(startLat, startLng));
+                    builder.include(new LatLng(endLat, endLng));
+                    LatLngBounds bounds = builder.build();
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100)
+                    );
+
+                } else {
+                    Toast.makeText(requireContext(), "Route not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                Toast.makeText(requireContext(), "Route error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private List<LatLng> decodePolyline(String encoded) {
+
+        List<LatLng> poly = new ArrayList<>();
+
+        int index = 0;
+        int lat = 0;
+        int lng = 0;
+
+        while (index < encoded.length()) {
+
+            int b;
+            int shift = 0;
+            int result = 0;
+
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+
+            int dLat = ((result & 1) != 0)
+                    ? ~(result >> 1)
+                    : (result >> 1);
+
+            lat += dLat;
+
+            shift = 0;
+            result = 0;
+
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+
+            int dLng = ((result & 1) != 0)
+                    ? ~(result >> 1)
+                    : (result >> 1);
+
+            lng += dLng;
+
+            LatLng point = new LatLng(
+                    lat / 1E5,
+                    lng / 1E5
+            );
+
+            poly.add(point);
+        }
+
+        return poly;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mapView != null) {
+            mapView.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        if (mapView != null) {
+            mapView.onPause();
+        }
+
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mapView != null) {
+            mapView.onDestroy();
+            mapView = null;
+        }
+
+        super.onDestroyView();
+    }
+
+
+    private Bitmap createMarkerBitmap(Bitmap image, int borderColor) {
+
+        int size = 120;
+        Bitmap output = Bitmap.createBitmap(size, size + 40, Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas = new android.graphics.Canvas(output);
+        android.graphics.Paint paint = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+
+        paint.setColor(borderColor);
+        paint.setStrokeWidth(8);
+
+        canvas.drawLine(size / 2f, 80, size / 2f, size + 20, paint);
+
+        float centerX = size / 2f;
+        float centerY = 55;
+        float radius = 48;
+
+        paint.setColor(borderColor);
+        canvas.drawCircle(centerX, centerY, radius + 5, paint);
+
+
+        android.graphics.Path path = new android.graphics.Path();
+        path.addCircle(centerX, centerY, radius, android.graphics.Path.Direction.CW);
+        canvas.save();
+        canvas.clipPath(path);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, size, size, true);
+        canvas.drawBitmap(scaledBitmap, 0, 5, paint);
+        canvas.restore();
+        return output;
     }
 }

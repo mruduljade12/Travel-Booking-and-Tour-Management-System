@@ -220,7 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="Featured Packages"
+            android:text="My Packages"
             android:textColor="#0F172A"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -265,6 +265,7 @@
             android:paddingHorizontal="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAllPackagesHeader"
             tools:listitem="@layout/search_item_cards" />

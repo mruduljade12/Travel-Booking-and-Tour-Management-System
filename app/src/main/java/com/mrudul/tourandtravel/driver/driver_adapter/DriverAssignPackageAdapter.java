@@ -12,19 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrudul.tourandtravel.R;
 import com.mrudul.tourandtravel.driver.driver_interfaces.DriverPackageClickListener;
+import com.mrudul.tourandtravel.driver.driver_interfaces.OnDriverHomeClick;
 import com.mrudul.tourandtravel.driver.driver_models.DriverAssignPackageModel;
+import com.mrudul.tourandtravel.user.user_interfaces.HomeTourClicked;
+import com.mrudul.tourandtravel.user.user_models.TourPackageResponse;
 
 import java.util.ArrayList;
 
 public class DriverAssignPackageAdapter extends RecyclerView.Adapter<DriverAssignPackageAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<DriverAssignPackageModel> packageList;
-    DriverPackageClickListener listener;
+    ArrayList<TourPackageResponse> packageList;
+    HomeTourClicked listener;
 
-    public DriverAssignPackageAdapter(Context context,ArrayList<DriverAssignPackageModel> packageList){
+    public DriverAssignPackageAdapter(Context context,ArrayList<TourPackageResponse> packageList,HomeTourClicked listener){
         this.context = context;
         this.packageList = packageList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,15 +41,13 @@ public class DriverAssignPackageAdapter extends RecyclerView.Adapter<DriverAssig
     @Override
     public void onBindViewHolder(@NonNull DriverAssignPackageAdapter.ViewHolder holder, int position) {
 
-        DriverAssignPackageModel packageModel = packageList.get(position);
-        holder.packageName.setText(packageModel.getPackageName());
-        holder.noOfPassenger.setText("Passengers : "+ packageModel.getNoOfPassenger());
-        holder.pickUpAddress.setText(packageModel.getPickUpAddress());
-        holder.guideName.setText(packageModel.getGuideName());
-
+        TourPackageResponse packageModel = packageList.get(position);
+        holder.packageName.setText(packageModel.getPackName());
+        holder.noOfPassenger.setText("Passengers : "+ packageModel.getPackMaxCapacity());
+        holder.guideName.setText(packageModel.getGuide().getGuideName());
 
         holder.itemView.setOnClickListener(v->{
-            listener.onClickDriverPackage(packageModel);
+            listener.onRecentHomeItemClicked(packageModel);
         });
     }
 
@@ -55,17 +57,14 @@ public class DriverAssignPackageAdapter extends RecyclerView.Adapter<DriverAssig
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView packageName,noOfPassenger,pickUpAddress,guideName;
-        AppCompatButton acceptPackageBtn;
+        TextView packageName,noOfPassenger,guideName;
 
         public ViewHolder(@NonNull View view) {
             super(view);
 
             packageName = view.findViewById(R.id.tvPackageTitle);
             noOfPassenger = view.findViewById(R.id.tvPassengerCount);
-            pickUpAddress = view.findViewById(R.id.tvPickupLocation);
             guideName = view.findViewById(R.id.tvTourGuideAssigned);
-            acceptPackageBtn = view.findViewById(R.id.btnAcceptPackage);
         }
     }
 }

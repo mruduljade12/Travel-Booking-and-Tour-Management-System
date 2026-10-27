@@ -11,9 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.network.RetrofitClient;
+import com.mrudul.tourandtravel.tour_guide.tour_guide_models.TourGuideLoginResponse;
+import com.mrudul.tourandtravel.utils.TourGuideSessionManger;
+
+import java.time.LocalDate;
+import java.time.Period;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,8 +34,8 @@ import com.mrudul.tourandtravel.R;
 public class TourGuideProfileFragment extends Fragment {
 
     private ImageView guideProfilePic;
-    private TextView tvGuideProfileName, tvGuideBadge;
-    private TextView tvGuideExperience, tvLanguages, tvSpecialization;
+    private TextView tvGuideProfileName;
+    private TextView tvGuideExperience, tvLanguages,tvPhone;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -81,25 +92,49 @@ public class TourGuideProfileFragment extends Fragment {
 
         guideProfilePic = view.findViewById(R.id.guideProfilePic);
         tvGuideProfileName = view.findViewById(R.id.tvGuideProfileName);
-        tvGuideBadge = view.findViewById(R.id.tvGuideBadge);
         tvGuideExperience = view.findViewById(R.id.tvGuideExperience);
         tvLanguages = view.findViewById(R.id.tvLanguages);
-        tvSpecialization = view.findViewById(R.id.tvSpecialization);
+        tvPhone = view.findViewById(R.id.tvTourGuidePhone);
 
+        loadGuideData();
+    }
 
+    private void loadGuideData() {
+        TourGuideSessionManger sessionManger = new TourGuideSessionManger(requireContext());
+        int guideId = sessionManger.getGuideId();
 
-        // Set profile image
-        Glide.with(this)
-                .load(R.drawable.tour_guide_ic)
-                .placeholder(R.drawable.tour_guide_ic)
-                .error(R.drawable.tour_guide_ic)
-                .into(guideProfilePic);
+        if (guideId == -1){
+            Toast.makeText(requireContext(), "Guide Not Login", Toast.LENGTH_SHORT).show();
+        }
 
-        // Set text
-        tvGuideProfileName.setText("Mrudul Jade");
-        tvGuideBadge.setText("Certified Professional Tour Guide");
-        tvGuideExperience.setText("Experience: 3 Years");
-        tvLanguages.setText("Languages: English, Hindi, Marathi");
-        tvSpecialization.setText("Specialization: Historical & Eco Tours");
+        Call<TourGuideLoginResponse> responseCall = RetrofitClient.getApiService().getTourGuide(guideId);
+
+        responseCall.enqueue(new Callback<TourGuideLoginResponse>() {
+            @Override
+            public void onResponse(Call<TourGuideLoginResponse> call, Response<TourGuideLoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null){
+                    TourGuideLoginResponse loginResponse = response.body();
+
+                    Glide.with(requireContext())
+                            .load(loginResponse.getProfileImageUrl())
+                            .error(R.drawable.ic_default_image)
+                            .placeholder(R.drawable.ic_default_image)
+                            .into(guideProfilePic);
+
+                    tvGuideProfileName.setText(loginResponse.getGuideName());
+                    tvGuideExperience.setText(Period.between(LocalDate.now(),LocalDate.parse(loginResponse.getJoiningDate())).getYears() + "years");
+                    tvLanguages.setText(loginResponse.getLanguage());
+                    tvPhone.setText(loginResponse.getGuidePhone());
+
+                } else {
+                    Toast.makeText(requireContext(), "Failed to load profile", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TourGuideLoginResponse> call, Throwable t) {
+                Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

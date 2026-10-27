@@ -8,22 +8,36 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.network.RetrofitClient;
+import com.mrudul.tourandtravel.user.user_adapters.DestinationAdapter;
 import com.mrudul.tourandtravel.user.user_adapters.SearchToutAdapter;
 import com.mrudul.tourandtravel.user.user_interfaces.SearchItemClick;
-import com.mrudul.tourandtravel.user.user_models.SearchTourModel;
+import com.mrudul.tourandtravel.user.user_models.BookingRequest;
+import com.mrudul.tourandtravel.user.user_models.BookingResponse;
+import com.mrudul.tourandtravel.user.user_models.PackageDestinationResponse;
+import com.mrudul.tourandtravel.user.user_models.TourPackageResponse;
+import com.mrudul.tourandtravel.utils.SessionManager;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,8 +47,9 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment implements SearchItemClick {
 
     EditText searchEditText;
+    ImageView searchBtn;
     RecyclerView searchItemRecyclerView;
-    ArrayList<SearchTourModel> tourList;
+    ArrayList<TourPackageResponse> tourList;
     SearchToutAdapter adapter;
 
 
@@ -90,45 +105,83 @@ public class SearchFragment extends Fragment implements SearchItemClick {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchEditText = view.findViewById(R.id.etSearchTourQuery);
+        searchBtn = view.findViewById(R.id.userPackageSearchBtn);
+
         searchItemRecyclerView = view.findViewById(R.id.rvSearchTourList);
-        searchItemRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2));
-
+        searchItemRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         tourList = new ArrayList<>();
-        tourList.add(new SearchTourModel(
-                "TOUR001", R.drawable.site1, "Goa Beach Tour",
-                "Available", 4.5f, 15000, 4, 3, 20,
-                "Enjoy beautiful beaches and nightlife in Goa."
-        ));
-
-        tourList.add(new SearchTourModel(
-                "TOUR002", R.drawable.site1, "Manali Adventure",
-                "Available", 4.8f, 25000, 6, 5, 15,
-                "Explore the mountains and enjoy adventure activities."
-        ));
-
-        tourList.add(new SearchTourModel(
-                "TOUR003", R.drawable.site1, "Kerala Backwaters",
-                "Available", 4.7f, 18000, 5, 4, 12,
-                "Experience the beauty of Kerala's backwaters."
-        ));
-
-        tourList.add(new SearchTourModel(
-                "TOUR004", R.drawable.site1, "Mumbai City Tour",
-                "Unavailable", 4.2f, 8000, 2, 1, 25,
-                "Discover famous landmarks and attractions in Mumbai."
-        ));
-
-        tourList.add(new SearchTourModel(
-                "TOUR005", R.drawable.site1, "Kashmir Valley Tour",
-                "Available", 4.9f, 35000, 7, 6, 10,
-                "Explore the beautiful valleys and lakes of Kashmir."
-        ));
-        adapter = new SearchToutAdapter(view.getContext(),tourList, this);
+        adapter = new SearchToutAdapter(view.getContext(), tourList, this);
         searchItemRecyclerView.setAdapter(adapter);
+
+
+        loadSearchTour();
+
+
+        searchBtn.setOnClickListener(v->{
+            filterTourPackage();
+        });
+    }
+
+    private void filterTourPackage() {
+        String query = searchEditText.getText().toString().trim().toLowerCase();
+
+        Call<List<TourPackageResponse>> call = RetrofitClient.getApiService().getTourPackage();
+        call.enqueue(new Callback<List<TourPackageResponse>>() {
+            @Override
+            public void onResponse(Call<List<TourPackageResponse>> call, Response<List<TourPackageResponse>> response) {
+                tourList.clear();
+
+                if (response.isSuccessful() && response != null){
+                    for (TourPackageResponse packageResponse: response.body()){
+                        if (packageResponse.getPackName().toLowerCase().contains(query)
+                        || packageResponse.getPackDescription().toLowerCase().contains(query)
+                        || packageResponse.getPackStatus().toLowerCase().contains(query)){
+
+                            tourList.add(packageResponse);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TourPackageResponse>> call, Throwable t) {
+                Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadSearchTour() {
+        Call<List<TourPackageResponse>> listCall = RetrofitClient.getApiService().getTourPackage();
+        listCall.enqueue(new Callback<List<TourPackageResponse>>() {
+            @Override
+            public void onResponse(Call<List<TourPackageResponse>> call, Response<List<TourPackageResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    tourList.clear();
+                    tourList.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(requireContext(), "Packages failed to load", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TourPackageResponse>> call, Throwable t) {
+                t.printStackTrace();
+
+                Toast.makeText(
+                        requireContext(),
+                        t.getClass().getSimpleName() + ": " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+
+                Log.e("API_ERROR", "Error: ", t);
+            }
+        });
     }
 
     @Override
-    public void onSearchItemClick(SearchTourModel tourModel) {
+    public void onSearchItemClick(TourPackageResponse tourModel) {
         Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(R.layout.search_item_dialog);
 
@@ -144,45 +197,114 @@ public class SearchFragment extends Fragment implements SearchItemClick {
         TextView remainingSeats = dialog.findViewById(R.id.dialogPackageRemainingSeats);
         TextView description = dialog.findViewById(R.id.dialogPackageDescription);
         AppCompatButton bookTourBtn = dialog.findViewById(R.id.dialogPackageBookBtn);
+        RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        ArrayList<PackageDestinationResponse> list = (ArrayList<PackageDestinationResponse>) tourModel.getDestinations();
+        DestinationAdapter destinationAdapter = new DestinationAdapter(requireContext(),list);
+        recyclerView.setAdapter(destinationAdapter);
+
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
 
 
         //setting image
         Glide.with(dialog.getContext())
-                .load(tourModel.getPack_thumbnail())
+                .load(tourModel.getPackThumbnail())
                 .error(R.drawable.ic_default_image)
                 .placeholder(R.drawable.ic_default_image)
                 .into(img);
 
 
-        //set window
-        dialog.getWindow().setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
+        packageName.setText(tourModel.getPackName());
+        packageStatus.setText(tourModel.getPackStatus());
+        duration.setText(String.valueOf(tourModel.getPackDurationDay()));
+        rating.setText(String.valueOf(tourModel.getPackRating()));
+        price.setText(String.valueOf(tourModel.getPackPrice()));
+        days.setText(String.valueOf(tourModel.getPackDurationDay()));
+        nights.setText(String.valueOf(tourModel.getPackDurationNight()));
+        remainingSeats.setText(String.valueOf(tourModel.getPackMaxCapacity() - 5));
+        description.setText(tourModel.getPackDescription());
 
 
-        packageName.setText(tourModel.getPack_name());
-        packageStatus.setText(tourModel.getPack_status());
-        duration.setText(String.valueOf(tourModel.getPack_duration_day()));
-        rating.setText(String.valueOf(tourModel.getTourPackageRating()));
-        price.setText(String.valueOf(tourModel.getPack_price()));
-        days.setText(String.valueOf(tourModel.getPack_duration_day()));
-        nights.setText(String.valueOf(tourModel.getPack_duration_night()));
-        remainingSeats.setText(String.valueOf(tourModel.getPack_max_capacity()-5));
-        description.setText(tourModel.getPack_description());
-
-
-        bookTourBtn.setOnClickListener(v->{
+        bookTourBtn.setOnClickListener(v -> {
+            bookingPackage(tourModel.getPackageId(),tourModel.getPackPrice(),tourModel.getPackName());
             dialog.dismiss();
         });
 
 
-        closeBtn.setOnClickListener(v->{
+        closeBtn.setOnClickListener(v -> {
             dialog.dismiss();
         });
 
 
         dialog.show();
 
+        if (dialog.getWindow() != null) dialog.getWindow().setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+    }
+
+    private void bookingPackage(Integer packageId, Integer packPrice, String packName) {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.dialog_booking);
+
+        EditText numberOfMemberInput = dialog.findViewById(R.id.etNumberOfMembers);
+        AppCompatButton confirmBtn = dialog.findViewById(R.id.btnConfirmBooking);
+        ImageView cancelBtn = dialog.findViewById(R.id.btnCloseBookingDialog);
+        TextView bookingPrice = dialog.findViewById(R.id.bookingPrice);
+        numberOfMemberInput.setText("1");
+        int members = Integer.parseInt(numberOfMemberInput.getText().toString().trim());
+        int totalPrice = members*packPrice;
+        bookingPrice.setText("Rs."+totalPrice*members);
+
+
+
+
+
+        confirmBtn.setOnClickListener(v->{
+            confirmBtn.setEnabled(false);
+
+            int newMembers = Integer.parseInt(numberOfMemberInput.getText().toString().trim());
+            int totalPackPrice = newMembers*packPrice;
+
+            SessionManager sessionManager = new SessionManager(requireContext());
+            BookingRequest request = new BookingRequest(packageId,sessionManager.getKeyCustName(),sessionManager.getKeyCustEmail(),sessionManager.getKeyCustPhone(),newMembers,packName,totalPackPrice);
+            Call<BookingResponse> call = RetrofitClient.getApiService().bookTour(request);
+
+            call.enqueue(new Callback<BookingResponse>() {
+                @Override
+                public void onResponse(Call<BookingResponse> call, Response<BookingResponse> response) {
+                    if (response.isSuccessful() && response.body() != null){
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(requireContext(), "something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BookingResponse> call, Throwable t) {
+                    Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+
+        cancelBtn.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+
+
+        dialog.show();
+
+        if (dialog.getWindow() != null) dialog.getWindow().setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
     }
 }

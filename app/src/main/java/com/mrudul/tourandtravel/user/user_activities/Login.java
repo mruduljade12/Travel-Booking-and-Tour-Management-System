@@ -110,8 +110,7 @@ public class Login extends AppCompatActivity {
         userLoginBtn.setEnabled(false);
 
         // Send request to Spring Boot
-        Call<CustomerResponse> call =
-                apiService.loginCustomer(request);
+        Call<CustomerResponse> call = apiService.loginCustomer(request);
 
         call.enqueue(new Callback<CustomerResponse>() {
 
@@ -129,6 +128,10 @@ public class Login extends AppCompatActivity {
 
                     SessionManager sessionManager = new SessionManager(Login.this);
                     sessionManager.saveCustomerId(customer.getCustId());
+                    sessionManager.saveCustomerEmail(customer.getCustEmail());
+                    sessionManager.saveCustomerPhone(customer.getCustPhone());
+                    sessionManager.setKeyCustName(customer.getCustName());
+                    sessionManager.saveCustomerImage(customer.getImageUrl());
 
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);

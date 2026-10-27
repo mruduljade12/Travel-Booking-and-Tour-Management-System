@@ -60,16 +60,15 @@
     <!-- Fragment Container View -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/tourGuideFragmentContainer"
-        android:name="com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:name="com.mrudul.tourandtravel.tour_guide.tour_guide_fragments.TourGuideHomeFragment"
         app:layout_constraintBottom_toTopOf="@+id/tourGuideBottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewTourGuideHeader" />
-
     <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tourGuideBottomNavigation"

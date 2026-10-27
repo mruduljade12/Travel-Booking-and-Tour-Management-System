@@ -10,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.user.user_interfaces.HomeTourClicked;
+import com.mrudul.tourandtravel.user.user_models.TourPackageResponse;
 import com.mrudul.tourandtravel.user.user_models.UserTourPackages;
 
 import java.util.ArrayList;
@@ -18,11 +21,13 @@ import java.util.ArrayList;
 public class UserTourPackageAdapter extends RecyclerView.Adapter<UserTourPackageAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<UserTourPackages> arrayList;
+    ArrayList<TourPackageResponse> arrayList;
+    HomeTourClicked listener;
 
-    public UserTourPackageAdapter(Context context,ArrayList<UserTourPackages> arrayList){
+    public UserTourPackageAdapter(Context context,ArrayList<TourPackageResponse> arrayList,HomeTourClicked listener){
         this.context = context;
         this.arrayList = arrayList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -36,12 +41,22 @@ public class UserTourPackageAdapter extends RecyclerView.Adapter<UserTourPackage
     @Override
     public void onBindViewHolder(@NonNull UserTourPackageAdapter.ViewHolder holder, int position) {
 
-        UserTourPackages userPackage = arrayList.get(position);
+        TourPackageResponse userPackage = arrayList.get(position);
 
-        holder.img.setImageResource(userPackage.getImage());
-        holder.name.setText(userPackage.getName());
-        holder.duration.setText(String.valueOf(userPackage.getDuration()));
-        holder.rating.setText(String.valueOf(userPackage.getRating()));
+        Glide.with(context)
+                .load(userPackage.getPackThumbnail())
+                .placeholder(R.drawable.ic_default_image)
+                .error(R.drawable.ic_default_image)
+                .into(holder.img);
+
+        holder.name.setText(userPackage.getPackName());
+        holder.duration.setText(String.valueOf(userPackage.getPackDurationDay()));
+        holder.rating.setText(String.valueOf(userPackage.getPackRating()));
+
+
+        holder.itemView.setOnClickListener(v->{
+            listener.onHomeTourClicked(userPackage);
+        });
     }
 
     @Override

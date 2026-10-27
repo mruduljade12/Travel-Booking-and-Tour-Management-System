@@ -7,8 +7,10 @@ public class RetrofitClient {
 
     // url for mobile == http://10.231.5.200:8080/
     // url for emulator == http://10.0.2.2:8080/
+    // url of railway server == "https://tour-app-server-production.up.railway.app/"
 
-    private static final String BASE_URL = "http://10.231.5.200:8080/";
+    private static final String BASE_URL =
+            "https://tour-app-server-production.up.railway.app/";
 
     private static Retrofit retrofit;
 
@@ -31,19 +33,4 @@ public class RetrofitClient {
                 .create(ApiService.class);
     }
 
-
-    public static Retrofit getClient() {
-
-        if (retrofit == null) {
-
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(
-                            GsonConverterFactory.create()
-                    )
-                    .build();
-        }
-
-        return retrofit;
-    }
 }
