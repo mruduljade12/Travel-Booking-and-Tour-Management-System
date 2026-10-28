@@ -1,4 +1,4 @@
-﻿package com.mrudul.tourandtravel.driver.driver_activities;
+package com.mrudul.tourandtravel.driver.driver_activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-﻿package com.mrudul.tourandtravel.driver.driver_fragments;
+package com.mrudul.tourandtravel.driver.driver_fragments;
 
 import android.content.Intent;
 import android.os.Bundle;

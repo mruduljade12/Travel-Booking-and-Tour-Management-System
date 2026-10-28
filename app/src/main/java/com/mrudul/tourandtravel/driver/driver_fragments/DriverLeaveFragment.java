@@ -1,4 +1,4 @@
-﻿package com.mrudul.tourandtravel.driver.driver_fragments;
+package com.mrudul.tourandtravel.driver.driver_fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
