@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <item
         android:id="@+id/driverHome"
-        android:title="@string/home"
-        android:icon="@drawable/ic_home"/>
-
+        android:title="@string/home_nav_home"
+        android:icon="@drawable/ic_home" />
 
     <item
-        android:id="@+id/driverAssignPackage"
-        android:title="@string/schedule"
-        android:icon="@drawable/ic_package"/>
+        android:id="@+id/driverLeave"
+        android:title="@string/home_shortcut_schedule"
+        android:icon="@drawable/ic_calendar" />
+
+    <item
+        android:id="@+id/driverEarnings"
+        android:title="@string/home_nav_earnings"
+        android:icon="@drawable/ic_wallet" />
 
     <item
         android:id="@+id/driverProfile"
         android:title="@string/profile"
-        android:icon="@drawable/ic_profile"/>
+        android:icon="@drawable/ic_profile" />
+
 </menu>

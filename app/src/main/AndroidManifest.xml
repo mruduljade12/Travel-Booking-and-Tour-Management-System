@@ -63,6 +63,41 @@
             android:name=".tour_guide.tour_guide_activities.TourGuideLoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverRegistrationActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverRequestsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.NavigateToPickupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverBankDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverVehicleDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverApplyLeaveActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

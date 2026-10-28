@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SmartTour360 Driver App - Bank Details Screen
+    Sky background + white card + 5 input fields + Save button.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bank_screen"
+    tools:context=".driver.driver_activities.DriverBankDetailsActivity">
+
+    <!-- ══ HEADER: back + bank icon + title ══ -->
+    <LinearLayout
+        android:id="@+id/ll_bank_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_bank_back"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:clickable="true"
+            android:contentDescription="@string/cd_back_arrow"
+            android:focusable="true"
+            android:src="@drawable/ic_back_arrow"
+            app:tint="@color/bank_title" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="12dp"
+            android:contentDescription="@string/cd_bank_icon"
+            android:src="@drawable/ic_bank"
+            app:tint="@color/bank_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/bank_screen_title"
+            android:textColor="@color/bank_title"
+            android:textSize="@dimen/bank_title_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- ══ SAVE BUTTON (pinned to bottom) ══ -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_save_bank"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bank_btn_height"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_bank_save_btn"
+        android:elevation="4dp"
+        android:stateListAnimator="@null"
+        android:text="@string/bank_btn_save"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- ══ SCROLLABLE FORM CARD ══ -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save_bank"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_bank_header">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/bank_card_bg"
+            app:cardCornerRadius="@dimen/bank_card_corner"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/bank_card_padding">
+
+                <!-- ── ACCOUNT HOLDER NAME ── -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/bank_label_holder_name"
+                    android:textColor="@color/bank_label"
+                    android:textSize="@dimen/bank_label_size"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bank_field_height"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_bank_input_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bank_icon_size"
+                        android:layout_height="@dimen/bank_icon_size"
+                        android:src="@drawable/ic_user"
+                        app:tint="@color/bank_icon" />
+
+                    <EditText
+                        android:id="@+id/et_holder_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:background="@null"
+                        android:hint="@string/bank_hint_holder_name"
+                        android:inputType="textPersonName|textCapWords"
+                        android:maxLines="1"
+                        android:textColor="@color/bank_field_text"
+                        android:textColorHint="@color/bank_field_hint"
+                        android:textSize="@dimen/bank_field_text_size" />
+                </LinearLayout>
+
+                <!-- ── BANK NAME ── -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/bank_label_bank_name"
+                    android:textColor="@color/bank_label"
+                    android:textSize="@dimen/bank_label_size"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bank_field_height"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_bank_input_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bank_icon_size"
+                        android:layout_height="@dimen/bank_icon_size"
+                        android:src="@drawable/ic_bank"
+                        app:tint="@color/bank_icon" />
+
+                    <EditText
+                        android:id="@+id/et_bank_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:background="@null"
+                        android:hint="@string/bank_hint_bank_name"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
+                        android:textColor="@color/bank_field_text"
+                        android:textColorHint="@color/bank_field_hint"
+                        android:textSize="@dimen/bank_field_text_size" />
+                </LinearLayout>
+
+                <!-- ── ACCOUNT NUMBER ── -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/bank_label_account_number"
+                    android:textColor="@color/bank_label"
+                    android:textSize="@dimen/bank_label_size"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bank_field_height"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_bank_input_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bank_icon_size"
+                        android:layout_height="@dimen/bank_icon_size"
+                        android:src="@drawable/ic_credit_card"
+                        android:contentDescription="@string/cd_bank_card_icon" />
+
+                    <EditText
+                        android:id="@+id/et_account_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:background="@null"
+                        android:hint="@string/bank_hint_account_number"
+                        android:inputType="numberPassword"
+                        android:maxLines="1"
+                        android:textColor="@color/bank_field_text"
+                        android:textColorHint="@color/bank_field_hint"
+                        android:textSize="@dimen/bank_field_text_size" />
+                </LinearLayout>
+
+                <!-- ── IFSC CODE ── -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/bank_label_ifsc"
+                    android:textColor="@color/bank_label"
+                    android:textSize="@dimen/bank_label_size"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bank_field_height"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_bank_input_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bank_icon_size"
+                        android:layout_height="@dimen/bank_icon_size"
+                        android:src="@drawable/ic_document"
+                        app:tint="@color/bank_icon" />
+
+                    <EditText
+                        android:id="@+id/et_ifsc_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:background="@null"
+                        android:hint="@string/bank_hint_ifsc"
+                        android:inputType="textCapCharacters"
+                        android:maxLines="1"
+                        android:textColor="@color/bank_field_text"
+                        android:textColorHint="@color/bank_field_hint"
+                        android:textSize="@dimen/bank_field_text_size" />
+                </LinearLayout>
+
+                <!-- ── ACCOUNT TYPE (dropdown) ── -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/bank_label_account_type"
+                    android:textColor="@color/bank_label"
+                    android:textSize="@dimen/bank_label_size"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/ll_account_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bank_field_height"
+                    android:background="@drawable/bg_bank_input_field"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bank_icon_size"
+                        android:layout_height="@dimen/bank_icon_size"
+                        android:src="@drawable/ic_menu_list" />
+
+                    <TextView
+                        android:id="@+id/tv_account_type"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:hint="@string/bank_hint_account_type"
+                        android:textColor="@color/bank_field_text"
+                        android:textColorHint="@color/bank_field_hint"
+                        android:textSize="@dimen/bank_field_text_size" />
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:contentDescription="@string/cd_bank_dropdown"
+                        android:src="@drawable/ic_arrow_down_fill" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

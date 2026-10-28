@@ -55,4 +55,235 @@
     <color name="tour_card_text">#29474B</color>
     <color name="tour_card_secondary_text">#60777A</color>
 
+
+    <!-- Driver Splash Screen Colors -->
+    <color name="driver_splash_brand_text">#1A237E</color>
+    <color name="driver_splash_title_text">#0D47A1</color>
+    <color name="driver_splash_subtitle_text">#1565C0</color>
+    <color name="driver_splash_btn_bg">#1976D2</color>
+    <color name="driver_splash_bottom_link">#1565C0</color>
+    <color name="driver_splash_divider">#1976D2</color>
+    <color name="driver_splash_card_bg">#CCFFFFFF</color>
+
+    <!-- Driver Login Screen Colors -->
+    <color name="login_screen_title">#0D47A1</color>
+    <color name="login_screen_desc">#1565C0</color>
+    <color name="login_card_bg">#F5FFFFFF</color>
+    <color name="login_input_bg">#FFFFFFFF</color>
+    <color name="login_input_border">#BBDEFB</color>
+    <color name="login_input_hint">#90A4AE</color>
+    <color name="login_input_icon">#1976D2</color>
+    <color name="login_btn_primary">#1976D2</color>
+    <color name="login_or_line">#BBDEFB</color>
+    <color name="login_or_text">#78909C</color>
+    <color name="login_google_border">#BBDEFB</color>
+    <color name="login_google_text">#1565C0</color>
+    <color name="login_register_label">#1A237E</color>
+    <color name="login_register_link">#1976D2</color>
+    <color name="login_forgot_text">#1976D2</color>
+    <color name="login_remember_text">#37474F</color>
+    <color name="login_checkbox_tint">#1976D2</color>
+
+    <!-- Driver Home Screen Colors -->
+    <color name="home_bg">#EBF5FF</color>
+    <color name="home_card_bg">#FFFFFFFF</color>
+    <color name="home_header_name">#0D47A1</color>
+    <color name="home_header_role">#1976D2</color>
+    <color name="home_online_card_bg">#1DB97C</color>
+    <color name="home_online_icon_bg">#A8F5CE</color>
+    <color name="home_offline_card_bg">#5C85A4</color>
+    <color name="home_offline_icon_bg">#A8C4D8</color>
+    <color name="home_status_title">#FFFFFFFF</color>
+    <color name="home_status_desc">#E8F5E9</color>
+    <color name="home_stat_bg">#FFFFFFFF</color>
+    <color name="home_stat_icon_bg_trips">#DDEEFF</color>
+    <color name="home_stat_icon_bg_earn">#D4F5E3</color>
+    <color name="home_stat_value">#0D47A1</color>
+    <color name="home_stat_label">#1565C0</color>
+    <color name="home_shortcut_schedule_bg">#E3F2FD</color>
+    <color name="home_shortcut_earnings_bg">#EDE7F6</color>
+    <color name="home_shortcut_profile_bg">#E8F5E9</color>
+    <color name="home_shortcut_icon_schedule">#1976D2</color>
+    <color name="home_shortcut_icon_earnings">#3949AB</color>
+    <color name="home_shortcut_icon_profile">#2E7D32</color>
+    <color name="home_shortcut_text">#1A237E</color>
+    <color name="home_banner_bg">#1565C0</color>
+    <color name="home_banner_icon_bg">#1976D2</color>
+    <color name="home_banner_text">#FFFFFFFF</color>
+    <color name="home_nav_selected">#1976D2</color>
+    <color name="home_nav_unselected">#90A4AE</color>
+    <color name="earn_icon_bg">#1DB97C</color>
+
+    <!-- Driver Requests Screen Colors -->
+    <color name="req_bg">#EBF5FF</color>
+    <color name="req_header_title">#06499F</color>
+    <color name="req_tab_selected_bg">#087EDB</color>
+    <color name="req_tab_selected_text">#FFFFFFFF</color>
+    <color name="req_tab_unselected_bg">#E8F4FF</color>
+    <color name="req_tab_unselected_text">#087EDB</color>
+    <color name="req_card_bg">#FFFFFFFF</color>
+    <color name="req_card_time">#06499F</color>
+    <color name="req_badge_new_bg">#E8F8E8</color>
+    <color name="req_badge_new_text">#1DB97C</color>
+    <color name="req_badge_accepted_bg">#E8F4FF</color>
+    <color name="req_badge_accepted_text">#087EDB</color>
+    <color name="req_badge_rejected_bg">#FFE8E8</color>
+    <color name="req_badge_rejected_text">#D32F2F</color>
+    <color name="req_location_dot">#087EDB</color>
+    <color name="req_route_line">#B0C4DE</color>
+    <color name="req_location_text">#06499F</color>
+    <color name="req_meta_text">#456080</color>
+    <color name="req_accept_bg">#1DB97C</color>
+    <color name="req_accept_text">#FFFFFFFF</color>
+    <color name="req_reject_bg">#FFEBEE</color>
+    <color name="req_reject_text">#D32F2F</color>
+    <color name="req_arrow_color">#087EDB</color>
+
+    <!-- Navigate to Pickup Screen -->
+    <color name="nav_bg">#EBF5FF</color>
+    <color name="nav_header_title">#06499F</color>
+    <color name="nav_route_blue">#1976D2</color>
+    <color name="nav_your_location_bg">#1976D2</color>
+    <color name="nav_pickup_label_bg">#1DB97C</color>
+    <color name="nav_pickup_pin">#1DB97C</color>
+    <color name="nav_panel_bg">#FFFFFFFF</color>
+    <color name="nav_panel_icon_bg">#E8F8EE</color>
+    <color name="nav_panel_label">#78909C</color>
+    <color name="nav_panel_title">#06499F</color>
+    <color name="nav_panel_subtitle">#456080</color>
+    <color name="nav_btn_start">#1565C0</color>
+    <color name="nav_btn_end">#1E88E5</color>
+    <color name="nav_drag_handle">#D0D0D0</color>
+
+    <!-- Driver Schedule Screen -->
+    <color name="sched_bg">#EBF5FF</color>
+    <color name="sched_title">#06499F</color>
+    <color name="sched_tab_selected_bg">#1976D2</color>
+    <color name="sched_tab_selected_text">#FFFFFFFF</color>
+    <color name="sched_tab_unselected_bg">#D6EEFF</color>
+    <color name="sched_tab_unselected_text">#06499F</color>
+    <color name="sched_card_bg">#FFFFFFFF</color>
+    <color name="sched_time_text">#06499F</color>
+    <color name="sched_badge_ongoing_bg">#E8F8E8</color>
+    <color name="sched_badge_ongoing_text">#1DB97C</color>
+    <color name="sched_badge_completed_bg">#E8F4FF</color>
+    <color name="sched_badge_completed_text">#1976D2</color>
+    <color name="sched_location_text">#1976D2</color>
+    <color name="sched_meta_text">#456080</color>
+    <color name="sched_divider">#E8F0FF</color>
+
+    <!-- Schedule — extra badge colors -->
+    <color name="sched_badge_pending_bg">#FFF3E0</color>
+    <color name="sched_badge_pending_text">#E65100</color>
+    <color name="sched_badge_accepted_bg">#E8F8E8</color>
+    <color name="sched_badge_accepted_text">#1DB97C</color>
+    <color name="sched_badge_rejected_bg">#FFE8E8</color>
+    <color name="sched_badge_rejected_text">#D32F2F</color>
+
+    <!-- Driver Earnings Screen -->
+    <color name="earn_bg">#EBF5FF</color>
+    <color name="earn_title">#06499F</color>
+    <color name="earn_card_bg">#FFFFFFFF</color>
+    <color name="earn_total_start">#1565C0</color>
+    <color name="earn_total_end">#00BCD4</color>
+    <color name="earn_total_text">#FFFFFFFF</color>
+    <color name="earn_total_sub">#B3E5FC</color>
+    <color name="earn_stat_trips_circle">#E8F8EE</color>
+    <color name="earn_stat_trips_icon">#1DB97C</color>
+    <color name="earn_stat_avg_circle">#EDE7F6</color>
+    <color name="earn_stat_avg_icon">#7B1FA2</color>
+    <color name="earn_stat_label">#456080</color>
+    <color name="earn_stat_value">#06499F</color>
+    <color name="earn_summary_title">#06499F</color>
+    <color name="earn_summary_week">#087EDB</color>
+    <color name="earn_chart_bar">#1E88E5</color>
+    <color name="earn_chart_axis">#B0BEC5</color>
+    <color name="earn_chart_grid">#E8F0FF</color>
+    <color name="earn_chart_label">#78909C</color>
+
+    <!-- Earnings period toggle -->
+    <color name="earn_toggle_selected_bg">#1976D2</color>
+    <color name="earn_toggle_selected_text">#FFFFFFFF</color>
+    <color name="earn_toggle_unselected_bg">#E3F0FB</color>
+    <color name="earn_toggle_unselected_text">#1976D2</color>
+    <color name="earn_toggle_container_bg">#D6EEFF</color>
+
+    <!-- Driver Profile Screen -->
+    <color name="prof_bg">#EBF5FF</color>
+    <color name="prof_title">#06499F</color>
+    <color name="prof_card_bg">#FFFFFFFF</color>
+    <color name="prof_name_text">#06499F</color>
+    <color name="prof_subtitle_text">#456080</color>
+    <color name="prof_rating_bg">#FFF3E0</color>
+    <color name="prof_rating_text">#E65100</color>
+    <color name="prof_trips_text">#78909C</color>
+    <color name="prof_section_title">#06499F</color>
+    <color name="prof_info_icon">#1976D2</color>
+    <color name="prof_info_text">#1976D2</color>
+    <color name="prof_divider">#E8F0FF</color>
+    <color name="prof_option_icon">#1976D2</color>
+    <color name="prof_option_title">#06499F</color>
+    <color name="prof_option_sub">#78909C</color>
+    <color name="prof_option_arrow">#1976D2</color>
+    <color name="prof_pic_bg">#B3D9F5</color>
+
+    <!-- Settings Screen -->
+    <color name="set_bg">#EBF5FF</color>
+    <color name="set_title">#06499F</color>
+    <color name="set_card_bg">#FFFFFFFF</color>
+    <color name="set_section_title">#06499F</color>
+    <color name="set_row_icon">#1976D2</color>
+    <color name="set_row_text">#1976D2</color>
+    <color name="set_row_arrow">#1976D2</color>
+    <color name="set_divider">#E8F0FF</color>
+    <color name="set_logout_text">#D32F2F</color>
+    <color name="set_logout_icon">#D32F2F</color>
+    <color name="set_logout_arrow">#D32F2F</color>
+    <color name="set_driver_name">#06499F</color>
+    <color name="set_driver_role">#456080</color>
+
+    <!-- Apply For Leave Screen -->
+    <color name="leave_bg_top">#87CEEB</color>
+    <color name="leave_bg_bottom">#EBF5FF</color>
+    <color name="leave_title">#06499F</color>
+    <color name="leave_card_bg">#F8FCFF</color>
+    <color name="leave_field_bg">#EEF6FF</color>
+    <color name="leave_field_border">#BBDEFB</color>
+    <color name="leave_field_hint">#90A4AE</color>
+    <color name="leave_field_text">#06499F</color>
+    <color name="leave_label">#06499F</color>
+    <color name="leave_icon">#1976D2</color>
+    <color name="leave_btn_start">#1565C0</color>
+    <color name="leave_btn_end">#29B6F6</color>
+
+    <!-- Bank Details Screen -->
+    <color name="bank_bg_top">#87CEEB</color>
+    <color name="bank_bg_bottom">#EBF5FF</color>
+    <color name="bank_title">#06499F</color>
+    <color name="bank_card_bg">#F8FCFF</color>
+    <color name="bank_field_bg">#EEF6FF</color>
+    <color name="bank_field_border">#BBDEFB</color>
+    <color name="bank_field_hint">#90A4AE</color>
+    <color name="bank_field_text">#06499F</color>
+    <color name="bank_label">#06499F</color>
+    <color name="bank_icon">#1976D2</color>
+    <color name="bank_btn_start">#1565C0</color>
+    <color name="bank_btn_end">#29B6F6</color>
+    <color name="bank_dropdown_arrow">#1976D2</color>
+
+    <!-- Vehicle Details Screen -->
+    <color name="veh_bg_top">#87CEEB</color>
+    <color name="veh_bg_bottom">#EBF5FF</color>
+    <color name="veh_title">#06499F</color>
+    <color name="veh_card_bg">#FFFFFFFF</color>
+    <color name="veh_label">#78909C</color>
+    <color name="veh_value">#06499F</color>
+    <color name="veh_divider">#E3F2FD</color>
+    <color name="veh_doc_icon_bg">#1976D2</color>
+    <color name="veh_doc_text">#06499F</color>
+    <color name="veh_verified_bg">#E8F8EE</color>
+    <color name="veh_verified_text">#1DB97C</color>
+    <color name="veh_arrow">#1976D2</color>
+    <color name="veh_section_title">#06499F</color>
+    <color name="veh_image_bg">#EEF6FF</color>
 </resources>

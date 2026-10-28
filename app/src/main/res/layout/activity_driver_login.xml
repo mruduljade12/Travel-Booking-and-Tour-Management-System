@@ -1,121 +1,366 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SmartTour360 Driver App â€” Screen 2: Driver Login
+    Layout: NestedScrollView â†’ ConstraintLayout
+    Scroll ensures keyboard never covers inputs on small screens.
+-->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/scroll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_screen_bg"
-    tools:context=".driver.driver_activities.DriverLoginActivity">
+    android:fillViewport="true"
+    tools:context=".driver.driver_activities.DriverLoginActivity"
+    android:clipToPadding="false">
 
-    <!-- Header Title -->
-    <TextView
-        android:id="@+id/tvDriverLoginTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Driver Login"
-        android:textColor="@color/white"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Full-screen ConstraintLayout sits inside the scroll -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <!-- Driver ID / Username Input Card -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardDriverUsername"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDriverLoginTitle">
+        <!-- â”€â”€ LAYER 1: Scenic full-screen background â”€â”€ -->
+        <ImageView
+            android:id="@+id/iv_login_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/cd_splash_bg"
+            android:scaleType="centerCrop"
+            android:src="@drawable/splash_screen_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/driverEmailInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/input_text_shape_login"
-            android:ems="10"
-            android:hint="Driver ID / Email"
-            android:inputType="text"
-            android:paddingStart="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/text_hint"
-            android:textSize="22sp" />
-    </androidx.cardview.widget.CardView>
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+             BRAND SECTION â€” logo + name + tagline
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+        <LinearLayout
+            android:id="@+id/ll_login_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Driver Password Input Card -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardDriverPassword"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardDriverUsername">
+            <ImageView
+                android:id="@+id/iv_login_logo"
+                android:layout_width="@dimen/login_logo_size"
+                android:layout_height="@dimen/login_logo_size"
+                android:contentDescription="@string/cd_brand_logo"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tour_travel_logo" />
 
-        <EditText
-            android:id="@+id/driverPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/input_text_shape_login"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/text_hint"
-            android:textSize="22sp" />
-    </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/tv_login_brand_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/smarttour360"
+                android:textColor="@color/driver_splash_brand_text"
+                android:textSize="@dimen/login_brand_text_size"
+                android:textStyle="bold" />
 
-    <!-- Login & Cancel Buttons -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/driverLoginBtn"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/login_btn_shape"
-        android:text="@string/login"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/driverCancelBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardDriverPassword" />
+            <TextView
+                android:id="@+id/tv_login_tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:letterSpacing="0.02"
+                android:text="@string/driver_splash_tagline"
+                android:textColor="@color/driver_splash_subtitle_text"
+                android:textSize="@dimen/login_tagline_text_size" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/driverCancelBtn"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/login_btn_shape"
-        android:text="@string/cancel"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/driverLoginBtn"
-        app:layout_constraintTop_toBottomOf="@+id/cardDriverPassword" />
+        </LinearLayout>
 
-    <!-- Register Navigation Link -->
-    <TextView
-        android:id="@+id/tvDriverRegisterLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Driver? Register Here"
-        android:textColor="@color/link_color"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driverLoginBtn" />
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+             DRIVER LOGIN TITLE + DESCRIPTION
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+        <TextView
+            android:id="@+id/tv_driver_login_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/driver_login_title"
+            android:textColor="@color/login_screen_title"
+            android:textSize="@dimen/login_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_login_brand" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_driver_login_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/driver_login_desc"
+            android:textColor="@color/login_screen_desc"
+            android:textSize="@dimen/login_desc_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_driver_login_title" />
+
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+             LOGIN CARD
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/login_card_margin_h"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/login_card_margin_h"
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="@color/login_card_bg"
+            app:cardCornerRadius="@dimen/login_card_corner"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_driver_login_desc">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/login_card_padding">
+
+                <!-- â”€â”€ EMAIL / MOBILE FIELD â”€â”€ -->
+                <LinearLayout
+                    android:id="@+id/ll_email_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_input_height"
+                    android:background="@drawable/bg_login_input_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/login_input_icon_size"
+                        android:layout_height="@dimen/login_input_icon_size"
+                        android:contentDescription="@string/cd_person_icon"
+                        android:src="@drawable/ic_user"
+                        app:tint="@color/login_input_icon" />
+
+                    <EditText
+                        android:id="@+id/driverLoginUserName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="@string/hint_email_mobile"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/login_input_hint"
+                        android:textSize="@dimen/login_input_text_size" />
+
+                </LinearLayout>
+
+                <!-- â”€â”€ PASSWORD FIELD â”€â”€ -->
+                <LinearLayout
+                    android:id="@+id/ll_password_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_input_height"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_login_input_field"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/login_input_icon_size"
+                        android:layout_height="@dimen/login_input_icon_size"
+                        android:contentDescription="@string/cd_lock_icon"
+                        android:src="@drawable/ic_password"
+                        app:tint="@color/login_input_icon" />
+
+                    <EditText
+                        android:id="@+id/driverPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="@string/hint_password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/login_input_hint"
+                        android:textSize="@dimen/login_input_text_size" />
+
+                    <ImageView
+                        android:id="@+id/iv_toggle_password"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/cd_visibility_icon"
+                        android:focusable="true"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_visibility_off" />
+
+                </LinearLayout>
+
+                <!-- â”€â”€ REMEMBER ME + FORGOT PASSWORD â”€â”€ -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cb_remember_me"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/login_checkbox_tint"
+                        android:text="@string/lbl_remember_me"
+                        android:textColor="@color/login_remember_text"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_forgot_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="4dp"
+                        android:text="@string/lbl_forgot_password"
+                        android:textColor="@color/login_forgot_text"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- â”€â”€ LOGIN BUTTON â”€â”€ -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/driverLoginBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_btn_height"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/btn_driver_splash_cta"
+                    android:elevation="4dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/btn_login"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/login_btn_text_size"
+                    android:textStyle="bold" />
+
+                <!-- â”€â”€ OR DIVIDER â”€â”€ -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/login_or_line" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:importantForAccessibility="no"
+                        android:text="@string/lbl_or"
+                        android:textColor="@color/login_or_text"
+                        android:textSize="@dimen/login_or_text_size" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/login_or_line" />
+
+                </LinearLayout>
+
+                <!-- â”€â”€ GOOGLE BUTTON â”€â”€ -->
+                <LinearLayout
+                    android:id="@+id/btn_google_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_google_btn"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:contentDescription="@string/cd_google_logo"
+                        android:src="@drawable/ic_google_logo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/btn_google"
+                        android:textColor="@color/login_google_text"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- â”€â”€ NEW DRIVER? REGISTER â”€â”€ -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_new_driver"
+                        android:textColor="@color/login_register_label"
+                        android:textSize="@dimen/login_bottom_text_size" />
+
+                    <TextView
+                        android:id="@+id/tv_driver_register_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="4dp"
+                        android:text="@string/lbl_register"
+                        android:textColor="@color/login_register_link"
+                        android:textSize="@dimen/login_bottom_text_size"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

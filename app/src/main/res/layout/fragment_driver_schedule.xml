@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SmartTour360 Driver App — Schedule Fragment (unified request management)
+    4 tabs: All Requests | Pending | Accepted | Completed
+    Cards for Pending show Accept/Reject buttons; others show only status badge.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sched_bg"
+    tools:context=".driver.driver_fragments.DriverScheduleFragment">
+
+    <!-- ══ HEADER: calendar icon + title ══ -->
+    <LinearLayout
+        android:id="@+id/ll_sched_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_calendar"
+            app:tint="@color/sched_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/sched_title"
+            android:textColor="@color/sched_title"
+            android:textSize="@dimen/sched_title_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- ══ TABS: All Requests | Pending | Accepted | Completed ══ -->
+    <HorizontalScrollView
+        android:id="@+id/hsv_tabs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="6dp"
+        android:scrollbars="none"
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_sched_header">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_sched_tab_container"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/tab_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/bg_sched_tab_selected"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/sched_tab_all_requests"
+                android:textColor="@color/sched_tab_selected_text"
+                android:textSize="@dimen/sched_tab_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tab_pending"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/sched_tab_pending"
+                android:textColor="@color/sched_tab_unselected_text"
+                android:textSize="@dimen/sched_tab_text_size" />
+
+            <TextView
+                android:id="@+id/tab_accepted"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/sched_tab_accepted"
+                android:textColor="@color/sched_tab_unselected_text"
+                android:textSize="@dimen/sched_tab_text_size" />
+
+            <TextView
+                android:id="@+id/tab_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/sched_tab_completed"
+                android:textColor="@color/sched_tab_unselected_text"
+                android:textSize="@dimen/sched_tab_text_size" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- ══ REQUEST LIST ══ -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_schedule_requests"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hsv_tabs" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

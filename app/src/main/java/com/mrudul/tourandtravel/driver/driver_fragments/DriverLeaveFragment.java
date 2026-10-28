@@ -1,4 +1,4 @@
-package com.mrudul.tourandtravel.driver.driver_fragments;
+﻿package com.mrudul.tourandtravel.driver.driver_fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mrudul.tourandtravel.R;
 import com.mrudul.tourandtravel.app_common_activities.LeaveRequest;
@@ -28,299 +28,147 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * SmartTour360 Driver App - Apply For Leave Fragment
+ *
+ * Submits leave requests via the backend API (LeaveRequest -> LeaveResponse).
+ * Button cast uses AppCompatButton (matches fragment_driver_leave.xml).
+ */
 public class DriverLeaveFragment extends Fragment {
 
-    private TextInputEditText startDate;
-    private TextInputEditText endDate;
-    private TextInputEditText subject;
-    private TextInputEditText description;
-
-    private MaterialButton applyLeaveBtn;
-
+    private TextInputEditText startDate, endDate, subject, description;
+    private AppCompatButton   applyLeaveBtn;
     private DriverSessionManager sessionManager;
 
-    public DriverLeaveFragment() {
-        // Required empty constructor
-    }
+    public DriverLeaveFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(
-                R.layout.fragment_driver_leave,
-                container,
-                false
-        );
+        return inflater.inflate(R.layout.fragment_driver_leave, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view,
-                              @Nullable Bundle savedInstanceState) {
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        startDate = view.findViewById(R.id.driverLeaveStartDate);
-        endDate = view.findViewById(R.id.driverLeaveEndDate);
-
-        subject = view.findViewById(R.id.driverLeaveSubject);
-        description = view.findViewById(R.id.driverLeaveDescription);
-
+        startDate     = view.findViewById(R.id.driverLeaveStartDate);
+        endDate       = view.findViewById(R.id.driverLeaveEndDate);
+        subject       = view.findViewById(R.id.driverLeaveSubject);
+        description   = view.findViewById(R.id.driverLeaveDescription);
         applyLeaveBtn = view.findViewById(R.id.driverApplyLeaveBtn);
-
 
         sessionManager = new DriverSessionManager(requireContext());
 
+        // Back arrow: finish the host Activity
+        View ivBack = view.findViewById(R.id.iv_leave_back);
+        if (ivBack != null) {
+            ivBack.setOnClickListener(v -> { if (getActivity() != null) getActivity().finish(); });
+        }
 
-        startDate.setOnClickListener(v ->
-                showDatePicker(startDate)
-        );
-
-        endDate.setOnClickListener(v ->
-                showDatePicker(endDate)
-        );
-
-
-        applyLeaveBtn.setOnClickListener(v ->
-                applyLeave()
-        );
+        if (startDate != null)
+            startDate.setOnClickListener(v -> showDatePicker(startDate));
+        if (endDate != null)
+            endDate.setOnClickListener(v -> showDatePicker(endDate));
+        if (applyLeaveBtn != null)
+            applyLeaveBtn.setOnClickListener(v -> applyLeave());
     }
 
     private void applyLeave() {
+        String s    = startDate   != null ? startDate.getText().toString().trim()   : "";
+        String e    = endDate     != null ? endDate.getText().toString().trim()      : "";
+        String sub  = subject     != null ? subject.getText().toString().trim()      : "";
+        String desc = description != null ? description.getText().toString().trim()  : "";
 
-        String startDateText = startDate.getText().toString().trim();
-        String endDateText = endDate.getText().toString().trim();
-        String subjectText = subject.getText().toString().trim();
-        String descriptionText = description.getText().toString().trim();
+        if (s.isEmpty())    { startDate.setError("Select start date");   return; }
+        if (e.isEmpty())    { endDate.setError("Select end date");       return; }
+        if (sub.isEmpty())  { subject.setError("Enter subject");         return; }
+        if (desc.isEmpty()) { description.setError("Enter description"); return; }
 
-        if (startDateText.isEmpty()) {
-            startDate.setError("Select start date");
-            startDate.requestFocus();
-            return;
-        }
-
-        if (endDateText.isEmpty()) {
-            endDate.setError("Select end date");
-            endDate.requestFocus();
-            return;
-        }
-
-        if (subjectText.isEmpty()) {
-            subject.setError("Enter subject");
-            subject.requestFocus();
-            return;
-        }
-
-        if (descriptionText.isEmpty()) {
-            description.setError("Enter description");
-            description.requestFocus();
-            return;
-        }
-
-
-        SimpleDateFormat sdf =
-                new SimpleDateFormat(
-                        "dd/MM/yyyy",
-                        Locale.getDefault()
-                );
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         sdf.setLenient(false);
-
         try {
-
-            if (sdf.parse(endDateText)
-                    .before(sdf.parse(startDateText))) {
-
-                endDate.setError(
-                        "End date cannot be before start date"
-                );
-
-                endDate.requestFocus();
-
+            if (sdf.parse(e).before(sdf.parse(s))) {
+                endDate.setError("End date cannot be before start date");
                 return;
             }
-
-        } catch (Exception e) {
-
-            Toast.makeText(
-                    requireContext(),
-                    "Invalid date",
-                    Toast.LENGTH_SHORT
-            ).show();
-
+        } catch (Exception ex) {
+            Toast.makeText(requireContext(), "Invalid date", Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         int driverId = sessionManager.getDriverId();
-
         if (driverId == -1) {
-
-            Toast.makeText(
-                    requireContext(),
-                    "Driver is not logged in",
-                    Toast.LENGTH_SHORT
-            ).show();
-
+            Toast.makeText(requireContext(), "Driver not logged in", Toast.LENGTH_SHORT).show();
             return;
         }
 
-
-
-        String backendStartDate = convertDate(startDateText);
-        String backendEndDate = convertDate(endDateText);
-        if (backendStartDate == null ||
-                backendEndDate == null) {
-
-            Toast.makeText(
-                    requireContext(),
-                    "Invalid date",
-                    Toast.LENGTH_SHORT
-            ).show();
-
+        String backendStart = convertDate(s);
+        String backendEnd   = convertDate(e);
+        if (backendStart == null || backendEnd == null) {
+            Toast.makeText(requireContext(), "Invalid date", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        LeaveRequest request = new LeaveRequest(driverId, null, backendStart, backendEnd, sub, desc);
 
-        LeaveRequest request =
-                new LeaveRequest(
-                        driverId,
-                        null,
-                        backendStartDate,
-                        backendEndDate,
-                        subjectText,
-                        descriptionText
-                );
-
-        Log.d("LEAVE_TEST", "Driver ID: " + driverId);
-        Log.d("LEAVE_TEST", "Start: " + backendStartDate);
-        Log.d("LEAVE_TEST", "End: " + backendEndDate);
-        Log.d("LEAVE_TEST", "Subject: " + subjectText);
-        Log.d("LEAVE_TEST", "Description: " + descriptionText);
+        Log.d("LEAVE_TEST", "Driver ID: " + driverId + " | " + backendStart + " -> " + backendEnd);
 
         submitLeave(request);
     }
 
-
     private void submitLeave(LeaveRequest request) {
+        if (applyLeaveBtn != null) applyLeaveBtn.setEnabled(false);
 
-        applyLeaveBtn.setEnabled(false);
-
-        Call<LeaveResponse> call =
-                RetrofitClient
-                        .getApiService()
-                        .applyLeave(request);
-
-        call.enqueue(new Callback<LeaveResponse>() {
-
-            @Override
-            public void onResponse(
-                    @NonNull Call<LeaveResponse> call,
-                    @NonNull Response<LeaveResponse> response) {
-
-                applyLeaveBtn.setEnabled(true);
-
-                if (response.isSuccessful() && response.body() != null) {
-
-                    Toast.makeText(
-                            requireContext(),
-                            "Leave application submitted",
-                            Toast.LENGTH_SHORT
-                    ).show();
-
-                    clearForm();
-
-                } else {
-
-                    String errorMessage = "";
-
-                    try {
-                        if (response.errorBody() != null) {
-                            errorMessage = response.errorBody().string();
+        RetrofitClient.getApiService().applyLeave(request)
+                .enqueue(new Callback<LeaveResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<LeaveResponse> call,
+                                           @NonNull Response<LeaveResponse> response) {
+                        if (applyLeaveBtn != null) applyLeaveBtn.setEnabled(true);
+                        if (response.isSuccessful() && response.body() != null) {
+                            Toast.makeText(requireContext(),
+                                    "Leave application submitted", Toast.LENGTH_SHORT).show();
+                            clearForm();
+                        } else {
+                            String error = "";
+                            try {
+                                if (response.errorBody() != null) error = response.errorBody().string();
+                            } catch (Exception ex) { error = ex.getMessage(); }
+                            Toast.makeText(requireContext(),
+                                    "Failed: " + response.code() + "\n" + error, Toast.LENGTH_LONG).show();
                         }
-                    } catch (Exception e) {
-                        errorMessage = e.getMessage();
                     }
-
-                    Toast.makeText(
-                            requireContext(),
-                            "Failed: " + response.code() + "\n" + errorMessage,
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LeaveResponse> call, Throwable t) {
-                Log.d("leave application failure",t.getMessage());
-                Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<LeaveResponse> call, Throwable t) {
+                        if (applyLeaveBtn != null) applyLeaveBtn.setEnabled(true);
+                        Log.d("LEAVE_FAIL", t.getMessage());
+                        Toast.makeText(requireContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
-
 
     private String convertDate(String date) {
-
         try {
-
-            SimpleDateFormat input =
-                    new SimpleDateFormat(
-                            "dd/MM/yyyy",
-                            Locale.getDefault()
-                    );
-
-            SimpleDateFormat output =
-                    new SimpleDateFormat(
-                            "yyyy-MM-dd",
-                            Locale.getDefault()
-                    );
-
-            return output.format(input.parse(date));
-
-        } catch (Exception e) {
-
-            return null;
-        }
+            SimpleDateFormat in  = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd",  Locale.getDefault());
+            return out.format(in.parse(date));
+        } catch (Exception e) { return null; }
     }
 
-    private void showDatePicker(TextInputEditText editText) {
-
-        Calendar calendar =
-                Calendar.getInstance();
-
-        DatePickerDialog datePickerDialog =
-                new DatePickerDialog(
-                        requireContext(),
-
-                        (view, year, month, dayOfMonth) -> {
-
-                            String date =
-                                    String.format(
-                                            Locale.getDefault(),
-                                            "%02d/%02d/%04d",
-                                            dayOfMonth,
-                                            month + 1,
-                                            year
-                                    );
-
-                            editText.setText(date);
-                        },
-
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)
-                );
-
-        datePickerDialog.show();
+    private void showDatePicker(TextInputEditText field) {
+        Calendar cal = Calendar.getInstance();
+        new DatePickerDialog(requireContext(),
+                (v, year, month, day) -> field.setText(
+                        String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month + 1, year)),
+                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
+        ).show();
     }
-
 
     private void clearForm() {
-
-        startDate.setText("");
-        endDate.setText("");
-        subject.setText("");
-        description.setText("");
+        if (startDate   != null) startDate.setText("");
+        if (endDate     != null) endDate.setText("");
+        if (subject     != null) subject.setText("");
+        if (description != null) description.setText("");
     }
 }

@@ -1,36 +1,458 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    SmartTour360 Driver App — Screen 4: Driver Home Fragment
+    Two states (Online / Offline) controlled by the toggle switch.
+    All non-status content is identical in both states.
+-->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_bg_shape"
+    android:background="@color/home_bg"
+    android:fillViewport="true"
     tools:context=".driver.driver_fragments.DriverHomeFragment">
 
-    <TextView
-        android:id="@+id/tvHeaderPackage"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Assigned Tour Packages"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:padding="@dimen/home_padding_screen">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAssignedPackages"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:padding="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderPackage"
-        tools:listitem="@layout/driver_assign_package_layout" />
+        <!-- ══════════════════════════════════
+             ONLINE / OFFLINE STATUS CARD
+        ══════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_status"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_status_card_height"
+            android:layout_marginBottom="10dp"
+            app:cardBackgroundColor="@color/home_online_card_bg"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="@dimen/home_card_elevation">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <!-- Status icon circle -->
+                <FrameLayout
+                    android:id="@+id/fl_status_icon"
+                    android:layout_width="@dimen/home_status_icon_container"
+                    android:layout_height="@dimen/home_status_icon_container"
+                    android:background="@drawable/bg_circle_online"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/iv_status_icon"
+                        android:layout_width="@dimen/home_status_icon_size"
+                        android:layout_height="@dimen/home_status_icon_size"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/cd_status_icon"
+                        android:src="@drawable/ic_car"
+                        app:tint="@color/home_online_card_bg" />
+
+                </FrameLayout>
+
+                <!-- Status title + description -->
+                <LinearLayout
+                    android:id="@+id/ll_status_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/switch_status"
+                    app:layout_constraintStart_toEndOf="@+id/fl_status_icon"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_status_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/home_status_online"
+                        android:textColor="@color/home_status_title"
+                        android:textSize="@dimen/home_status_title_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_status_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/home_online_desc"
+                        android:textColor="@color/home_status_desc"
+                        android:textSize="@dimen/home_status_desc_size" />
+
+                </LinearLayout>
+
+                <!-- Toggle switch -->
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:showText="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:thumbTint="@color/white"
+                    app:trackTint="@color/home_online_card_bg" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- ══════════════════════════════════
+             TODAY'S STATISTICS ROW
+        ══════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!-- Today's Trips Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/home_stat_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="@dimen/home_card_elevation">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/home_stat_icon_container"
+                        android:layout_height="@dimen/home_stat_icon_container"
+                        android:background="@drawable/bg_stat_icon_trips">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_stat_icon_size"
+                            android:layout_height="@dimen/home_stat_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_car"
+                            app:tint="@color/home_shortcut_icon_schedule" />
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_todays_trips"
+                            android:textColor="@color/home_stat_label"
+                            android:textSize="@dimen/home_stat_label_size" />
+
+                        <TextView
+                            android:id="@+id/tv_today_trips"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_trips_value"
+                            android:textColor="@color/home_stat_value"
+                            android:textSize="@dimen/home_stat_value_size"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Today's Earnings Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/home_stat_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="@dimen/home_card_elevation">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/home_stat_icon_container"
+                        android:layout_height="@dimen/home_stat_icon_container"
+                        android:background="@drawable/bg_stat_icon_earn">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_stat_icon_size"
+                            android:layout_height="@dimen/home_stat_icon_size"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_rupee"
+                            app:tint="@color/white" />
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_todays_earnings"
+                            android:textColor="@color/home_stat_label"
+                            android:textSize="@dimen/home_stat_label_size" />
+
+                        <TextView
+                            android:id="@+id/tv_today_earnings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_earnings_value"
+                            android:textColor="@color/home_stat_value"
+                            android:textSize="@dimen/home_stat_value_size"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!-- ══════════════════════════════════
+             SHORTCUT CARDS ROW
+        ══════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <!-- Schedule -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_shortcut_schedule"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/home_shortcut_schedule_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/home_shortcut_icon_container"
+                        android:layout_height="@dimen/home_shortcut_icon_container"
+                        android:src="@drawable/ic_calendar"
+                        app:tint="@color/home_shortcut_icon_schedule" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/home_shortcut_schedule"
+                        android:textColor="@color/home_shortcut_text"
+                        android:textSize="@dimen/home_shortcut_label_size"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Earnings -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_shortcut_earnings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/home_shortcut_earnings_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/home_shortcut_icon_container"
+                        android:layout_height="@dimen/home_shortcut_icon_container"
+                        android:src="@drawable/ic_wallet"
+                        app:tint="@color/home_shortcut_icon_earnings" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/home_shortcut_earnings"
+                        android:textColor="@color/home_shortcut_text"
+                        android:textSize="@dimen/home_shortcut_label_size"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Profile -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_shortcut_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/home_shortcut_profile_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/home_shortcut_icon_container"
+                        android:layout_height="@dimen/home_shortcut_icon_container"
+                        android:src="@drawable/ic_profile"
+                        app:tint="@color/home_shortcut_icon_profile" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/home_shortcut_profile"
+                        android:textColor="@color/home_shortcut_text"
+                        android:textSize="@dimen/home_shortcut_label_size"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!-- ══════════════════════════════════
+             DRIVE SAFE TRAVEL FAR BANNER
+        ══════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_banner_height"
+            android:adjustViewBounds="false"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/home_banner_bg"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Background scenic image -->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/cd_banner"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/splash_screen_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Dark overlay for readability -->
+
+                <!-- Blue circle icon -->
+                <FrameLayout
+                    android:id="@+id/fl_banner_icon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_circle_blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/home_banner_icon_size"
+                        android:layout_height="@dimen/home_banner_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_car"
+                        app:tint="@color/white" />
+
+                </FrameLayout>
+
+                <!-- Banner text -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/fl_banner_icon"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/home_banner_line1"
+                        android:textColor="@color/home_banner_text"
+                        android:textSize="@dimen/home_banner_text_size_big"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/home_banner_line2"
+                        android:textColor="@color/home_banner_text"
+                        android:textSize="@dimen/home_banner_text_size_big"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.45"
+            android:background="@color/home_banner_bg" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
