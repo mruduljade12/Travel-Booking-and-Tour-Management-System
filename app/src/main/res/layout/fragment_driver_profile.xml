@@ -1,119 +1,127 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SmartTour360 Driver App â€” Profile Fragment
+    Header | Driver Card | Personal Info | Options Card
+-->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_bg_shape"
+    android:background="@color/prof_bg"
     android:fillViewport="true"
     tools:context=".driver.driver_fragments.DriverProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="12dp">
 
-        <!-- Driver Profile Picture Header -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardProfileImage"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="55dp"
-            app:cardElevation="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/driverProfilePic"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@tools:sample/avatars" />
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/driverProfileName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/user_name"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardProfileImage" />
-
-        <TextView
-            android:id="@+id/tvDriverRoleBadge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/tour_and_travel_registered_driver"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/driverProfileName" />
-
-        <!-- Quick Stats Cards (Trips & Rating) -->
+        <!-- â•â• HEADER: profile icon + title + settings â•â• -->
         <LinearLayout
-            android:id="@+id/statsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDriverRoleBadge">
+            android:paddingStart="4dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="10dp">
 
-            <androidx.cardview.widget.CardView
+            <ImageView
+                android:layout_width="@dimen/prof_header_icon_size"
+                android:layout_height="@dimen/prof_header_icon_size"
+                android:contentDescription="@string/cd_prof_pic"
+                android:src="@drawable/ic_user"
+                app:tint="@color/prof_title" />
+
+            <TextView
                 android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                android:fontFamily="sans-serif-black"
+                android:text="@string/prof_screen_title"
+                android:textColor="@color/prof_title"
+                android:textSize="@dimen/prof_title_size"
+                android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/iv_prof_settings"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:clickable="true"
+                android:contentDescription="@string/cd_prof_settings"
+                android:focusable="true"
+                android:src="@drawable/ic_settings" />
+
+        </LinearLayout>
+
+        <!-- â•â• DRIVER PROFILE CARD â•â• -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/prof_card_bg"
+            app:cardCornerRadius="@dimen/prof_card_corner"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/prof_card_padding">
+
+                <!-- Circular profile image -->
+                <FrameLayout
+                    android:layout_width="@dimen/prof_pic_size"
+                    android:layout_height="@dimen/prof_pic_size"
+                    android:background="@drawable/bg_prof_pic_circle">
+
+                    <ImageView
+                        android:id="@+id/driverProfilePic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/cd_prof_pic"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_profile_avatar" />
+
+                </FrameLayout>
+
+                <!-- Name + role -->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/event_card"
-                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/driverCompletedPackages"
+                        android:id="@+id/driverProfileName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="124"
-                        android:textColor="@color/event_text_col"
-                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/prof_driver_name"
+                        android:textColor="@color/prof_name_text"
+                        android:textSize="@dimen/prof_name_size"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Completed Tours"
-                        android:textColor="@color/event_text_col"
-                        android:textSize="12sp" />
+                        android:layout_marginTop="3dp"
+                        android:text="@string/prof_driver_role"
+                        android:textColor="@color/prof_subtitle_text"
+                        android:textSize="@dimen/prof_role_size" />
+
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
-
+                <!-- Rating badge -->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/event_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -121,109 +129,276 @@
                         android:id="@+id/driverRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4.9 ★"
-                        android:textColor="@color/event_text_col"
-                        android:textSize="20sp"
+                        android:background="@drawable/bg_prof_rating"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="@string/prof_rating"
+                        android:textColor="@color/prof_rating_text"
+                        android:textSize="@dimen/prof_rating_size"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rating"
-                        android:textColor="@color/event_text_col"
-                        android:textSize="12sp" />
+                        android:layout_marginTop="4dp"
+                        android:text="@string/prof_trips"
+                        android:textColor="@color/prof_trips_text"
+                        android:textSize="@dimen/prof_trips_size" />
+
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-
-        <!-- Driver Details Section Card -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/statsLayout">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/choose_role_cards"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="Personal Information"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/driverPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Phone: +91 98765 43210"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/driverEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Email: driver@tourtravel.com"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="#40FFFFFF" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="License Info"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/driverLicenseNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="License No: MH-08-2023-00982"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Edit Profile & Logout Buttons -->
+        <!-- â•â• PERSONAL INFORMATION SECTION TITLE â•â• -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/prof_personal_info"
+            android:textColor="@color/prof_section_title"
+            android:textSize="@dimen/prof_section_title_size"
+            android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/driverLogoutBtn"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/login_btn_shape"
-            android:text="@string/logout"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardDetails" />
+        <!-- â•â• PERSONAL INFORMATION CARD â•â• -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/prof_card_bg"
+            app:cardCornerRadius="@dimen/prof_card_corner"
+            app:cardElevation="3dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/prof_card_padding"
+                android:paddingTop="10dp"
+                android:paddingEnd="@dimen/prof_card_padding"
+                android:paddingBottom="10dp">
+
+                <!-- Phone -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/prof_icon_size"
+                        android:layout_height="@dimen/prof_icon_size"
+                        android:contentDescription="@string/cd_prof_phone"
+                        android:src="@drawable/ic_phone"
+                        app:tint="@color/prof_info_icon" />
+                    <TextView
+                        android:id="@+id/driverPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:text="@string/prof_phone"
+                        android:textColor="@color/prof_info_text"
+                        android:textSize="@dimen/prof_info_text_size" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/prof_divider"/>
+
+                <!-- Email -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/prof_icon_size"
+                        android:layout_height="@dimen/prof_icon_size"
+                        android:contentDescription="@string/cd_prof_email"
+                        android:src="@drawable/ic_email"
+                        app:tint="@color/prof_info_icon" />
+                    <TextView
+                        android:id="@+id/driverEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:text="@string/prof_email"
+                        android:textColor="@color/prof_info_text"
+                        android:textSize="@dimen/prof_info_text_size" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/prof_divider"/>
+
+                <!-- Vehicle No -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/prof_icon_size"
+                        android:layout_height="@dimen/prof_icon_size"
+                        android:contentDescription="@string/cd_prof_vehicle"
+                        android:src="@drawable/ic_car"
+                        app:tint="@color/prof_info_icon" />
+                    <TextView
+                        android:id="@+id/driverLicenseNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:text="@string/prof_vehicle_no"
+                        android:textColor="@color/prof_info_text"
+                        android:textSize="@dimen/prof_info_text_size" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/prof_divider"/>
+
+                <!-- Location -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/prof_icon_size"
+                        android:layout_height="@dimen/prof_icon_size"
+                        android:contentDescription="@string/cd_prof_location"
+                        android:src="@drawable/ic_address"
+                        app:tint="@color/prof_info_icon" />
+                    <TextView
+                        android:id="@+id/driverVehicle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:text="@string/prof_location"
+                        android:textColor="@color/prof_info_text"
+                        android:textSize="@dimen/prof_info_text_size" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- â•â• OPTIONS CARD â•â• -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/prof_card_bg"
+            app:cardCornerRadius="@dimen/prof_card_corner"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/prof_card_padding"
+                android:paddingEnd="@dimen/prof_card_padding">
+
+                <!-- Row 1: Vehicle Details -->
+                <LinearLayout
+                    android:id="@+id/row_vehicle_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_car"
+                        app:tint="@color/prof_option_icon" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:text="@string/prof_vehicle_details"
+                        android:textColor="@color/prof_option_title"
+                        android:textSize="@dimen/prof_option_title_size"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:text="@string/prof_add_update"
+                        android:textColor="@color/prof_option_sub"
+                        android:textSize="@dimen/prof_option_sub_size" />
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/prof_divider"/>
+
+                <!-- Row 2: Apply For Leave -->
+                <LinearLayout
+                    android:id="@+id/row_apply_leave"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_calendar"
+                        app:tint="@color/prof_option_icon" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:text="@string/prof_apply_leave"
+                        android:textColor="@color/prof_option_title"
+                        android:textSize="@dimen/prof_option_title_size"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/prof_divider"/>
+
+                <!-- Row 3: Help & Support -->
+                <LinearLayout
+                    android:id="@+id/row_help_support"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_help_support" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:text="@string/prof_help_support"
+                        android:textColor="@color/prof_option_title"
+                        android:textSize="@dimen/prof_option_title_size"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

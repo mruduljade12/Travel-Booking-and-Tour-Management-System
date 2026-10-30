@@ -148,10 +148,21 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:scrollbars="none"
             android:layout_marginTop="14dp"
             android:paddingStart="16dp"
             android:paddingEnd="8dp">
+=======
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="My Packages"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutCategories" />
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -409,6 +420,7 @@
             android:visibility="gone"
             android:paddingBottom="24dp">
 
+<<<<<<< HEAD
             <!-- Packages Hero Banner -->
             <FrameLayout
                 android:layout_width="match_parent"
@@ -418,6 +430,22 @@
                 android:layout_marginTop="14dp"
                 android:background="@drawable/pkg_banner_bg"
                 android:clipToOutline="true">
+=======
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPopularTours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            android:paddingHorizontal="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAllPackagesHeader"
+            tools:listitem="@layout/search_item_cards" />
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
 
                 <ImageView
                     android:layout_width="match_parent"

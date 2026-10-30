@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Responsive dimension overrides for standard phones (360dp - 393dp wide) -->
+<resources>
+
+    <!-- Splash — tighter on small screens -->
+    <dimen name="splash_title_text_size">34sp</dimen>
+    <dimen name="splash_subtitle_text_size">16sp</dimen>
+    <dimen name="splash_brand_text_size">26sp</dimen>
+    <dimen name="splash_btn_margin_h">20dp</dimen>
+
+    <!-- Login -->
+    <dimen name="login_title_text_size">30sp</dimen>
+    <dimen name="login_card_padding">18dp</dimen>
+    <dimen name="login_logo_size">68dp</dimen>
+    <dimen name="login_brand_text_size">24sp</dimen>
+
+    <!-- Home -->
+    <dimen name="home_padding_screen">10dp</dimen>
+    <dimen name="home_status_card_height">90dp</dimen>
+    <dimen name="home_status_icon_container">52dp</dimen>
+    <dimen name="home_status_title_size">19sp</dimen>
+    <dimen name="home_stat_value_size">22sp</dimen>
+    <dimen name="home_shortcut_icon_container">44dp</dimen>
+    <dimen name="home_banner_height">115dp</dimen>
+    <dimen name="home_header_name_size">16sp</dimen>
+
+    <!-- Driver Requests -->
+    <dimen name="req_time_text_size">15sp</dimen>
+    <dimen name="req_btn_height">40dp</dimen>
+    <dimen name="req_card_padding">12dp</dimen>
+
+    <!-- Navigate to Pickup -->
+    <dimen name="nav_panel_title_size">17sp</dimen>
+    <dimen name="nav_btn_height">50dp</dimen>
+
+    <!-- Schedule -->
+    <dimen name="sched_title_size">19sp</dimen>
+    <dimen name="sched_time_size">15sp</dimen>
+
+    <!-- Earnings -->
+    <dimen name="earn_total_amount_size">28sp</dimen>
+    <dimen name="earn_stat_value_size">22sp</dimen>
+    <dimen name="earn_chart_height">160dp</dimen>
+    <dimen name="earn_stat_icon_size">44dp</dimen>
+
+    <!-- Profile -->
+    <dimen name="prof_title_size">19sp</dimen>
+    <dimen name="prof_name_size">17sp</dimen>
+    <dimen name="prof_pic_size">68dp</dimen>
+    <dimen name="prof_card_padding">12dp</dimen>
+    <dimen name="prof_option_title_size">13sp</dimen>
+
+    <!-- Settings -->
+    <dimen name="set_title_size">19sp</dimen>
+    <dimen name="set_row_height">52dp</dimen>
+    <dimen name="set_pic_size">60dp</dimen>
+
+    <!-- Leave -->
+    <dimen name="leave_title_size">19sp</dimen>
+    <dimen name="leave_field_height">52dp</dimen>
+    <dimen name="leave_desc_height">120dp</dimen>
+    <dimen name="leave_card_corner">18dp</dimen>
+
+    <!-- Bank Details -->
+    <dimen name="bank_title_size">19sp</dimen>
+    <dimen name="bank_field_height">52dp</dimen>
+    <dimen name="bank_card_padding">14dp</dimen>
+
+    <!-- Vehicle Details -->
+    <dimen name="veh_title_size">19sp</dimen>
+    <dimen name="veh_vehicle_image_size">110dp</dimen>
+    <dimen name="veh_doc_row_height">58dp</dimen>
+    <dimen name="veh_doc_icon_size">40dp</dimen>
+
+</resources>

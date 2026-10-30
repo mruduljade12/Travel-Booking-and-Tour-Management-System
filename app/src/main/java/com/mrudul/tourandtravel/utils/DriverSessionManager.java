@@ -7,6 +7,7 @@ public class DriverSessionManager {
 
     private static final String PREF_NAME = "DriverSession";
     private static final String KEY_DRIVER_ID = "driverId";
+    private static final String KEY_DRIVER_IMAGE = "driverImage";
     private static final String KEY_LOGGED_IN = "loggedIn";
 
     private final SharedPreferences preferences;
@@ -27,12 +28,24 @@ public class DriverSessionManager {
                 .apply();
     }
 
+    public void saveDriverImage(String image) {
+        preferences.edit()
+                .putString(KEY_DRIVER_IMAGE, image)
+                .putBoolean(KEY_LOGGED_IN, true)
+                .apply();
+    }
+
     public int getDriverId() {
 
         return preferences.getInt(
                 KEY_DRIVER_ID,
                 -1
         );
+    }
+
+
+    public String getKeyDriverImage() {
+        return preferences.getString(KEY_DRIVER_IMAGE, null);
     }
 
     public boolean isLoggedIn() {

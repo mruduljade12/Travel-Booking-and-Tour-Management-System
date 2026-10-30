@@ -138,7 +138,13 @@ public class Login extends AppCompatActivity {
         CustomerLoginRequest request = new CustomerLoginRequest(email, password);
         userLoginBtn.setEnabled(false);
 
+<<<<<<< HEAD
         Call<CustomerResponse> call = apiService.loginCustomer(request);
+=======
+        // Send request to Spring Boot
+        Call<CustomerResponse> call = apiService.loginCustomer(request);
+
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
         call.enqueue(new Callback<CustomerResponse>() {
             @Override
             public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
@@ -147,6 +153,7 @@ public class Login extends AppCompatActivity {
                     CustomerResponse customer = response.body();
                     SessionManager sessionManager = new SessionManager(Login.this);
                     sessionManager.saveCustomerId(customer.getCustId());
+<<<<<<< HEAD
                     // Cache profile fields so ProfileFragment shows data even offline
                     sessionManager.saveCustomerProfile(
                             customer.getCustName(),
@@ -155,6 +162,15 @@ public class Login extends AppCompatActivity {
                             customer.getCustAddress(),
                             customer.getImageUrl());
                     startActivity(new Intent(Login.this, MainActivity.class));
+=======
+                    sessionManager.saveCustomerEmail(customer.getCustEmail());
+                    sessionManager.saveCustomerPhone(customer.getCustPhone());
+                    sessionManager.setKeyCustName(customer.getCustName());
+                    sessionManager.saveCustomerImage(customer.getImageUrl());
+
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    startActivity(intent);
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
                     finish();
                 } else {
                     Toast.makeText(Login.this, "Invalid email or password", Toast.LENGTH_LONG).show();

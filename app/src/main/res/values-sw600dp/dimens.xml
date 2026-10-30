@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Responsive dimension overrides for large phones + tablets (600dp+) -->
+<resources>
+    <dimen name="splash_title_text_size">48sp</dimen>
+    <dimen name="login_title_text_size">42sp</dimen>
+    <dimen name="login_card_margin_h">48dp</dimen>
+    <dimen name="home_padding_screen">16dp</dimen>
+    <dimen name="home_status_card_height">110dp</dimen>
+    <dimen name="earn_chart_height">220dp</dimen>
+    <dimen name="earn_total_amount_size">40sp</dimen>
+    <dimen name="prof_pic_size">96dp</dimen>
+</resources>

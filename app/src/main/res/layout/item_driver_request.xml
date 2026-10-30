@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SmartTour360 Driver App — Driver Requests screen
+    Single request card item for RecyclerView.
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/req_card_bg"
+    app:cardCornerRadius="@dimen/req_card_corner"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/req_card_padding">
+
+        <!-- ── Row 1: Time + Status badge + Arrow ── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_req_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
+                android:text="10:30 AM"
+                android:textColor="@color/req_card_time"
+                android:textSize="@dimen/req_time_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_req_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_badge_new"
+                android:paddingStart="10dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="3dp"
+                android:text="@string/req_badge_new"
+                android:textColor="@color/req_badge_new_text"
+                android:textSize="@dimen/req_badge_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_req_arrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/cd_route_arrow"
+                android:src="@drawable/ic_chevron_right" />
+
+        </LinearLayout>
+
+        <!-- ── Row 2: Route (pickup → destination) ── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <!-- Dot + line column -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="4dp">
+
+                <View
+                    android:layout_width="@dimen/req_dot_size"
+                    android:layout_height="@dimen/req_dot_size"
+                    android:background="@drawable/bg_location_dot" />
+
+                <View
+                    android:layout_width="@dimen/req_dot_line_width"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_route_line"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"/>
+
+                <View
+                    android:layout_width="@dimen/req_dot_size"
+                    android:layout_height="@dimen/req_dot_size"
+                    android:background="@drawable/bg_location_dot" />
+
+            </LinearLayout>
+
+            <!-- Location text column -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_req_pickup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pune Airport"
+                    android:textColor="@color/req_location_text"
+                    android:textSize="@dimen/req_location_text_size" 
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
+
+                <TextView
+                    android:id="@+id/tv_req_destination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Lonavala, Maharashtra"
+                    android:textColor="@color/req_location_text"
+                    android:textSize="@dimen/req_location_text_size" 
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ── Row 3: Meta info (seats · amount · distance) ── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_car"
+                app:tint="@color/req_location_dot" />
+
+            <TextView
+                android:id="@+id/tv_req_seats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="2 Seats"
+                android:textColor="@color/req_meta_text"
+                android:textSize="@dimen/req_meta_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:importantForAccessibility="no"
+                android:text="•"
+                android:textColor="@color/req_meta_text" />
+
+            <TextView
+                android:id="@+id/tv_req_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹650"
+                android:textColor="@color/req_meta_text"
+                android:textSize="@dimen/req_meta_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:importantForAccessibility="no"
+                android:text="•"
+                android:textColor="@color/req_meta_text" />
+
+            <TextView
+                android:id="@+id/tv_req_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45 km"
+                android:textColor="@color/req_meta_text"
+                android:textSize="@dimen/req_meta_text_size" />
+
+        </LinearLayout>
+
+        <!-- ── Row 4: Accept / Reject buttons (hidden once actioned) ── -->
+        <LinearLayout
+            android:id="@+id/ll_req_action_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!-- Reject -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_req_reject"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/req_btn_height"
+                    android:minHeight="48dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_reject"
+                android:drawableStart="@drawable/ic_close"
+                android:drawablePadding="4dp"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/req_btn_reject"
+                android:textColor="@color/req_reject_text"
+                android:textSize="@dimen/req_btn_text_size"
+                android:textStyle="bold" />
+
+            <!-- Accept -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_req_accept"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/req_btn_height"
+                    android:minHeight="48dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_accept"
+                android:drawableStart="@drawable/ic_check"
+                android:drawablePadding="4dp"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/req_btn_accept"
+                android:textColor="@color/req_accept_text"
+                android:textSize="@dimen/req_btn_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

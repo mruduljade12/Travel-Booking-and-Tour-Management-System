@@ -181,44 +181,28 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/tvSpecialization"
+                    android:id="@+id/tvTourGuidePhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Specialization: Historical &amp; Eco Tours"
+                    android:text="@string/phone_number"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Edit Profile & Logout Buttons -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnEditGuideProfile"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/login_btn_shape"
-            android:text="Edit Info"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/btnGuideLogout"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardGuideDetails" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGuideLogout"
             android:layout_width="0dp"
             android:layout_height="55dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/login_btn_shape"
             android:text="Logout"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnEditGuideProfile"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardGuideDetails" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

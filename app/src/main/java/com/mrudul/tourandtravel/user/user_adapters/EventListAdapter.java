@@ -10,18 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.user.user_interfaces.HomeTourClicked;
 import com.mrudul.tourandtravel.user.user_models.EventModel;
+import com.mrudul.tourandtravel.user.user_models.PackageDestinationResponse;
 
 import java.util.ArrayList;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<EventModel> arrayList;
+    ArrayList<PackageDestinationResponse> arrayList;
+    HomeTourClicked listener;
 
-    public EventListAdapter(Context context,ArrayList<EventModel> arrayList){
+    public EventListAdapter(Context context,ArrayList<PackageDestinationResponse> arrayList,HomeTourClicked listener){
         this.context = context;
         this.arrayList = arrayList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -35,11 +39,15 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull EventListAdapter.ViewHolder holder, int position) {
 
-        EventModel events = arrayList.get(position);
+        PackageDestinationResponse events = arrayList.get(position);
 
-        holder.event.setText(events.getNAME());
-        holder.date.setText(events.getDATE());
-        holder.time.setText(events.getTIME());
+        holder.event.setText(events.getName());
+        holder.date.setText(events.getVisitDate());
+
+
+        holder.itemView.setOnClickListener(v->{
+            listener.onMapEventClicked(events);
+        });
     }
 
     @Override
@@ -49,14 +57,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView event,date,time;
+        TextView event,date;
 
         public ViewHolder(@NonNull View view) {
             super(view);
 
             event = view.findViewById(R.id.eventName);
             date = view.findViewById(R.id.eventDate);
-            time = view.findViewById(R.id.eventTime);
         }
     }
 }

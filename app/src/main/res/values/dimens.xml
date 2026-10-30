@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Driver Splash Screen -->
+    <dimen name="splash_brand_logo_size">80dp</dimen>
+    <dimen name="splash_brand_text_size">30sp</dimen>
+    <dimen name="splash_tagline_text_size">14sp</dimen>
+    <dimen name="splash_title_text_size">42sp</dimen>
+    <dimen name="splash_subtitle_text_size">18sp</dimen>
+    <dimen name="splash_btn_height">56dp</dimen>
+    <dimen name="splash_btn_margin_h">28dp</dimen>
+    <dimen name="splash_bottom_text_size">15sp</dimen>
+    <dimen name="splash_card_padding_h">24dp</dimen>
+    <dimen name="splash_card_padding_v">12dp</dimen>
+
+    <!-- Driver Login Screen -->
+    <dimen name="login_logo_size">80dp</dimen>
+    <dimen name="login_brand_text_size">28sp</dimen>
+    <dimen name="login_tagline_text_size">13sp</dimen>
+    <dimen name="login_title_text_size">36sp</dimen>
+    <dimen name="login_desc_text_size">16sp</dimen>
+    <dimen name="login_card_corner">28dp</dimen>
+    <dimen name="login_card_padding">24dp</dimen>
+    <dimen name="login_card_margin_h">16dp</dimen>
+    <dimen name="login_input_corner">14dp</dimen>
+    <dimen name="login_input_height">56dp</dimen>
+    <dimen name="login_input_text_size">16sp</dimen>
+    <dimen name="login_input_icon_size">22dp</dimen>
+    <dimen name="login_btn_height">54dp</dimen>
+    <dimen name="login_btn_text_size">17sp</dimen>
+    <dimen name="login_or_text_size">14sp</dimen>
+    <dimen name="login_bottom_text_size">14sp</dimen>
+
+    <!-- Driver Home Screen -->
+    <dimen name="home_padding_screen">12dp</dimen>
+    <dimen name="home_card_corner">16dp</dimen>
+    <dimen name="home_card_elevation">4dp</dimen>
+    <dimen name="home_status_card_height">100dp</dimen>
+    <dimen name="home_status_icon_container">60dp</dimen>
+    <dimen name="home_status_icon_size">32dp</dimen>
+    <dimen name="home_status_title_size">22sp</dimen>
+    <dimen name="home_status_desc_size">13sp</dimen>
+    <dimen name="home_header_name_size">18sp</dimen>
+    <dimen name="home_header_role_size">13sp</dimen>
+    <dimen name="home_stat_value_size">26sp</dimen>
+    <dimen name="home_stat_label_size">12sp</dimen>
+    <dimen name="home_stat_icon_container">48dp</dimen>
+    <dimen name="home_stat_icon_size">26dp</dimen>
+    <dimen name="home_shortcut_icon_container">52dp</dimen>
+    <dimen name="home_shortcut_icon_size">28dp</dimen>
+    <dimen name="home_shortcut_label_size">13sp</dimen>
+    <dimen name="home_banner_height">130dp</dimen>
+    <dimen name="home_banner_icon_size">48dp</dimen>
+    <dimen name="home_banner_text_size_big">20sp</dimen>
+
+    <!-- Driver Requests Screen -->
+    <dimen name="req_header_icon_size">24dp</dimen>
+    <dimen name="req_header_title_size">20sp</dimen>
+    <dimen name="req_tab_text_size">13sp</dimen>
+    <dimen name="req_card_corner">16dp</dimen>
+    <dimen name="req_card_padding">14dp</dimen>
+    <dimen name="req_time_text_size">17sp</dimen>
+    <dimen name="req_location_text_size">14sp</dimen>
+    <dimen name="req_meta_text_size">13sp</dimen>
+    <dimen name="req_btn_height">44dp</dimen>
+    <dimen name="req_btn_text_size">15sp</dimen>
+    <dimen name="req_badge_text_size">12sp</dimen>
+    <dimen name="req_dot_size">10dp</dimen>
+    <dimen name="req_dot_line_width">2dp</dimen>
+
+    <!-- Navigate to Pickup Screen -->
+    <dimen name="nav_header_title_size">20sp</dimen>
+    <dimen name="nav_panel_label_size">12sp</dimen>
+    <dimen name="nav_panel_title_size">20sp</dimen>
+    <dimen name="nav_panel_subtitle_size">13sp</dimen>
+    <dimen name="nav_btn_height">56dp</dimen>
+    <dimen name="nav_btn_text_size">18sp</dimen>
+    <dimen name="nav_panel_icon_size">52dp</dimen>
+    <dimen name="nav_drag_handle_width">40dp</dimen>
+    <dimen name="nav_drag_handle_height">4dp</dimen>
+
+    <!-- Driver Schedule Screen -->
+    <dimen name="sched_title_size">22sp</dimen>
+    <dimen name="sched_tab_text_size">14sp</dimen>
+    <dimen name="sched_card_padding">14dp</dimen>
+    <dimen name="sched_card_corner">16dp</dimen>
+    <dimen name="sched_time_size">17sp</dimen>
+    <dimen name="sched_badge_size">12sp</dimen>
+    <dimen name="sched_location_size">14sp</dimen>
+    <dimen name="sched_meta_size">13sp</dimen>
+
+    <!-- Driver Earnings Screen -->
+    <dimen name="earn_title_size">22sp</dimen>
+    <dimen name="earn_total_amount_size">34sp</dimen>
+    <dimen name="earn_total_label_size">15sp</dimen>
+    <dimen name="earn_total_period_size">13sp</dimen>
+    <dimen name="earn_stat_icon_size">52dp</dimen>
+    <dimen name="earn_stat_icon_inner">28dp</dimen>
+    <dimen name="earn_stat_value_size">26sp</dimen>
+    <dimen name="earn_stat_label_size">12sp</dimen>
+    <dimen name="earn_summary_title_size">16sp</dimen>
+    <dimen name="earn_chart_bar_width">28dp</dimen>
+    <dimen name="earn_chart_height">180dp</dimen>
+    <dimen name="earn_card_corner">16dp</dimen>
+    <dimen name="earn_card_padding">16dp</dimen>
+
+    <!-- Driver Profile Screen -->
+    <dimen name="prof_title_size">22sp</dimen>
+    <dimen name="prof_name_size">20sp</dimen>
+    <dimen name="prof_role_size">13sp</dimen>
+    <dimen name="prof_rating_size">16sp</dimen>
+    <dimen name="prof_trips_size">12sp</dimen>
+    <dimen name="prof_section_title_size">15sp</dimen>
+    <dimen name="prof_info_text_size">14sp</dimen>
+    <dimen name="prof_icon_size">22dp</dimen>
+    <dimen name="prof_option_title_size">14sp</dimen>
+    <dimen name="prof_option_sub_size">12sp</dimen>
+    <dimen name="prof_card_corner">16dp</dimen>
+    <dimen name="prof_card_padding">16dp</dimen>
+    <dimen name="prof_pic_size">80dp</dimen>
+    <dimen name="prof_header_icon_size">28dp</dimen>
+
+    <!-- Settings Screen -->
+    <dimen name="set_title_size">22sp</dimen>
+    <dimen name="set_section_size">15sp</dimen>
+    <dimen name="set_row_text_size">15sp</dimen>
+    <dimen name="set_row_height">56dp</dimen>
+    <dimen name="set_icon_size">24dp</dimen>
+    <dimen name="set_card_corner">16dp</dimen>
+    <dimen name="set_card_margin">12dp</dimen>
+    <dimen name="set_pic_size">72dp</dimen>
+
+    <!-- Apply For Leave Screen -->
+    <dimen name="leave_title_size">22sp</dimen>
+    <dimen name="leave_label_size">15sp</dimen>
+    <dimen name="leave_field_text_size">15sp</dimen>
+    <dimen name="leave_field_height">56dp</dimen>
+    <dimen name="leave_desc_height">140dp</dimen>
+    <dimen name="leave_btn_height">56dp</dimen>
+    <dimen name="leave_card_corner">24dp</dimen>
+    <dimen name="leave_field_corner">14dp</dimen>
+    <dimen name="leave_icon_size">22dp</dimen>
+
+    <!-- Bank Details Screen -->
+    <dimen name="bank_title_size">22sp</dimen>
+    <dimen name="bank_label_size">15sp</dimen>
+    <dimen name="bank_field_text_size">15sp</dimen>
+    <dimen name="bank_field_height">58dp</dimen>
+    <dimen name="bank_btn_height">56dp</dimen>
+    <dimen name="bank_card_corner">24dp</dimen>
+    <dimen name="bank_field_corner">14dp</dimen>
+    <dimen name="bank_icon_size">24dp</dimen>
+    <dimen name="bank_card_padding">20dp</dimen>
+
+    <!-- Vehicle Details Screen -->
+    <dimen name="veh_title_size">22sp</dimen>
+    <dimen name="veh_label_size">12sp</dimen>
+    <dimen name="veh_value_size">16sp</dimen>
+    <dimen name="veh_section_title_size">18sp</dimen>
+    <dimen name="veh_doc_row_height">64dp</dimen>
+    <dimen name="veh_doc_icon_size">46dp</dimen>
+    <dimen name="veh_doc_text_size">15sp</dimen>
+    <dimen name="veh_card_corner">16dp</dimen>
+    <dimen name="veh_vehicle_image_size">130dp</dimen>
+</resources>

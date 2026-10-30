@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/set_bg"
+    tools:context=".driver.driver_activities.DriverSettingsActivity">
+
+    <!-- BOTTOM NAV -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/set_bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:background="@color/home_card_bg"
+        app:itemIconTint="@color/home_nav_unselected"
+        app:itemTextColor="@color/home_nav_unselected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/driver_menu" />
+
+    <!-- SCROLL CONTENT -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/set_bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- HEADER: back + title + gear -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_set_back"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/cd_back_arrow"
+                    android:focusable="true"
+                    android:src="@drawable/ic_back_arrow"
+                    app:tint="@color/set_title" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/set_screen_title"
+                    android:textColor="@color/set_title"
+                    android:textSize="@dimen/set_title_size"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:contentDescription="@string/cd_prof_settings"
+                    android:src="@drawable/ic_settings" />
+
+            </LinearLayout>
+
+            <!-- DRIVER PROFILE MINI CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="@color/set_card_bg"
+                app:cardCornerRadius="@dimen/set_card_corner"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/set_pic_size"
+                        android:layout_height="@dimen/set_pic_size"
+                        android:background="@drawable/bg_prof_pic_circle">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/cd_prof_pic"
+                            android:src="@drawable/ic_profile_avatar" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:text="@string/prof_driver_name"
+                            android:textColor="@color/set_driver_name"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/prof_driver_role"
+                            android:textColor="@color/set_driver_role"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- PREFERENCES SECTION TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/set_section_preferences"
+                android:textColor="@color/set_section_title"
+                android:textSize="@dimen/set_section_size"
+                android:textStyle="bold" />
+
+            <!-- PREFERENCES CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="@color/set_card_bg"
+                app:cardCornerRadius="@dimen/set_card_corner"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <!-- Notifications -->
+                    <LinearLayout
+                        android:id="@+id/row_notifications"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/set_row_height"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ImageView android:layout_width="@dimen/set_icon_size" android:layout_height="@dimen/set_icon_size"
+                            android:src="@drawable/ic_notification_bell" android:contentDescription="@string/cd_set_notification"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp" android:layout_weight="1"
+                            android:text="@string/set_notifications"
+                            android:textColor="@color/set_row_text" android:textSize="@dimen/set_row_text_size"/>
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:src="@drawable/ic_chevron_right"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/set_divider"/>
+
+                    <!-- Language -->
+                    <LinearLayout
+                        android:id="@+id/row_language"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/set_row_height"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ImageView android:layout_width="@dimen/set_icon_size" android:layout_height="@dimen/set_icon_size"
+                            android:src="@drawable/ic_globe" android:contentDescription="@string/cd_set_language"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp" android:layout_weight="1"
+                            android:text="@string/set_language"
+                            android:textColor="@color/set_row_text" android:textSize="@dimen/set_row_text_size"/>
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:src="@drawable/ic_chevron_right"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/set_divider"/>
+
+                    <!-- Change Password -->
+                    <LinearLayout
+                        android:id="@+id/row_change_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/set_row_height"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ImageView android:layout_width="@dimen/set_icon_size" android:layout_height="@dimen/set_icon_size"
+                            android:src="@drawable/ic_password" app:tint="@color/set_row_icon"
+                            android:contentDescription="@string/cd_set_password"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp" android:layout_weight="1"
+                            android:text="@string/set_change_password"
+                            android:textColor="@color/set_row_text" android:textSize="@dimen/set_row_text_size"/>
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:src="@drawable/ic_chevron_right"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/set_divider"/>
+
+                    <!-- Privacy & Security -->
+                    <LinearLayout
+                        android:id="@+id/row_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/set_row_height"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ImageView android:layout_width="@dimen/set_icon_size" android:layout_height="@dimen/set_icon_size"
+                            android:src="@drawable/ic_shield" android:contentDescription="@string/cd_set_privacy"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp" android:layout_weight="1"
+                            android:text="@string/set_privacy_security"
+                            android:textColor="@color/set_row_text" android:textSize="@dimen/set_row_text_size"/>
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:src="@drawable/ic_chevron_right"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ABOUT SECTION TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/set_section_about"
+                android:textColor="@color/set_section_title"
+                android:textSize="@dimen/set_section_size"
+                android:textStyle="bold" />
+
+            <!-- ABOUT CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="@color/set_card_bg"
+                app:cardCornerRadius="@dimen/set_card_corner"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <!-- Help & Support -->
+                    <LinearLayout
+                        android:id="@+id/row_help"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/set_row_height"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ImageView android:layout_width="@dimen/set_icon_size" android:layout_height="@dimen/set_icon_size"
+                            android:src="@drawable/ic_help_support"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp" android:layout_weight="1"
+                            android:text="@string/set_help_support"
+                            android:textColor="@color/set_row_text" android:textSize="@dimen/set_row_text_size"/>
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:src="@drawable/ic_chevron_right"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/set_divider"/>
+
+                    <!-- Terms & Conditions -->
+                    <LinearLayout
+                        android:id="@+id/row_terms"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/set_row_height"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ImageView android:layout_width="@dimen/set_icon_size" android:layout_height="@dimen/set_icon_size"
+                            android:src="@drawable/ic_document" android:contentDescription="@string/cd_set_terms"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp" android:layout_weight="1"
+                            android:text="@string/set_terms_conditions"
+                            android:textColor="@color/set_row_text" android:textSize="@dimen/set_row_text_size"/>
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:src="@drawable/ic_chevron_right"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- LOG OUT CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="@color/set_card_bg"
+                app:cardCornerRadius="@dimen/set_card_corner"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:id="@+id/row_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/set_row_height"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView android:layout_width="@dimen/set_icon_size" android:layout_height="@dimen/set_icon_size"
+                        android:src="@drawable/ic_logout" android:contentDescription="@string/cd_set_logout"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp" android:layout_weight="1"
+                        android:text="@string/set_log_out"
+                        android:textColor="@color/set_logout_text"
+                        android:textSize="@dimen/set_row_text_size"
+                        android:textStyle="bold"/>
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                        android:src="@drawable/ic_chevron_right_red"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.mrudul.tourandtravel.R;
 import com.mrudul.tourandtravel.user.user_interfaces.SearchItemClick;
 import com.mrudul.tourandtravel.user.user_models.SearchTourModel;
+import com.mrudul.tourandtravel.user.user_models.TourPackageResponse;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,13 @@ public class SearchToutAdapter extends RecyclerView.Adapter<SearchToutAdapter.Vi
 
 
     Context context;
-    ArrayList<SearchTourModel> tourList;
+    ArrayList<TourPackageResponse> tourList;
     SearchItemClick itemClick;
+    RecyclerView destinationRecyclerView;
 
 
 
-    public SearchToutAdapter(Context context,ArrayList<SearchTourModel> tourList,SearchItemClick itemClick){
+    public SearchToutAdapter(Context context,ArrayList<TourPackageResponse> tourList,SearchItemClick itemClick){
         this.context = context;
         this.tourList = tourList;
         this.itemClick = itemClick;
@@ -46,15 +48,15 @@ public class SearchToutAdapter extends RecyclerView.Adapter<SearchToutAdapter.Vi
     public void onBindViewHolder(@NonNull SearchToutAdapter.ViewHolder holder, int position) {
 
 
-        SearchTourModel searchModel = tourList.get(position);
+        TourPackageResponse searchModel = tourList.get(position);
 
-        holder.tourName.setText(searchModel.getPack_name());
-        holder.tourPrice.setText(String.valueOf(searchModel.getPack_price()));
-        holder.tourDuration.setText(String.valueOf(searchModel.getPack_duration_day()));
-        holder.tourRating.setText(String.valueOf(searchModel.getPack_rating()));
+        holder.tourName.setText(searchModel.getPackName());
+        holder.tourPrice.setText(String.valueOf(searchModel.getPackPrice()));
+        holder.tourDuration.setText(String.valueOf(searchModel.getPackDurationDay()));
+        holder.tourRating.setText(String.valueOf(searchModel.getPackRating()));
 
         Glide.with(context)
-                        .load(searchModel.getPack_thumbnail())
+                        .load(searchModel.getPackThumbnail())
                                 .error(R.drawable.advertize)
                                         .placeholder(R.drawable.advertize)
                                                 .into(holder.tourImage);

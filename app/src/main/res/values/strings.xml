@@ -82,6 +82,7 @@
     <string name="leave">Leave</string>
 
 
+<<<<<<< HEAD
     <!-- Choose Role redesigned strings -->
     <string name="role_screen_subtitle">Select your role to access the right features\nand continue with your journey.</string>
     <string name="role_customer_title">Customer App</string>
@@ -177,4 +178,230 @@
     <string name="search_no_results">No packages found</string>
     <string name="search_no_results_sub">Try changing your destination or travel dates.</string>
 
+=======
+    <!-- Driver Splash Screen -->
+    <string name="smarttour360">SmartTour360</string>
+    <string name="driver_splash_tagline">Explore • Book • Travel • Live</string>
+    <string name="driver_app_title">Driver App</string>
+    <string name="driver_app_subtitle">Your journey keeps\nour travelers moving</string>
+    <string name="btn_get_started">Let\'s Get Started  →</string>
+    <string name="lbl_driver_login">Driver Login</string>
+    <string name="lbl_register">Register</string>
+    <string name="driver_reg_coming_soon">Driver Registration — Coming Soon</string>
+    <string name="cd_splash_bg">Scenic travel background</string>
+    <string name="cd_brand_logo">SmartTour360 logo</string>
+    <string name="cd_driver_illustration">Driver standing near a car in a travel scene</string>
+
+    <!-- Driver Login Screen -->
+    <string name="driver_login_title">Driver Login</string>
+    <string name="driver_login_desc">Log in to manage your trips,\nview earnings and more.</string>
+    <string name="hint_email_mobile">Email or Mobile Number</string>
+    <string name="hint_password">Password</string>
+    <string name="lbl_remember_me">Remember me</string>
+    <string name="lbl_forgot_password">Forgot Password?</string>
+    <string name="btn_login">Login</string>
+    <string name="lbl_or">OR</string>
+    <string name="btn_google">Continue with Google</string>
+    <string name="lbl_new_driver">New Driver?</string>
+    <string name="err_email_required">Email or mobile number is required</string>
+    <string name="err_password_required">Password is required</string>
+    <string name="cd_google_logo">Google logo</string>
+    <string name="cd_person_icon">Person icon</string>
+    <string name="cd_lock_icon">Lock icon</string>
+    <string name="cd_visibility_icon">Toggle password visibility</string>
+
+    <!-- Driver Register Screen -->
+    <string name="driver_register_title">Driver Register</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="btn_register_now">Register</string>
+    <string name="lbl_already_account">Already have an account?</string>
+    <string name="lbl_login_link">Login</string>
+    <string name="err_name_required">Full Name is required</string>
+    <string name="err_confirm_password_required">Confirm password is required</string>
+    <string name="err_passwords_no_match">Passwords do not match</string>
+    <string name="cd_email_icon">Email icon</string>
+
+    <!-- Driver Home Screen -->
+    <string name="home_hello_prefix">Hello, </string>
+    <string name="home_role_driver">Driver</string>
+    <string name="home_status_online">Online</string>
+    <string name="home_status_offline">Offline</string>
+    <string name="home_online_desc">You are now visible to get ride requests</string>
+    <string name="home_offline_desc">Go online to receive ride requests</string>
+    <string name="home_todays_trips">Today\'s Trips</string>
+    <string name="home_todays_earnings">Today\'s Earnings</string>
+    <string name="home_trips_value">5</string>
+    <string name="home_earnings_value">₹ 1,250</string>
+    <string name="home_shortcut_schedule">Schedule</string>
+    <string name="home_shortcut_earnings">Earnings</string>
+    <string name="home_shortcut_profile">Profile</string>
+    <string name="home_banner_line1">Drive Safe</string>
+    <string name="home_banner_line2">Travel Far</string>
+    <string name="home_nav_home">Home</string>
+    <string name="home_nav_earnings">Earnings</string>
+    <string name="cd_driver_profile_pic">Driver profile picture</string>
+    <string name="cd_notification_bell">Notifications</string>
+    <string name="cd_status_icon">Driver status icon</string>
+    <string name="cd_banner">Drive Safe Travel Far banner</string>
+
+    <!-- Driver Requests Screen -->
+    <string name="req_screen_title">Driver Requests</string>
+    <string name="req_tab_all">All</string>
+    <string name="req_tab_pending">Pending</string>
+    <string name="req_tab_accepted">Accepted</string>
+    <string name="req_badge_new">New</string>
+    <string name="req_badge_accepted">Accepted</string>
+    <string name="req_badge_rejected">Rejected</string>
+    <string name="req_btn_accept">Accept</string>
+    <string name="req_btn_reject">Reject</string>
+    <string name="req_seats_suffix"> Seats</string>
+    <string name="req_km_suffix"> km</string>
+    <string name="cd_filter_icon">Filter requests</string>
+    <string name="cd_back_arrow">Go back</string>
+    <string name="cd_route_arrow">View route</string>
+
+    <!-- Driver Requests shortcut on Home -->
+    <string name="home_driver_requests">Driver Requests</string>
+
+    <!-- Navigate to Pickup Screen -->
+    <string name="nav_screen_title">Navigate to Pickup</string>
+    <string name="nav_your_location">Your location</string>
+    <string name="nav_customer_pickup">Customer pickup</string>
+    <string name="nav_panel_label">Pickup location</string>
+    <string name="nav_btn_start">Start Navigation</string>
+    <string name="nav_extra_key_pickup">nav_pickup</string>
+    <string name="nav_extra_key_dest">nav_destination</string>
+
+    <!-- Driver Schedule Screen -->
+    <string name="sched_title">Schedule</string>
+    <string name="sched_tab_ongoing">Ongoing</string>
+    <string name="sched_tab_completed">Completed</string>
+    <string name="sched_badge_ongoing">Ongoing</string>
+    <string name="sched_badge_completed">Completed</string>
+
+    <!-- Schedule unified tabs -->
+    <string name="sched_tab_all_requests">All Requests</string>
+    <string name="sched_tab_accepted">Accepted</string>
+    <string name="sched_badge_pending">Pending</string>
+
+    <string name="sched_tab_pending">Pending</string>
+    <!-- Driver Earnings Screen -->
+    <string name="earn_screen_title">Earnings</string>
+    <string name="earn_total_label">Total Earnings</string>
+    <string name="earn_total_amount">\u20b9 18,450</string>
+    <string name="earn_total_period">This Month (1 - 30 Sep)</string>
+    <string name="earn_completed_trips">Completed Trips</string>
+    <string name="earn_trips_count">28</string>
+    <string name="earn_avg_per_trip">Average per Trip</string>
+    <string name="earn_avg_amount">\u20b9 658</string>
+    <string name="earn_summary_title">Earnings Summary</string>
+    <string name="earn_this_week">This Week</string>
+    <string name="earn_mon">Mon</string>
+    <string name="earn_tue">Tue</string>
+    <string name="earn_wed">Wed</string>
+    <string name="earn_thu">Thu</string>
+    <string name="earn_fri">Fri</string>
+    <string name="earn_sat">Sat</string>
+    <string name="earn_sun">Sun</string>
+    <string name="cd_earn_wallet">Earnings wallet icon</string>
+    <string name="cd_earn_trips_icon">Completed trips icon</string>
+    <string name="cd_earn_avg_icon">Average earnings icon</string>
+
+    <!-- Earnings chart period toggle -->
+    <string name="earn_period_today">Today</string>
+    <string name="earn_period_week">This Week</string>
+    <string name="earn_period_month">Month</string>
+    <string name="earn_period_year">Year</string>
+
+    <!-- Driver Profile Screen -->
+    <string name="prof_screen_title">Profile</string>
+    <string name="prof_driver_name">Ramesh Kumar</string>
+    <string name="prof_driver_role">Tour &amp; Travel Driver</string>
+    <string name="prof_rating">4.8 &#9733;</string>
+    <string name="prof_trips">(32 trips)</string>
+    <string name="prof_personal_info">Personal Information</string>
+    <string name="prof_phone">+91 98765 43210</string>
+    <string name="prof_email">ramesh@gmail.com</string>
+    <string name="prof_vehicle_no">MH-12-AB-1234</string>
+    <string name="prof_location">Pune, Maharashtra</string>
+    <string name="prof_vehicle_details">Vehicle Details</string>
+    <string name="prof_apply_leave">Apply For Leave</string>
+    <string name="prof_bank_details">Bank Details</string>
+    <string name="prof_help_support">Help &amp; Support</string>
+    <string name="prof_add_update">Add / Update</string>
+    <string name="cd_prof_settings">Settings</string>
+    <string name="cd_prof_pic">Driver profile picture</string>
+    <string name="cd_prof_phone">Phone icon</string>
+    <string name="cd_prof_email">Email icon</string>
+    <string name="cd_prof_vehicle">Vehicle icon</string>
+    <string name="cd_prof_location">Location icon</string>
+
+    <!-- Settings Screen -->
+    <string name="set_screen_title">Settings</string>
+    <string name="set_section_preferences">Preferences</string>
+    <string name="set_section_about">About</string>
+    <string name="set_notifications">Notifications</string>
+    <string name="set_language">Language</string>
+    <string name="set_change_password">Change Password</string>
+    <string name="set_privacy_security">Privacy &amp; Security</string>
+    <string name="set_help_support">Help &amp; Support</string>
+    <string name="set_terms_conditions">Terms &amp; Conditions</string>
+    <string name="set_log_out">Log Out</string>
+    <string name="cd_set_notification">Notification icon</string>
+    <string name="cd_set_language">Language globe icon</string>
+    <string name="cd_set_password">Lock icon</string>
+    <string name="cd_set_privacy">Shield icon</string>
+    <string name="cd_set_terms">Document icon</string>
+    <string name="cd_set_logout">Log out icon</string>
+
+    <!-- Apply For Leave Screen -->
+    <string name="leave_screen_title">Apply For Leave</string>
+    <string name="leave_start_date_label">Start Date</string>
+    <string name="leave_end_date_label">End Date</string>
+    <string name="leave_subject_label">Subject</string>
+    <string name="leave_description_label">Description</string>
+    <string name="leave_hint_start_date">Select Start Date</string>
+    <string name="leave_hint_end_date">Select End Date</string>
+    <string name="leave_hint_subject">Enter subject</string>
+    <string name="leave_hint_description">Enter description</string>
+    <string name="leave_btn_apply">Apply</string>
+
+    <!-- Bank Details Screen -->
+    <string name="bank_screen_title">Bank Details</string>
+    <string name="bank_label_holder_name">Account Holder Name</string>
+    <string name="bank_label_bank_name">Bank Name</string>
+    <string name="bank_label_account_number">Account Number</string>
+    <string name="bank_label_ifsc">IFSC Code</string>
+    <string name="bank_label_account_type">Account Type</string>
+    <string name="bank_hint_holder_name">Enter account holder name</string>
+    <string name="bank_hint_bank_name">Enter bank name</string>
+    <string name="bank_hint_account_number">Enter account number</string>
+    <string name="bank_hint_ifsc">Enter IFSC code</string>
+    <string name="bank_hint_account_type">Select account type</string>
+    <string name="bank_btn_save">Save Details</string>
+    <string name="bank_type_savings">Savings</string>
+    <string name="bank_type_current">Current</string>
+    <string name="cd_bank_icon">Bank icon</string>
+    <string name="cd_bank_card_icon">Account card icon</string>
+    <string name="cd_bank_dropdown">Dropdown arrow</string>
+
+    <!-- Vehicle Details Screen -->
+    <string name="veh_screen_title">Vehicle Details</string>
+    <string name="veh_lbl_car_model">Car Model</string>
+    <string name="veh_val_car_model">Toyota Innova Crysta</string>
+    <string name="veh_lbl_reg_no">Registration No.</string>
+    <string name="veh_val_reg_no">MH-12-AB-1234</string>
+    <string name="veh_lbl_type">Vehicle Type</string>
+    <string name="veh_val_type">SUV</string>
+    <string name="veh_lbl_seats">Seats</string>
+    <string name="veh_val_seats">6 Seater</string>
+    <string name="veh_section_documents">Documents</string>
+    <string name="veh_doc_rc">RC Book</string>
+    <string name="veh_doc_license">Driving License</string>
+    <string name="veh_doc_insurance">Insurance</string>
+    <string name="veh_status_verified">Verified</string>
+    <string name="cd_veh_image">Vehicle image</string>
+    <string name="cd_veh_doc_icon">Document icon</string>
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
 </resources>

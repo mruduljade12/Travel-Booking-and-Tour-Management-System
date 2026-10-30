@@ -13,18 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mrudul.tourandtravel.R;
 import com.mrudul.tourandtravel.tour_guide.tour_guide_interfaces.TourGuidePackageClickListener;
 import com.mrudul.tourandtravel.tour_guide.tour_guide_models.TourGuideScheduleModel;
+import com.mrudul.tourandtravel.user.user_interfaces.HomeTourClicked;
+import com.mrudul.tourandtravel.user.user_models.TourPackageResponse;
 
 import java.util.ArrayList;
 
 public class TourGuideScheduleAdapter extends RecyclerView.Adapter<TourGuideScheduleAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<TourGuideScheduleModel> packageList;
-    TourGuidePackageClickListener listener;
+    ArrayList<TourPackageResponse> packageList;
+    HomeTourClicked listener;
 
-    public TourGuideScheduleAdapter(Context context,ArrayList<TourGuideScheduleModel> packageList){
+    public TourGuideScheduleAdapter(Context context,ArrayList<TourPackageResponse> packageList,HomeTourClicked listener){
         this.context = context;
         this.packageList = packageList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,15 +40,14 @@ public class TourGuideScheduleAdapter extends RecyclerView.Adapter<TourGuideSche
     @Override
     public void onBindViewHolder(@NonNull TourGuideScheduleAdapter.ViewHolder holder, int position) {
 
-        TourGuideScheduleModel tourModel = packageList.get(position);
-        holder.packageName.setText(tourModel.getPackageName());
-        holder.dateAndTime.setText(tourModel.getDateAndTime());
-        holder.groupDetails.setText(tourModel.getGroupDetails());
-        holder.driverName.setText(tourModel.getDriverName());
+        TourPackageResponse tourModel = packageList.get(position);
+        holder.packageName.setText(tourModel.getPackName());
+        holder.dateAndTime.setText(tourModel.getPackStartDate());
+        holder.driverName.setText(tourModel.getDriver().getDriverName());
 
 
         holder.itemView.setOnClickListener(v->{
-            listener.onTourGuidePackageClick(tourModel);
+            listener.onRecentHomeItemClicked(tourModel);
         });
     }
 
@@ -55,17 +57,14 @@ public class TourGuideScheduleAdapter extends RecyclerView.Adapter<TourGuideSche
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView packageName,dateAndTime,groupDetails,driverName;
-        AppCompatButton acceptBtn;
+        TextView packageName,dateAndTime,driverName;
 
         public ViewHolder(@NonNull View view) {
             super(view);
 
             packageName = view.findViewById(R.id.tvTourName);
             dateAndTime = view.findViewById(R.id.tvTourTimeDate);
-            groupDetails = view.findViewById(R.id.tvGroupDetails);
             driverName = view.findViewById(R.id.tvAssignedDriverName);
-            acceptBtn = view.findViewById(R.id.btnAcceptTour);
         }
     }
 }

@@ -24,7 +24,6 @@ import com.mrudul.tourandtravel.network.ApiService;
 import com.mrudul.tourandtravel.network.RetrofitClient;
 import com.mrudul.tourandtravel.user.user_fragments.AssistantFragment;
 import com.mrudul.tourandtravel.user.user_fragments.HomeFragment;
-import com.mrudul.tourandtravel.user.user_fragments.MapFragment;
 import com.mrudul.tourandtravel.user.user_fragments.ProfileFragment;
 import com.mrudul.tourandtravel.user.user_fragments.SearchFragment;
 import com.mrudul.tourandtravel.user.user_models.CustomerResponse;
@@ -117,6 +116,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
+<<<<<<< HEAD
+=======
+                int home = R.id.user_home;
+                int search = R.id.user_search;
+                int ai = R.id.ai_assistant;
+                int profile = R.id.user_profile;
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
 
                 if (id == R.id.user_home) {
                     changeFragment(new HomeFragment(), R.id.user_home);
@@ -124,11 +130,18 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.user_search) {
                     changeFragment(new SearchFragment(), R.id.user_search);
                     return true;
+<<<<<<< HEAD
                 } else if (id == R.id.user_map) {
                     changeFragment(new MapFragment(), R.id.user_map);
                     return true;
                 } else if (id == R.id.ai_assistant) {
                     changeFragment(new AssistantFragment(), R.id.ai_assistant);
+=======
+                } else if (id == ai){
+
+                    //navigate to home fragment.
+                    changeFragment(new AssistantFragment());
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
                     return true;
                 } else if (id == R.id.user_profile) {
                     changeFragment(new ProfileFragment(), R.id.user_profile);

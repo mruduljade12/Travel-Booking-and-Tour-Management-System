@@ -53,6 +53,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
+<<<<<<< HEAD
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -417,6 +418,43 @@
                 </LinearLayout>
 
             </LinearLayout>
+=======
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/search_edit_text_shape"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <EditText
+                    android:id="@+id/etSearchTourQuery"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="Search tour destination or package..."
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="#0F172A"
+                    android:textColorHint="#64748B"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/userPackageSearchBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_search"
+                    android:visibility="visible"
+                    app:tint="#64748B" />
+
+            </LinearLayout>
+
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
         </androidx.cardview.widget.CardView>
 
         <!-- ═══ SEARCH BUTTON ════════════════════════════════════════ -->

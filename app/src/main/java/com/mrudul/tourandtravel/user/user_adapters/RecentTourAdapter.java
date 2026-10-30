@@ -10,7 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mrudul.tourandtravel.R;
+import com.mrudul.tourandtravel.user.user_interfaces.HomeTourClicked;
+import com.mrudul.tourandtravel.user.user_models.BookingResponse;
+import com.mrudul.tourandtravel.user.user_models.TourPackageResponse;
 import com.mrudul.tourandtravel.user.user_models.UserTourPackages;
 
 import java.util.ArrayList;
@@ -18,11 +22,13 @@ import java.util.ArrayList;
 public class RecentTourAdapter extends RecyclerView.Adapter<RecentTourAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<UserTourPackages> arrayList;
+    ArrayList<TourPackageResponse> arrayList;
+    HomeTourClicked listener;
 
-    public RecentTourAdapter(Context context, ArrayList<UserTourPackages> arrayList){
+    public RecentTourAdapter(Context context, ArrayList<TourPackageResponse> arrayList,HomeTourClicked listener){
         this.context = context;
         this.arrayList = arrayList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -35,12 +41,22 @@ public class RecentTourAdapter extends RecyclerView.Adapter<RecentTourAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull RecentTourAdapter.ViewHolder holder, int position) {
 
-        UserTourPackages recentTour = arrayList.get(position);
+        TourPackageResponse recentTour = arrayList.get(position);
 
-        holder.img.setImageResource(recentTour.getImage());
-        holder.name.setText(recentTour.getName());
-        holder.duration.setText(String.valueOf(recentTour.getDuration()));
-        holder.rating.setText(String.valueOf(recentTour.getRating()));
+        Glide.with(context)
+                .load(recentTour.getPackThumbnail())
+                .error(R.drawable.ic_default_image)
+                .placeholder(R.drawable.ic_default_image)
+                .into(holder.img);
+
+        holder.name.setText(recentTour.getPackName());
+        holder.duration.setText(String.valueOf(recentTour.getPackDurationDay()));
+        holder.rating.setText(String.valueOf(recentTour.getPackRating()));
+
+
+        holder.itemView.setOnClickListener(v->{
+            listener.onRecentHomeItemClicked(recentTour);
+        });
 
     }
 

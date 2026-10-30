@@ -19,10 +19,20 @@ import android.content.SharedPreferences;
  */
 public class SessionManager {
 
+<<<<<<< HEAD
     private static final String PREF_NAME    = "CustomerSession";
 
     // ── Existing keys (unchanged) ──────────────────────────────────────────
     private static final String KEY_CUST_ID  = "custId";
+=======
+    private static final String PREF_NAME = "CustomerSession";
+
+    private static final String KEY_CUST_ID = "custId";
+    private static final String KEY_CUST_NAME = "custName";
+    private static final String KEY_CUST_EMAIL = "email";
+    private static final String KEY_CUST_PHONE = "phone";
+    private static final String KEY_CUST_IMAGE = "image";
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
     private static final String KEY_LOGGED_IN = "loggedIn";
 
     // ── New profile-cache keys ─────────────────────────────────────────────
@@ -35,11 +45,20 @@ public class SessionManager {
     private final SharedPreferences preferences;
 
     public SessionManager(Context context) {
+<<<<<<< HEAD
         preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     // ── Existing methods (unchanged) ──────────────────────────────────────
 
+=======
+        preferences = context.getSharedPreferences(
+                PREF_NAME,
+                Context.MODE_PRIVATE
+        );
+    }
+
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
     public void saveCustomerId(int custId) {
         preferences.edit()
                 .putInt(KEY_CUST_ID, custId)
@@ -47,10 +66,60 @@ public class SessionManager {
                 .apply();
     }
 
+<<<<<<< HEAD
+=======
+    public void saveCustomerEmail(String email) {
+        preferences.edit()
+                .putString(KEY_CUST_EMAIL, email)
+                .putBoolean(KEY_LOGGED_IN, true)
+                .apply();
+    }
+
+    public void saveCustomerPhone(String phone) {
+        preferences.edit()
+                .putString(KEY_CUST_PHONE, phone)
+                .putBoolean(KEY_LOGGED_IN, true)
+                .apply();
+    }
+
+    public void saveCustomerImage(String image) {
+        preferences.edit()
+                .putString(KEY_CUST_IMAGE, image)
+                .putBoolean(KEY_LOGGED_IN, true)
+                .apply();
+    }
+
+    public void setKeyCustName(String name) {
+        preferences.edit()
+                .putString(KEY_CUST_NAME, name)
+                .putBoolean(KEY_LOGGED_IN, true)
+                .apply();
+    }
+
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
     public int getCustomerId() {
         return preferences.getInt(KEY_CUST_ID, -1);
     }
 
+<<<<<<< HEAD
+=======
+    public String getKeyCustName() {
+        return preferences.getString(KEY_CUST_NAME, null);
+    }
+
+    public String getKeyCustEmail() {
+        return preferences.getString(KEY_CUST_EMAIL, null);
+    }
+
+    public String getKeyCustPhone() {
+        return preferences.getString(KEY_CUST_PHONE, null);
+    }
+
+    public String getKeyCustImage() {
+        return preferences.getString(KEY_CUST_IMAGE, null);
+    }
+
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
     public boolean isLoggedIn() {
         return preferences.getBoolean(KEY_LOGGED_IN, false);
     }
@@ -58,6 +127,7 @@ public class SessionManager {
     public void logout() {
         preferences.edit().clear().apply();
     }
+<<<<<<< HEAD
 
     // ── New: cache full profile after successful API load/update ──────────
 
@@ -85,4 +155,6 @@ public class SessionManager {
     public boolean hasCachedProfile() {
         return !preferences.getString(KEY_NAME, "").isEmpty();
     }
+=======
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
 }

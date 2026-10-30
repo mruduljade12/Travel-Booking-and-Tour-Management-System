@@ -76,12 +76,50 @@
             android:name=".tour_guide.tour_guide_activities.TourGuideLoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+<<<<<<< HEAD
 
         <!-- Trip Details screen -->
         <activity
             android:name=".user.user_activities.TripDetailsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
+=======
+    
+        <activity
+            android:name=".driver.driver_activities.DriverRegistrationActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverRequestsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.NavigateToPickupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverBankDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverVehicleDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+    
+        <activity
+            android:name=".driver.driver_activities.DriverApplyLeaveActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+>>>>>>> 5705a3faf7ae0ac8091c7aab87b2b459c72910b2
     </application>
 
 </manifest>
