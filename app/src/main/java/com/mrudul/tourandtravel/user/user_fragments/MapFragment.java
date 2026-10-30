@@ -1,123 +1,169 @@
 package com.mrudul.tourandtravel.user.user_fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.mrudul.tourandtravel.R;
-import com.mrudul.tourandtravel.user.user_adapters.EventListAdapter;
-import com.mrudul.tourandtravel.user.user_models.EventModel;
-
-import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * MapFragment — SmartTour360 Live Tracking Screen
+ * ══════════════════════════════════════════════════
+ * Fully offline / UI-only. No Google Maps SDK. No API key. No GPS.
+ *
+ * The map is rendered by GoapMapView (custom Canvas drawing).
+ * All data is local mock data — no network calls.
+ *
+ * Interactions:
+ *  • Back button → popBackStack / finish
+ *  • Map View button → Toast (future: toggle satellite/terrain view)
+ *  • My Location control → highlights mock location, Toast
+ *  • Zoom In / Zoom Out → scale GoapMapView
+ *  • Phone button → dialog (call feature placeholder)
+ *  • Send button → dialog (navigation feature placeholder)
+ *  • Start Navigation → dialog with mock next-stop info
+ *
+ * Package/folder structure is unchanged.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment {
 
-    ArrayList<EventModel> eventList;
-    EventListAdapter eventAdapter;
-    RecyclerView eventRecyclerView;
+    // ── Mock zoom state ────────────────────────────────────────────────────
+    private float currentScale = 1.0f;
+    private static final float ZOOM_STEP = 0.15f;
+    private static final float ZOOM_MIN  = 0.70f;
+    private static final float ZOOM_MAX  = 2.20f;
 
-    MapView mapView;
-    GoogleMap googleMap;
+    private GoapMapView goapMapView;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MapFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MapFragment newInstance(String param1, String param2) {
-        MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public MapFragment() { /* required empty constructor */ }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mapView = view.findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+        goapMapView = view.findViewById(R.id.navGoapMap);
 
-        eventRecyclerView = view.findViewById(R.id.eventRecyclerView);
+        // ── Back button ────────────────────────────────────────────────────
+        ImageView backBtn = view.findViewById(R.id.navBackBtn);
+        if (backBtn != null) {
+            backBtn.setOnClickListener(v -> {
+                if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+                    getParentFragmentManager().popBackStack();
+                } else {
+                    requireActivity().onBackPressed();
+                }
+            });
+        }
 
-        eventRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        // ── Map View toggle button ─────────────────────────────────────────
+        View mapViewBtn = view.findViewById(R.id.navMapViewBtn);
+        if (mapViewBtn != null) {
+            mapViewBtn.setOnClickListener(v ->
+                Toast.makeText(requireContext(),
+                    "Satellite / terrain view coming soon",
+                    Toast.LENGTH_SHORT).show());
+        }
 
-        eventList = new ArrayList<>();
+        // ── Map Controls ───────────────────────────────────────────────────
+        FrameLayout btnZoomIn  = view.findViewById(R.id.navBtnZoomIn);
+        FrameLayout btnZoomOut = view.findViewById(R.id.navBtnZoomOut);
+        FrameLayout btnMyLoc   = view.findViewById(R.id.navBtnMyLocation);
 
-        eventList.add(new EventModel("go to temple","03-jan-2026","03:45 pm"));
-        eventList.add(new EventModel("go to mall","03-jan-2026","07:45 pm"));
-        eventList.add(new EventModel("go to river basin","03-jan-2026","08:45 pm"));
+        if (btnZoomIn != null) {
+            btnZoomIn.setOnClickListener(v -> {
+                currentScale = Math.min(currentScale + ZOOM_STEP, ZOOM_MAX);
+                applyMapScale();
+                Toast.makeText(requireContext(), "Zoom In", Toast.LENGTH_SHORT).show();
+            });
+        }
 
+        if (btnZoomOut != null) {
+            btnZoomOut.setOnClickListener(v -> {
+                currentScale = Math.max(currentScale - ZOOM_STEP, ZOOM_MIN);
+                applyMapScale();
+                Toast.makeText(requireContext(), "Zoom Out", Toast.LENGTH_SHORT).show();
+            });
+        }
 
-        eventAdapter = new EventListAdapter(view.getContext(),eventList);
-        eventRecyclerView.setAdapter(eventAdapter);
+        if (btnMyLoc != null) {
+            btnMyLoc.setOnClickListener(v -> {
+                // Reset zoom to default, visual feedback for "center on location"
+                currentScale = 1.0f;
+                applyMapScale();
+                Toast.makeText(requireContext(),
+                    "Centred on Your Location (mock)",
+                    Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        // ── Phone button ───────────────────────────────────────────────────
+        FrameLayout phoneBtn = view.findViewById(R.id.navPhoneBtn);
+        if (phoneBtn != null) {
+            phoneBtn.setOnClickListener(v -> showPhoneDialog());
+        }
+
+        // ── Send / Navigate button ─────────────────────────────────────────
+        FrameLayout sendBtn = view.findViewById(R.id.navSendBtn);
+        if (sendBtn != null) {
+            sendBtn.setOnClickListener(v -> showNavigationDialog("send"));
+        }
+
+        // ── Start Navigation button ────────────────────────────────────────
+        Button startNavBtn = view.findViewById(R.id.navStartBtn);
+        if (startNavBtn != null) {
+            startNavBtn.setOnClickListener(v -> showNavigationDialog("start"));
+        }
     }
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap map) {
+    // ── Zoom helper ──────────────────────────────────────────────────────────
+    private void applyMapScale() {
+        if (goapMapView != null) {
+            goapMapView.setScaleX(currentScale);
+            goapMapView.setScaleY(currentScale);
+        }
+    }
 
-        googleMap = map;
+    // ── Dialogs ──────────────────────────────────────────────────────────────
+    private void showPhoneDialog() {
+        new AlertDialog.Builder(requireContext())
+            .setTitle("Call Driver")
+            .setMessage("Driver: Sanika Patil\nVehicle: MH-14-CD-5678\n\n" +
+                        "Live call feature will be enabled in a future update.\n" +
+                        "Please contact your tour coordinator.")
+            .setPositiveButton("OK", null)
+            .show();
+    }
 
-        LatLng mahabaleshwar =
-                new LatLng(17.9237,73.6586);
-
-        googleMap.addMarker(new MarkerOptions().position(mahabaleshwar).title("mahabaleshwar"));
-
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mahabaleshwar,12));
+    private void showNavigationDialog(String trigger) {
+        String title   = trigger.equals("start") ? "Start Navigation" : "Navigation";
+        String message = "Mock Navigation Preview\n\n" +
+                         "Next Stop: Baga Beach\n" +
+                         "Route: Your Location \u2192 Candolim \u2192 Calangute \u2192 Baga Beach\n" +
+                         "Estimated: ~25 min (demo)\n\n" +
+                         "Live turn-by-turn navigation will be enabled\n" +
+                         "in a future integration. This is a local preview.";
+        new AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Got it", null)
+            .show();
     }
 }

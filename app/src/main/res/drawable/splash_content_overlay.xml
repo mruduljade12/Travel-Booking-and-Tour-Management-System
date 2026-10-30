@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Subtle vertical gradient overlay placed over the scenic background image.
+    Top section: very light so the sky shows through cleanly.
+    Middle section: semi-transparent white/blue so branding text pops.
+    Bottom section: transparent so the landscape and traveler remain visible.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Top-to-center: very soft sky-blue tint for status-bar readability -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#33B3DFF5"
+                android:centerColor="#22FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:angle="270"
+                android:type="linear" />
+        </shape>
+    </item>
+
+</layer-list>

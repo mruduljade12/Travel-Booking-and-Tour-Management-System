@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Popular Package card — horizontal landscape card matching reference design -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:padding="12dp">
+
+        <!-- Package image (left) -->
+        <ImageView
+            android:id="@+id/popPkgImage"
+            android:layout_width="110dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/pkg_image_bg"
+            android:contentDescription="Package destination"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/dest_goa" />
+
+        <!-- Package name -->
+        <TextView
+            android:id="@+id/popPkgName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bali Adventure"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#0D5BB5"
+            android:includeFontPadding="false"
+            android:layout_marginStart="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/popPkgImage"
+            app:layout_constraintEnd_toStartOf="@id/popPkgChevron"
+            tools:ignore="HardcodedText" />
+
+        <!-- Duration row -->
+        <LinearLayout
+            android:id="@+id/popPkgDurationRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/popPkgName"
+            app:layout_constraintStart_toEndOf="@id/popPkgImage"
+            app:layout_constraintEnd_toStartOf="@id/popPkgChevron">
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_calendar"
+                android:contentDescription="@null"
+                android:layout_marginEnd="4dp" />
+
+            <TextView
+                android:id="@+id/popPkgDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 Days • 4 Nights"
+                android:textSize="12sp"
+                android:textColor="#6683A6"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <!-- Location row -->
+        <LinearLayout
+            android:id="@+id/popPkgLocationRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/popPkgDurationRow"
+            app:layout_constraintStart_toEndOf="@id/popPkgImage"
+            app:layout_constraintEnd_toStartOf="@id/popPkgChevron">
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_address"
+                android:contentDescription="@null"
+                android:layout_marginEnd="4dp" />
+
+            <TextView
+                android:id="@+id/popPkgLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bali, Indonesia"
+                android:textSize="12sp"
+                android:textColor="#6683A6"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <!-- Price tag -->
+        <TextView
+            android:id="@+id/popPkgPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\u20B9 22,999"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#0D9488"
+            android:background="@drawable/search_price_tag_bg"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="2dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@id/popPkgLocationRow"
+            app:layout_constraintStart_toEndOf="@id/popPkgImage"
+            tools:ignore="HardcodedText" />
+
+        <!-- "per person" label -->
+        <TextView
+            android:id="@+id/popPkgPerPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_per_person"
+            android:textSize="9sp"
+            android:textColor="#9AB5D0"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="1dp"
+            app:layout_constraintTop_toBottomOf="@id/popPkgPrice"
+            app:layout_constraintStart_toEndOf="@id/popPkgImage" />
+
+        <!-- Rating row -->
+        <LinearLayout
+            android:id="@+id/popPkgRatingRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/popPkgPerPerson"
+            app:layout_constraintStart_toEndOf="@id/popPkgImage"
+            app:layout_constraintEnd_toStartOf="@id/popPkgChevron"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_star_filled"
+                android:contentDescription="@null"
+                android:layout_marginEnd="3dp" />
+
+            <TextView
+                android:id="@+id/popPkgRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.8 (1.2k reviews)"
+                android:textSize="11sp"
+                android:textColor="#6683A6"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <!-- Chevron (right edge) -->
+        <ImageView
+            android:id="@+id/popPkgChevron"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_chevron_right"
+            android:contentDescription="@null"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

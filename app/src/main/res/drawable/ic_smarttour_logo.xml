@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SmartTour360 logo icon: three blue mountains, yellow/orange sun, airplane with arc trail.
+    Designed to match the reference image branding mark.
+    ViewBox: 200 x 160
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="160dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+
+    <!-- ── Sun (yellow circle behind mountains) ── -->
+    <path
+        android:fillColor="#F5A623"
+        android:pathData="M 100,28 m -26,0 a 26,26 0 1,0 52,0 a 26,26 0 1,0 -52,0 Z" />
+
+    <!-- Sun highlight ring -->
+    <path
+        android:fillColor="#FFD154"
+        android:pathData="M 100,10 m -18,18 a 18,18 0 1,0 36,0 a 18,18 0 1,0 -36,0 Z" />
+
+    <!-- ── Left mountain (darkest blue) ── -->
+    <path
+        android:fillColor="#0B3B80"
+        android:pathData="M 12,130 L 55,52 L 98,130 Z" />
+
+    <!-- Left mountain highlight face -->
+    <path
+        android:fillColor="#1558B0"
+        android:pathData="M 55,52 L 76,130 L 98,130 Z" />
+
+    <!-- ── Centre mountain (brightest, tallest) ── -->
+    <path
+        android:fillColor="#0B4A9E"
+        android:pathData="M 58,130 L 100,30 L 142,130 Z" />
+
+    <!-- Centre mountain highlight face -->
+    <path
+        android:fillColor="#1E6DD5"
+        android:pathData="M 100,30 L 120,130 L 142,130 Z" />
+
+    <!-- ── Right mountain ── -->
+    <path
+        android:fillColor="#0B3B80"
+        android:pathData="M 102,130 L 145,55 L 188,130 Z" />
+
+    <!-- Right mountain highlight face -->
+    <path
+        android:fillColor="#1558B0"
+        android:pathData="M 145,55 L 165,130 L 188,130 Z" />
+
+    <!-- Snow caps -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 100,30 L 88,62 L 112,62 Z" />
+    <path
+        android:fillColor="#E8F4FF"
+        android:pathData="M 55,52 L 46,72 L 64,72 Z" />
+    <path
+        android:fillColor="#E8F4FF"
+        android:pathData="M 145,55 L 136,74 L 154,74 Z" />
+
+    <!-- ── Curved flight arc ── -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#F5A623"
+        android:strokeWidth="2.5"
+        android:pathData="M 80,50 Q 120,20 165,38" />
+
+    <!-- ── Airplane ── -->
+    <!-- Body -->
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M 155,28 L 175,36 L 168,42 L 148,34 Z" />
+    <!-- Left wing -->
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M 158,33 L 152,48 L 162,44 Z" />
+    <!-- Right wing (small) -->
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M 165,30 L 175,25 L 172,33 Z" />
+    <!-- Tail fin -->
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M 148,34 L 143,28 L 152,30 Z" />
+
+</vector>

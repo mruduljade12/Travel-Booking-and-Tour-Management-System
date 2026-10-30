@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Gradient overlay behind the branding area (top ~46% of screen).
+    Top: soft white-blue so sky still shows through.
+    Bottom: fully transparent so the landscape is unobstructed.
+    This ensures SmartTour360 text is readable without hiding the scenery.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:startColor="#B0D6EFFE"
+        android:centerColor="#70C8E8FA"
+        android:endColor="#00FFFFFF"
+        android:angle="270"
+        android:type="linear" />
+</shape>

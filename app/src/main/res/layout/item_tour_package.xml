@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Package card layout for TourPackageAdapter.
+    Horizontal card: image left | details right.
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <!-- LEFT: image + category badge -->
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:layout_marginEnd="12dp">
+
+            <ImageView
+                android:id="@+id/pkgImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/home_dest_img_bg"
+                android:contentDescription="Package image"
+                tools:src="@drawable/dest_goa" />
+
+            <!-- Category badge: top-left of image -->
+            <TextView
+                android:id="@+id/pkgCategoryBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/pkg_badge_popular"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="6dp"
+                tools:ignore="HardcodedText" />
+
+        </FrameLayout>
+
+        <!-- RIGHT: all details -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Title + rating row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/pkgTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Goa Beach Holiday"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D5BB5"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/pkgRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.8"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#F59E0B"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/star_ic"
+                    android:contentDescription="@null"
+                    android:layout_marginStart="2dp" />
+
+            </LinearLayout>
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/pkgSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sun, Sand &amp; Endless Vibes"
+                android:textSize="11sp"
+                android:textColor="#6683A6"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="6dp"
+                tools:ignore="HardcodedText" />
+
+            <!-- Duration + Location row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="3dp">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_calendar"
+                    android:contentDescription="@null"
+                    android:layout_marginEnd="3dp" />
+
+                <TextView
+                    android:id="@+id/pkgDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="4 Days / 3 Nights"
+                    android:textSize="11sp"
+                    android:textColor="#6683A6"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_address"
+                    android:contentDescription="@null"
+                    android:layout_marginEnd="3dp" />
+
+                <TextView
+                    android:id="@+id/pkgLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Goa"
+                    android:textSize="11sp"
+                    android:textColor="#6683A6"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <!-- Group -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="6dp">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_people"
+                    android:contentDescription="@null"
+                    android:layout_marginEnd="3dp" />
+
+                <TextView
+                    android:id="@+id/pkgGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5+ People"
+                    android:textSize="11sp"
+                    android:textColor="#6683A6"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <!-- Price + View Details -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Starting from"
+                        android:textSize="9sp"
+                        android:textColor="#9AB5D0"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/pkgPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="&#8377; 16,999"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D5BB5"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/pkgViewBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Details"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/pkg_view_details_btn"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

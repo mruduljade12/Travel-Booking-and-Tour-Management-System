@@ -1,6 +1,5 @@
 package com.mrudul.tourandtravel.user.user_activities;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -38,7 +37,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    TextView username;
+    TextView  username;
     ImageView userImage;
 
     @Override
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -54,122 +54,118 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         userImage = findViewById(R.id.mainUserImage);
-        username = findViewById(R.id.mainUserName);
+        username  = findViewById(R.id.mainUserName);
 
+        // ── FIX: Set up bottom-nav listener BEFORE the session guard so it is
+        //         always registered regardless of login state.
+        //         Previously the listener was placed after an early return, which
+        //         meant no tab tap worked for unauthenticated / demo sessions.
+        setupBottomNavigation();
+
+        // ── Load initial fragment (Home) only once on first create ─────────────
+        if (savedInstanceState == null) {
+            changeFragment(new HomeFragment(), R.id.user_home);
+        }
+
+        // ── Load customer profile (best-effort — navigation already works) ─────
         SessionManager sessionManager = new SessionManager(this);
-        ApiService apiService = RetrofitClient.getApiService();
-
         int custId = sessionManager.getCustomerId();
 
         if (custId == -1) {
-
-            Toast.makeText(
-                    this,
-                    "Customer not logged in",
-                    Toast.LENGTH_SHORT
-            ).show();
-
-            return;
+            // Not logged in — navigation still works; profile info won't load.
+            Toast.makeText(this, "Customer not logged in", Toast.LENGTH_SHORT).show();
+            return;   // Skip API call, but listener is already registered above.
         }
 
-
+        ApiService apiService = RetrofitClient.getApiService();
         Call<CustomerResponse> call = apiService.getCustomer(custId);
-
         call.enqueue(new Callback<CustomerResponse>() {
 
             @Override
-            public void onResponse(
-                    Call<CustomerResponse> call,
-                    Response<CustomerResponse> response) {
-
-                if (response.isSuccessful()
-                        && response.body() != null) {
-
+            public void onResponse(@NonNull Call<CustomerResponse> call,
+                                   @NonNull Response<CustomerResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     CustomerResponse customer = response.body();
-
                     username.setText(customer.getCustName());
                     if (customer.getImageUrl() != null && !customer.getImageUrl().isEmpty()) {
-
                         Glide.with(MainActivity.this)
                                 .load(customer.getImageUrl())
                                 .placeholder(R.drawable.ic_default_image)
                                 .error(R.drawable.ic_default_image)
                                 .into(userImage);
                     }
-
                 } else {
-
-                    Toast.makeText(
-                            MainActivity.this,
-                            "Failed to load profile",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast.makeText(MainActivity.this,
+                            "Failed to load profile", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(
-                    Call<CustomerResponse> call,
-                    Throwable t) {
-
-                Toast.makeText(
-                        MainActivity.this,
-                        "Network error: " + t.getMessage(),
-                        Toast.LENGTH_LONG
-                ).show();
+            public void onFailure(@NonNull Call<CustomerResponse> call, @NonNull Throwable t) {
+                Toast.makeText(MainActivity.this,
+                        "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+    // ─────────────────────────────────────────────────────────────────────────
+    // Bottom navigation — must be set up before any early return
+    // ─────────────────────────────────────────────────────────────────────────
+    private void setupBottomNavigation() {
+        bottomNavigationView.setOnItemSelectedListener(
+                new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                // id declare
                 int id = menuItem.getItemId();
-                int home = R.id.user_home;
-                int search = R.id.user_search;
-                int map = R.id.user_map;
-                int ai = R.id.ai_assistant;
-                int profile = R.id.user_profile;
 
-                if (id == home){
-
-                    //navigate to home fragment.
-                    changeFragment(new HomeFragment());
+                if (id == R.id.user_home) {
+                    changeFragment(new HomeFragment(), R.id.user_home);
                     return true;
-                } else if (id == search){
-
-                    //navigate to home fragment.
-                    changeFragment(new SearchFragment());
+                } else if (id == R.id.user_search) {
+                    changeFragment(new SearchFragment(), R.id.user_search);
                     return true;
-                } else if (id == map){
-
-                    //navigate to home fragment.
-                    changeFragment(new MapFragment());
+                } else if (id == R.id.user_map) {
+                    changeFragment(new MapFragment(), R.id.user_map);
                     return true;
-                } else if (id == ai){
-
-                    //navigate to home fragment.
-                    changeFragment(new AssistantFragment());
+                } else if (id == R.id.ai_assistant) {
+                    changeFragment(new AssistantFragment(), R.id.ai_assistant);
                     return true;
-                } else if (id == profile){
-
-                    //navigate to home fragment.
-                    changeFragment(new ProfileFragment());
+                } else if (id == R.id.user_profile) {
+                    changeFragment(new ProfileFragment(), R.id.user_profile);
                     return true;
                 }
                 return false;
             }
         });
-
     }
 
-    private void changeFragment(Fragment fragment){
+    // ─────────────────────────────────────────────────────────────────────────
+    // Fragment replace + highlight the correct bottom-nav tab
+    //
+    // FIX: The old changeFragment() never called setSelectedItemId(), so Home
+    //      stayed visually selected even when another tab was active.
+    //      Now every fragment swap also updates the visual selection.
+    // ─────────────────────────────────────────────────────────────────────────
+    private void changeFragment(Fragment fragment, int menuItemId) {
+        // Update the visual selection first (safe even if id == currently selected)
+        if (bottomNavigationView.getSelectedItemId() != menuItemId) {
+            // Temporarily remove the listener to avoid recursive callback when we
+            // call setSelectedItemId() programmatically.
+            bottomNavigationView.setOnItemSelectedListener(null);
+            bottomNavigationView.setSelectedItemId(menuItemId);
+            setupBottomNavigation();   // Re-attach listener
+        }
 
-        //code which replace the fragment when an item is clicked on navigation bar
         FragmentManager fm = getSupportFragmentManager();
+
+        // Avoid replacing with the same fragment type that is already visible
+        Fragment current = fm.findFragmentById(R.id.fragmentContainerView);
+        if (current != null && current.getClass().equals(fragment.getClass())) {
+            return;  // Already showing this fragment — prevents duplicate instances
+        }
+
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.fragmentContainerView,fragment)
-                .commit();
+        transaction.replace(R.id.fragmentContainerView, fragment)
+                   .commit();
     }
 }

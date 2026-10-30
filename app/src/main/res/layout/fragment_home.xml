@@ -1,273 +1,619 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    fragment_home.xml — SmartTour360 Home Dashboard
+    ═══════════════════════════════════════════════
+    Structure:
+      Header (always visible)
+      Search bar (always visible)
+      Category pills (always visible)
+      ─── content switcher ───
+      homeSection   (VISIBLE when All/Adventure/Beaches selected)
+        → hero banner, trip details (rvFeaturedTours), popular (rvPopularTours)
+      packagesSection (VISIBLE when Packages selected)
+        → packages banner, sub-filter pills, rvPackages RecyclerView
+    ═══════════════════════════════════════════════
+    Existing IDs preserved: rvPopularTours, rvFeaturedTours
+    New IDs: rvPackages, homeSection, packagesSection
+-->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_bg_shape"
+    android:background="@drawable/home_screen_bg"
     android:fillViewport="true"
     tools:context=".user.user_fragments.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp">
+        android:orientation="vertical">
 
-        <!-- Top Header Container -->
+        <!-- ═══ ALWAYS VISIBLE: HEADER ═══ -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/homeHeaderContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/header_shape"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="64dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="#FFFFFF">
 
-            <TextView
-                android:id="@+id/tvWelcomeTitle"
+            <ImageView
+                android:id="@+id/homeHamburger"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_menu_hamburger"
+                android:contentDescription="Menu"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/homeBrandGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome Back,"
-                android:textColor="#0F766E"
-                android:textSize="14sp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Explore World"
-                android:textColor="#0F172A"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvWelcomeTitle" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardProfileAvatar"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="2dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvUserName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvWelcomeTitle">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <ImageView
-                    android:id="@+id/ivUserAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/driver_shape"
-                    android:padding="10dp"
-                    android:src="@drawable/driver_ic"
-                    app:tint="@color/white" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_smarttour_logo"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="SmartTour360 logo"
+                    android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:id="@+id/homeBrandText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SmartTour360"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D5BB5"
+                    android:fontFamily="sans-serif-medium"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/homeNotifContainer"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification"
+                    android:contentDescription="Notifications" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="top|end"
+                    android:background="@drawable/home_notif_dot" />
+
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Advertisement / Offer Banner Section -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardAdBanner"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/homeHeaderContainer">
-
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- Categories Section -->
-        <TextView
-            android:id="@+id/tvCategoryHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Categories"
-            android:textColor="#0F172A"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardAdBanner" />
-
+        <!-- ═══ ALWAYS VISIBLE: SEARCH BAR ═══ -->
         <LinearLayout
-            android:id="@+id/layoutCategories"
+            android:id="@+id/homeSearchBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_height="52dp"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCategoryHeader">
+            android:gravity="center_vertical"
+            android:background="@drawable/home_search_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true">
 
-            <!-- Category 1: Beach -->
-            <androidx.cardview.widget.CardView
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_search"
+                android:contentDescription="Search"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/homeSearchHintText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="2dp">
+                android:text="@string/home_search_hint"
+                android:textSize="15sp"
+                android:textColor="#9AB5D0"
+                android:singleLine="true" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/tour_search_card_shape"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_default_image"
-                        app:tint="#0F766E" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Beach"
-                        android:textColor="#0F172A"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Category 2: Mountain -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/tour_search_card_shape"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_default_image"
-                        app:tint="#0F766E" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Mountain"
-                        android:textColor="#0F172A"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Category 3: Heritage -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/tour_search_card_shape"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_default_image"
-                        app:tint="#0F766E" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Heritage"
-                        android:textColor="#0F172A"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <!-- Featured Tours Section -->
-        <TextView
-            android:id="@+id/tvFeaturedHeader"
-            android:layout_width="wrap_content"
+        <!-- ═══ ALWAYS VISIBLE: CATEGORY PILLS ═══ -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Featured Packages"
-            android:textColor="#0F172A"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutCategories" />
+            android:scrollbars="none"
+            android:layout_marginTop="14dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFeaturedTours"
-            android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/homeCatAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/home_cat_all"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/home_cat_active"
+                    android:gravity="center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/homeCatPackages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/home_cat_packages"
+                    android:textSize="13sp"
+                    android:textColor="#0D5BB5"
+                    android:background="@drawable/home_cat_inactive"
+                    android:gravity="center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/homeCatAdventure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/home_cat_adventure"
+                    android:textSize="13sp"
+                    android:textColor="#0D5BB5"
+                    android:background="@drawable/home_cat_inactive"
+                    android:gravity="center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/homeCatBeaches"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/home_cat_beaches"
+                    android:textSize="13sp"
+                    android:textColor="#0D5BB5"
+                    android:background="@drawable/home_cat_inactive"
+                    android:gravity="center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             HOME SECTION — visible when All/Adventure/Beaches is selected
+             ═══════════════════════════════════════════════════════════════ -->
+        <LinearLayout
+            android:id="@+id/homeSection"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvFeaturedHeader"
-            tools:listitem="@layout/search_item_cards" />
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:paddingBottom="16dp">
 
-        <!-- Popular Destinations Section -->
-        <TextView
-            android:id="@+id/tvAllPackagesHeader"
-            android:layout_width="wrap_content"
+            <!-- Hero Banner -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="195dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/home_banner_bg"
+                android:clipToOutline="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/splash_screen_bg"
+                    android:contentDescription="@null" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/home_banner_overlay" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="start|center_vertical"
+                    android:paddingStart="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_banner_title"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_banner_subtitle"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginTop="2dp" />
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="2dp"
+                        android:background="#FFFFFF"
+                        android:layout_marginTop="8dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="12dp">
+
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_active" android:layout_marginEnd="6dp"/>
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_inactive" android:layout_marginEnd="6dp"/>
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_inactive" android:layout_marginEnd="6dp"/>
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_inactive"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Trip Details Card with rvFeaturedTours -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/homeTripCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_address"
+                            android:contentDescription="@null"
+                            android:layout_marginEnd="8dp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/home_trip_details"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#0D5BB5" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_chevron_right"
+                            android:contentDescription="View all" />
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#EAF3FA" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvFeaturedTours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_trip_destination" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Popular Destinations header -->
+            <TextView
+                android:id="@+id/tvFeaturedHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular Destinations"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#0D5BB5"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="8dp"
+                tools:ignore="HardcodedText" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPopularTours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/popular_tour_package" />
+
+        </LinearLayout>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             PACKAGES SECTION — visible ONLY when Packages tab is selected
+             ═══════════════════════════════════════════════════════════════ -->
+        <LinearLayout
+            android:id="@+id/packagesSection"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Popular Destinations"
-            android:textColor="#0F172A"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvFeaturedTours" />
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:paddingBottom="24dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPopularTours"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAllPackagesHeader"
-            tools:listitem="@layout/search_item_cards" />
+            <!-- Packages Hero Banner -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/pkg_banner_bg"
+                android:clipToOutline="true">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/advertize"
+                    android:contentDescription="@null" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/home_banner_overlay" />
+
+                <!-- Banner text -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="6dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_package"
+                            android:contentDescription="@null"
+                            android:layout_marginEnd="6dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pkg_banner_title"
+                            android:textSize="13sp"
+                            android:textColor="#FFFFFF" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/pkg_banner_headline"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:lineSpacingMultiplier="1.2"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pkg_banner_tags"
+                        android:textSize="12sp"
+                        android:textColor="#CCFFFFFF"
+                        android:layout_marginTop="6dp" />
+
+                </LinearLayout>
+
+                <!-- Indicator dots bottom-left -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="12dp">
+
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_active" android:layout_marginEnd="6dp"/>
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_inactive" android:layout_marginEnd="6dp"/>
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_inactive" android:layout_marginEnd="6dp"/>
+                    <View android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/home_dot_inactive"/>
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- Package sub-filter pills: Popular | Festival | Holiday | Adventure | Beach -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginTop="14dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/pkgSubPopular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:text="&#9733; Popular"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/pkg_sub_active"
+                        android:gravity="center"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/pkgSubFestival"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:text="Festival"
+                        android:textSize="12sp"
+                        android:textColor="#0D5BB5"
+                        android:background="@drawable/pkg_sub_inactive"
+                        android:gravity="center"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/pkgSubHoliday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:text="Holiday"
+                        android:textSize="12sp"
+                        android:textColor="#0D5BB5"
+                        android:background="@drawable/pkg_sub_inactive"
+                        android:gravity="center"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/pkgSubAdventure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:text="Adventure"
+                        android:textSize="12sp"
+                        android:textColor="#0D5BB5"
+                        android:background="@drawable/pkg_sub_inactive"
+                        android:gravity="center"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/pkgSubBeach"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:text="Beach"
+                        android:textSize="12sp"
+                        android:textColor="#0D5BB5"
+                        android:background="@drawable/pkg_sub_inactive"
+                        android:gravity="center"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Package cards RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPackages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_tour_package" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

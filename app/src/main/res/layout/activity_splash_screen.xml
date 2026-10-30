@@ -1,22 +1,123 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/splash_screen_bg"
-    tools:context=".app_common_activities.SplashScreen">
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/splashBackground"
         android:layout_width="0dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_screen_bg"
+        android:contentDescription="@null"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tour_travel_logo" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/splashBrandingOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/splash_branding_overlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.46" />
+
+    <ImageView
+        android:id="@+id/splashLogoIcon"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_smarttour_logo"
+        android:scaleType="fitCenter"
+        android:contentDescription="SmartTour360 logo"
+        android:layout_marginTop="64dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/splashBrandName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SmartTour360"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        android:textColor="@color/splash_brand_dark"
+        android:fontFamily="sans-serif-medium"
+        android:includeFontPadding="false"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/splashLogoIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/splashTagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Explore  •  Book  •  Travel  •  Live"
+        android:textSize="13sp"
+        android:textColor="@color/splash_text_dark_blue"
+        android:letterSpacing="0.03"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/splashBrandName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/splashDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Explore beautiful destinations,\nand create unforgettable memories."
+        android:textSize="15sp"
+        android:textColor="@color/splash_text_dark_blue"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.35"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintTop_toBottomOf="@id/splashTagline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:id="@+id/splashIndicators"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <View
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/splash_indicator_active"
+            android:layout_marginEnd="8dp" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/splash_indicator_inactive"
+            android:layout_marginEnd="8dp" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/splash_indicator_inactive" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

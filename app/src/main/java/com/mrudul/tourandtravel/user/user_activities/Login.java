@@ -1,19 +1,27 @@
 package com.mrudul.tourandtravel.user.user_activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.mrudul.tourandtravel.R;
 import com.mrudul.tourandtravel.network.ApiService;
@@ -28,135 +36,149 @@ import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
 
-    private EditText userLoginEmail;
-    private EditText userLoginPassword;
+    private EditText     userLoginEmail;
+    private EditText     userLoginPassword;
+    private Button       userLoginBtn;
+    private TextView     regPageLink;
 
-    private Button userLoginBtn;
-    private Button cancelBtn;
+    private ImageView    passwordToggleIcon;
+    private CheckBox     rememberMeCheck;
+    private TextView     forgotPasswordLink;
+    private LinearLayout googleLoginBtn;
+    private LinearLayout guestLoginBtn;
 
-    private TextView regPageLink;
-
+    private boolean passwordVisible = false;
     private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        setupStatusBar();
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        userLoginEmail = findViewById(R.id.userLoginEmail);
-        userLoginPassword = findViewById(R.id.userLoginPassword);
-        userLoginBtn = findViewById(R.id.userLoginBtn);
-        cancelBtn = findViewById(R.id.cancelBtn);
-        regPageLink = findViewById(R.id.regPageLink);
+        userLoginEmail     = findViewById(R.id.userLoginEmail);
+        userLoginPassword  = findViewById(R.id.userLoginPassword);
+        userLoginBtn       = findViewById(R.id.userLoginBtn);
+        regPageLink        = findViewById(R.id.regPageLink);
+        passwordToggleIcon = findViewById(R.id.passwordToggleIcon);
+        rememberMeCheck    = findViewById(R.id.rememberMeCheck);
+        forgotPasswordLink = findViewById(R.id.forgotPasswordLink);
+        googleLoginBtn     = findViewById(R.id.googleLoginBtn);
+        guestLoginBtn      = findViewById(R.id.guestLoginBtn);
+
         apiService = RetrofitClient.getApiService();
 
-        //login button logic
         userLoginBtn.setOnClickListener(v -> loginCustomer());
 
+        if (passwordToggleIcon != null) {
+            passwordToggleIcon.setOnClickListener(v -> {
+                passwordVisible = !passwordVisible;
+                if (passwordVisible) {
+                    userLoginPassword.setTransformationMethod(
+                            HideReturnsTransformationMethod.getInstance());
+                    passwordToggleIcon.setImageResource(R.drawable.ic_eye_on);
+                } else {
+                    userLoginPassword.setTransformationMethod(
+                            PasswordTransformationMethod.getInstance());
+                    passwordToggleIcon.setImageResource(R.drawable.ic_eye_off);
+                }
+                userLoginPassword.setSelection(userLoginPassword.getText().length());
+            });
+        }
 
-        //cancel button logic
-        cancelBtn.setOnClickListener(v -> finish());
+        if (forgotPasswordLink != null) {
+            forgotPasswordLink.setOnClickListener(v -> {
+                startActivity(new Intent(Login.this, ForgotPassword.class));
+            });
+        }
 
+        if (googleLoginBtn != null) {
+            googleLoginBtn.setOnClickListener(v ->
+                Toast.makeText(this, "Google sign-in coming soon", Toast.LENGTH_SHORT).show());
+        }
 
-        //link logic
-        regPageLink.setOnClickListener(view -> {
-            Intent intent = new Intent(Login.this, UserRegisteration.class);
-            startActivity(intent);
+        if (guestLoginBtn != null) {
+            guestLoginBtn.setOnClickListener(v -> {
+                startActivity(new Intent(Login.this, MainActivity.class));
+                finish();
+            });
+        }
+
+        regPageLink.setOnClickListener(v -> {
+            startActivity(new Intent(Login.this, UserRegisteration.class));
             finish();
         });
     }
 
     private void loginCustomer() {
-
-        String email = userLoginEmail.getText().toString().trim();
+        String email    = userLoginEmail.getText().toString().trim();
         String password = userLoginPassword.getText().toString().trim();
 
-        // Email validation
         if (TextUtils.isEmpty(email)) {
             userLoginEmail.setError("Enter email");
             userLoginEmail.requestFocus();
             return;
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             userLoginEmail.setError("Enter a valid email");
             userLoginEmail.requestFocus();
             return;
         }
-
-        // Password validation
         if (TextUtils.isEmpty(password)) {
             userLoginPassword.setError("Enter password");
             userLoginPassword.requestFocus();
             return;
         }
-
         if (password.length() < 6) {
             userLoginPassword.setError("Password must be at least 6 characters");
             userLoginPassword.requestFocus();
             return;
         }
 
-        // Create login request
         CustomerLoginRequest request = new CustomerLoginRequest(email, password);
-
-        // Disable button while request is running
         userLoginBtn.setEnabled(false);
 
-        // Send request to Spring Boot
-        Call<CustomerResponse> call =
-                apiService.loginCustomer(request);
-
+        Call<CustomerResponse> call = apiService.loginCustomer(request);
         call.enqueue(new Callback<CustomerResponse>() {
-
             @Override
-            public void onResponse(
-                    Call<CustomerResponse> call,
-                    Response<CustomerResponse> response) {
-
+            public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
                 userLoginBtn.setEnabled(true);
-
-                if (response.isSuccessful()
-                        && response.body() != null) {
-
+                if (response.isSuccessful() && response.body() != null) {
                     CustomerResponse customer = response.body();
-
                     SessionManager sessionManager = new SessionManager(Login.this);
                     sessionManager.saveCustomerId(customer.getCustId());
-
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
+                    // Cache profile fields so ProfileFragment shows data even offline
+                    sessionManager.saveCustomerProfile(
+                            customer.getCustName(),
+                            customer.getCustEmail(),
+                            customer.getCustPhone(),
+                            customer.getCustAddress(),
+                            customer.getImageUrl());
+                    startActivity(new Intent(Login.this, MainActivity.class));
                     finish();
-
                 } else {
-
-                    Toast.makeText(
-                            Login.this,
-                            "Invalid email or password",
-                            Toast.LENGTH_LONG
-                    ).show();
+                    Toast.makeText(Login.this, "Invalid email or password", Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
-            public void onFailure(
-                    Call<CustomerResponse> call,
-                    Throwable t) {
-
+            public void onFailure(Call<CustomerResponse> call, Throwable t) {
                 userLoginBtn.setEnabled(true);
-
-                Toast.makeText(
-                        Login.this,
-                        "Network error: " + t.getMessage(),
-                        Toast.LENGTH_LONG
-                ).show();
+                Toast.makeText(Login.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void setupStatusBar() {
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+        WindowInsetsControllerCompat ctrl =
+                WindowCompat.getInsetsController(window, window.getDecorView());
+        if (ctrl != null) {
+            ctrl.setAppearanceLightStatusBars(false);
+        }
     }
 }

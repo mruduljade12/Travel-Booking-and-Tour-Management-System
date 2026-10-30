@@ -81,4 +81,100 @@
     <string name="apply_for_leave">Apply for Leave</string>
     <string name="leave">Leave</string>
 
+
+    <!-- Choose Role redesigned strings -->
+    <string name="role_screen_subtitle">Select your role to access the right features\nand continue with your journey.</string>
+    <string name="role_customer_title">Customer App</string>
+    <string name="role_customer_desc">Explore destinations, book\ntours and manage your trips.</string>
+    <string name="role_driver_title">Driver App</string>
+    <string name="role_driver_desc">Manage trips, navigate\nroutes and track in real-time.</string>
+    <string name="role_guide_title">Tour Guide App</string>
+    <string name="role_guide_desc">Manage tours, assist travelers\nand deliver amazing\nexperiences.</string>
+    <string name="role_smarttour_tagline">Plan &#8226; Explore &#8226; Manage &#8226; Experience</string>
+    <string name="role_smarttour_subtitle">One Platform. Four Powerful Apps.</string>
+    <string name="cd_customer_card">Customer App</string>
+    <string name="cd_driver_card">Driver App</string>
+    <string name="cd_tour_guide_card">Tour Guide App</string>
+
+    <!-- Login screen redesign strings -->
+    <string name="login_welcome_title">Welcome Back!</string>
+    <string name="login_welcome_subtitle">Sign in to continue your journey</string>
+    <string name="login_email_hint">Email or Mobile Number</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_remember_me">Remember me</string>
+    <string name="login_forgot_password">Forgot Password?</string>
+    <string name="login_or_divider">OR</string>
+    <string name="login_google_btn">Continue with Google</string>
+    <string name="login_guest_btn">Continue as Guest</string>
+    <string name="login_no_account">Don\'t have an account?</string>
+    <string name="login_register_link">Register</string>
+    <string name="login_tagline">Explore  &#8226;  Book  &#8226;  Experience</string>
+
+    <!-- Forgot Password screen -->
+    <string name="fp_title">Forgot Password?</string>
+    <string name="fp_desc">Enter your registered email or phone number and we&#8217;ll send you a link to reset your password.</string>
+    <string name="fp_input_hint">Email or Phone Number</string>
+    <string name="fp_btn_send">Send Reset Link</string>
+    <string name="fp_remember_pwd">Remember your password?</string>
+    <string name="fp_login_link">Login</string>
+    <string name="fp_error_empty">Please enter your email or phone number</string>
+    <string name="fp_error_invalid">Please enter a valid email or phone number</string>
+    <string name="fp_success_toast">Reset link sent! Check your email or SMS.</string>
+
+    <!-- Registration screen redesign -->
+    <string name="reg_create_account">Create Account</string>
+    <string name="reg_subtitle">Join SmartTour360 and start exploring the world with us!</string>
+    <string name="reg_full_name_hint">Full Name</string>
+    <string name="reg_email_mobile_hint">Email or Mobile Number</string>
+    <string name="reg_password_hint">Password</string>
+    <string name="reg_confirm_hint">Confirm Password</string>
+    <string name="reg_terms">I agree to Terms &amp; Conditions and Privacy Policy</string>
+    <string name="reg_terms_link">Terms &amp; Conditions</string>
+    <string name="reg_privacy_link">Privacy Policy</string>
+    <string name="reg_btn">Register</string>
+    <string name="reg_have_account">Already have an account?</string>
+    <string name="reg_login_link">Login</string>
+    <string name="reg_err_name_empty">Please enter your full name</string>
+    <string name="reg_err_name_short">Name must be more than 6 characters</string>
+    <string name="reg_err_email_empty">Please enter your email or mobile number</string>
+    <string name="reg_err_email_invalid">Please enter a valid email or mobile number</string>
+    <string name="reg_err_pwd_empty">Please enter a password</string>
+    <string name="reg_err_pwd_short">Password must be at least 6 characters</string>
+    <string name="reg_err_confirm_empty">Please confirm your password</string>
+    <string name="reg_err_pwd_mismatch">Passwords do not match</string>
+    <string name="reg_err_terms">Please agree to the Terms &amp; Conditions and Privacy Policy</string>
+
+    <!-- Home Dashboard -->
+    <string name="home_search_hint">Search destinations, peri...</string>
+    <string name="home_cat_all">All</string>
+    <string name="home_cat_packages">Packages</string>
+    <string name="home_cat_adventure">Adventure</string>
+    <string name="home_cat_beaches">Beaches</string>
+    <string name="home_banner_title">Explore the world,</string>
+    <string name="home_banner_subtitle">one trip at a time.</string>
+    <string name="home_trip_details">Trip Details</string>
+
+    <!-- Packages section -->
+    <string name="pkg_banner_title">Travel Packages</string>
+    <string name="pkg_banner_headline">Curated trips for every mood &amp; season.</string>
+    <string name="pkg_banner_tags">Festivals  &#8226;  Holidays  &#8226;  Adventure  &#8226;  Beaches</string>
+    <string name="home_search_pkg_hint">Search destinations, packages, festivals...</string>
+
+    <!-- Search Packages screen -->
+    <string name="search_pkg_banner_title">Search Packages</string>
+    <string name="search_pkg_banner_subtitle">Find your perfect trip package and explore amazing destinations.</string>
+    <string name="search_destination_label">Destination</string>
+    <string name="search_destination_hint">Where do you want to go?</string>
+    <string name="search_checkin_label">Check In</string>
+    <string name="search_checkout_label">Check Out</string>
+    <string name="search_date_hint">Select date</string>
+    <string name="search_travellers_label">Travelers</string>
+    <string name="search_travellers_default">1 Adult</string>
+    <string name="search_btn_label">Search Packages</string>
+    <string name="search_popular_title">Popular Packages</string>
+    <string name="search_view_all">View All</string>
+    <string name="search_per_person">per person</string>
+    <string name="search_no_results">No packages found</string>
+    <string name="search_no_results_sub">Try changing your destination or travel dates.</string>
+
 </resources>

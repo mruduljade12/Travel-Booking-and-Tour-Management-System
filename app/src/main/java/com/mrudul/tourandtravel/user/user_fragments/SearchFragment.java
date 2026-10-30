@@ -1,72 +1,79 @@
 package com.mrudul.tourandtravel.user.user_fragments;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.mrudul.tourandtravel.R;
-import com.mrudul.tourandtravel.user.user_adapters.SearchToutAdapter;
-import com.mrudul.tourandtravel.user.user_interfaces.SearchItemClick;
-import com.mrudul.tourandtravel.user.user_models.SearchTourModel;
+import com.mrudul.tourandtravel.user.user_adapters.PopularPackageAdapter;
+import com.mrudul.tourandtravel.user.user_models.TourPackageModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * SearchFragment — SmartTour360 Search Packages Screen
+ *
+ * Fixes applied:
+ *  1. MaterialDatePicker now uses getChildFragmentManager() — fixes crash
+ *     when tapping Check-In / Check-Out rows inside a Fragment host.
+ *  2. Destination validation uses Toast only (setError only works on EditText).
+ *  3. Button background rendering fixed via layout xml (AppCompat style).
+ *  4. Travellers picker simplified to avoid unused import of activity_list_item.
+ *
+ * Existing IDs preserved: rvSearchTourList, tvSearchDest, tvCheckinDate,
+ *                          tvCheckoutDate, tvTravellers, btnSearchPackages.
  */
-public class SearchFragment extends Fragment implements SearchItemClick {
+public class SearchFragment extends Fragment
+        implements PopularPackageAdapter.OnPackageClickListener {
 
-    EditText searchEditText;
+    // ── Views ──────────────────────────────────────────────────────────────
     RecyclerView searchItemRecyclerView;
-    ArrayList<SearchTourModel> tourList;
-    SearchToutAdapter adapter;
+    private TextView     tvSearchDest, tvCheckinDate, tvCheckoutDate, tvTravellers;
+    private Button       btnSearchPackages;
+    private View         layoutEmptyState;
 
+    private PopularPackageAdapter       popularAdapter;
+    private ArrayList<TourPackageModel> popularList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // ── State ──────────────────────────────────────────────────────────────
+    private String selectedDestination = "";
+    private long   checkinMs  = -1;
+    private long   checkoutMs = -1;
+    private int    adultCount = 1;
+    private int    childCount = 0;
+
+    // Legacy newInstance kept for compat
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private String mParam1, mParam2;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public SearchFragment() {}
 
-    public SearchFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
+    public static SearchFragment newInstance(String p1, String p2) {
+        SearchFragment f = new SearchFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        args.putString(ARG_PARAM1, p1);
+        args.putString(ARG_PARAM2, p2);
+        f.setArguments(args);
+        return f;
     }
 
     @Override
@@ -81,108 +88,282 @@ public class SearchFragment extends Fragment implements SearchItemClick {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchEditText = view.findViewById(R.id.etSearchTourQuery);
+
+        // ── Bind ─────────────────────────────────────────────────────────────
         searchItemRecyclerView = view.findViewById(R.id.rvSearchTourList);
-        searchItemRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2));
+        tvSearchDest      = view.findViewById(R.id.tvSearchDest);
+        tvCheckinDate     = view.findViewById(R.id.tvCheckinDate);
+        tvCheckoutDate    = view.findViewById(R.id.tvCheckoutDate);
+        tvTravellers      = view.findViewById(R.id.tvTravellers);
+        btnSearchPackages = view.findViewById(R.id.btnSearchPackages);
+        layoutEmptyState  = view.findViewById(R.id.layoutSearchEmptyState);
 
-        tourList = new ArrayList<>();
-        tourList.add(new SearchTourModel(
-                "TOUR001", R.drawable.site1, "Goa Beach Tour",
-                "Available", 4.5f, 15000, 4, 3, 20,
-                "Enjoy beautiful beaches and nightlife in Goa."
-        ));
+        // ── RecyclerView ──────────────────────────────────────────────────────
+        searchItemRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        buildPopularList();
+        popularAdapter = new PopularPackageAdapter(requireContext(), popularList, this);
+        searchItemRecyclerView.setAdapter(popularAdapter);
 
-        tourList.add(new SearchTourModel(
-                "TOUR002", R.drawable.site1, "Manali Adventure",
-                "Available", 4.8f, 25000, 6, 5, 15,
-                "Explore the mountains and enjoy adventure activities."
-        ));
+        // ── Row listeners ──────────────────────────────────────────────────
+        view.findViewById(R.id.searchDestRow)
+            .setOnClickListener(v -> showDestinationPicker());
 
-        tourList.add(new SearchTourModel(
-                "TOUR003", R.drawable.site1, "Kerala Backwaters",
-                "Available", 4.7f, 18000, 5, 4, 12,
-                "Experience the beauty of Kerala's backwaters."
-        ));
+        // FIX 1: Use getChildFragmentManager() — NOT getParentFragmentManager()
+        //        Using getParentFragmentManager() from inside a Fragment causes
+        //        IllegalStateException: Fragment not attached to an activity.
+        view.findViewById(R.id.searchCheckinRow)
+            .setOnClickListener(v -> showDatePicker(true));
 
-        tourList.add(new SearchTourModel(
-                "TOUR004", R.drawable.site1, "Mumbai City Tour",
-                "Unavailable", 4.2f, 8000, 2, 1, 25,
-                "Discover famous landmarks and attractions in Mumbai."
-        ));
+        view.findViewById(R.id.searchCheckoutRow)
+            .setOnClickListener(v -> showDatePicker(false));
 
-        tourList.add(new SearchTourModel(
-                "TOUR005", R.drawable.site1, "Kashmir Valley Tour",
-                "Available", 4.9f, 35000, 7, 6, 10,
-                "Explore the beautiful valleys and lakes of Kashmir."
-        ));
-        adapter = new SearchToutAdapter(view.getContext(),tourList, this);
-        searchItemRecyclerView.setAdapter(adapter);
+        view.findViewById(R.id.searchTravellersRow)
+            .setOnClickListener(v -> showTravellersPicker());
+
+        btnSearchPackages.setOnClickListener(v -> performSearch());
+
+        // View All
+        TextView tvViewAll = view.findViewById(R.id.tvViewAll);
+        if (tvViewAll != null) {
+            tvViewAll.setOnClickListener(v ->
+                Toast.makeText(getContext(), "View All Packages", Toast.LENGTH_SHORT).show());
+        }
+
+        // Notification
+        View notif = view.findViewById(R.id.searchNotifContainer);
+        if (notif != null) {
+            notif.setOnClickListener(v ->
+                Toast.makeText(getContext(), "Notifications", Toast.LENGTH_SHORT).show());
+        }
     }
 
+    // ─────────────────────────────────────────────────────────────────────────
+    // Destination picker
+    // ─────────────────────────────────────────────────────────────────────────
+    private void showDestinationPicker() {
+        final String[] destinations = {
+            "Goa", "Mumbai", "Manali", "Kashmir",
+            "Ratnagiri", "Jaipur", "Bali", "Kerala"
+        };
+        new AlertDialog.Builder(requireContext())
+            .setTitle("Select Destination")
+            .setItems(destinations, (dialog, which) -> {
+                selectedDestination = destinations[which];
+                tvSearchDest.setText(selectedDestination);
+                tvSearchDest.setTextColor(android.graphics.Color.parseColor("#0D5BB5"));
+            })
+            .show();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Date pickers
+    // FIX 1: show() must use getChildFragmentManager() when called from a Fragment.
+    //        getParentFragmentManager() throws IllegalStateException on navigation.
+    // ─────────────────────────────────────────────────────────────────────────
+    private void showDatePicker(final boolean isCheckin) {
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointForward.now());
+
+        if (!isCheckin && checkinMs > 0) {
+            constraintsBuilder.setValidator(DateValidatorPointForward.from(checkinMs));
+        }
+
+        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText(isCheckin ? "Select Check-In Date" : "Select Check-Out Date")
+                .setCalendarConstraints(constraintsBuilder.build())
+                .build();
+
+        picker.addOnPositiveButtonClickListener(selection -> {
+            String formatted = formatDate(selection);
+            if (isCheckin) {
+                checkinMs = selection;
+                tvCheckinDate.setText(formatted);
+                tvCheckinDate.setTextColor(android.graphics.Color.parseColor("#0D5BB5"));
+                // Reset check-out if it is now before check-in
+                if (checkoutMs > 0 && checkoutMs <= checkinMs) {
+                    checkoutMs = -1;
+                    tvCheckoutDate.setText(R.string.search_date_hint);
+                    tvCheckoutDate.setTextColor(android.graphics.Color.parseColor("#8AAAC8"));
+                }
+            } else {
+                checkoutMs = selection;
+                tvCheckoutDate.setText(formatted);
+                tvCheckoutDate.setTextColor(android.graphics.Color.parseColor("#0D5BB5"));
+            }
+        });
+
+        // *** KEY FIX: getChildFragmentManager() not getParentFragmentManager() ***
+        picker.show(getChildFragmentManager(), "datePicker_" + isCheckin);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Travellers picker
+    // ─────────────────────────────────────────────────────────────────────────
+    private void showTravellersPicker() {
+        final String[] options = {
+            "1 Adult",
+            "2 Adults",
+            "3 Adults",
+            "2 Adults \u2022 1 Child",
+            "2 Adults \u2022 2 Children",
+            "Family (2A + 2C)"
+        };
+        new AlertDialog.Builder(requireContext())
+            .setTitle("Select Travelers")
+            .setItems(options, (dialog, which) -> {
+                switch (which) {
+                    case 0: adultCount = 1; childCount = 0; break;
+                    case 1: adultCount = 2; childCount = 0; break;
+                    case 2: adultCount = 3; childCount = 0; break;
+                    case 3: adultCount = 2; childCount = 1; break;
+                    case 4: adultCount = 2; childCount = 2; break;
+                    case 5: adultCount = 2; childCount = 2; break;
+                }
+                updateTravellersText();
+            })
+            .show();
+    }
+
+    private void updateTravellersText() {
+        String text = adultCount + (adultCount == 1 ? " Adult" : " Adults");
+        if (childCount > 0) {
+            text += " \u2022 " + childCount + (childCount == 1 ? " Child" : " Children");
+        }
+        tvTravellers.setText(text);
+        tvTravellers.setTextColor(android.graphics.Color.parseColor("#0D5BB5"));
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Search validation
+    // FIX 2: Removed tvSearchDest.setError() — setError() only works on EditText,
+    //        not plain TextView. Using Toast for all validation feedback.
+    // ─────────────────────────────────────────────────────────────────────────
+    private void performSearch() {
+        if (selectedDestination.isEmpty()) {
+            // FIX: Use Toast only — setError() on TextView silently fails
+            Toast.makeText(getContext(),
+                    "Please select a destination", Toast.LENGTH_SHORT).show();
+            // Visually highlight the destination row
+            tvSearchDest.setTextColor(android.graphics.Color.parseColor("#E53935"));
+            tvSearchDest.setText("Where do you want to go? \u2B05");
+            return;
+        }
+        if (checkinMs < 0) {
+            Toast.makeText(getContext(),
+                    "Please select a check-in date", Toast.LENGTH_SHORT).show();
+            tvCheckinDate.setTextColor(android.graphics.Color.parseColor("#E53935"));
+            return;
+        }
+        if (checkoutMs < 0) {
+            Toast.makeText(getContext(),
+                    "Please select a check-out date", Toast.LENGTH_SHORT).show();
+            tvCheckoutDate.setTextColor(android.graphics.Color.parseColor("#E53935"));
+            return;
+        }
+        if (checkoutMs <= checkinMs) {
+            Toast.makeText(getContext(),
+                    "Check-out must be after check-in", Toast.LENGTH_SHORT).show();
+            tvCheckoutDate.setTextColor(android.graphics.Color.parseColor("#E53935"));
+            return;
+        }
+
+        // All valid — show result
+        // TODO: Replace with Retrofit API call when backend is ready.
+        String msg = "Searching " + selectedDestination
+                + " \u2022 " + adultCount + " Adult"
+                + (childCount > 0 ? " \u2022 " + childCount + " Child" : "")
+                + "\n" + formatDate(checkinMs) + " \u2192 " + formatDate(checkoutMs);
+        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Package click callback
+    // ─────────────────────────────────────────────────────────────────────────
     @Override
-    public void onSearchItemClick(SearchTourModel tourModel) {
-        Dialog dialog = new Dialog(requireContext());
-        dialog.setContentView(R.layout.search_item_dialog);
+    public void onPackageClick(TourPackageModel pkg) {
+        Toast.makeText(getContext(),
+                "Opening: " + pkg.getTitle(), Toast.LENGTH_SHORT).show();
+        // TODO: Navigate to PackageDetailsActivity with pkg details
+    }
 
-        ImageView img = dialog.findViewById(R.id.dialogPackageThumbnail);
-        ImageView closeBtn = dialog.findViewById(R.id.dialogCancelBtn);
-        TextView packageName = dialog.findViewById(R.id.dialogPackageName);
-        TextView packageStatus = dialog.findViewById(R.id.dialogPackageStatus);
-        TextView duration = dialog.findViewById(R.id.dialogPackageDuration);
-        TextView rating = dialog.findViewById(R.id.dialogPackageRating);
-        TextView price = dialog.findViewById(R.id.dialogPackagePrice);
-        TextView days = dialog.findViewById(R.id.dialogPackageDays);
-        TextView nights = dialog.findViewById(R.id.dialogPackageNights);
-        TextView remainingSeats = dialog.findViewById(R.id.dialogPackageRemainingSeats);
-        TextView description = dialog.findViewById(R.id.dialogPackageDescription);
-        AppCompatButton bookTourBtn = dialog.findViewById(R.id.dialogPackageBookBtn);
+    // ─────────────────────────────────────────────────────────────────────────
+    // Popular packages local data
+    // ─────────────────────────────────────────────────────────────────────────
+    private void buildPopularList() {
+        popularList = new ArrayList<>();
 
+        popularList.add(new TourPackageModel(
+            R.drawable.dest_goa, null,
+            "Goa Beach Escape",
+            "Sun, Sand & Endless Vibes",
+            "3 Days \u2022 2 Nights",
+            "Goa",
+            "5+ People",
+            "12,999",
+            4.5f, "632", "Popular"));
 
-        //setting image
-        Glide.with(dialog.getContext())
-                .load(tourModel.getPack_thumbnail())
-                .error(R.drawable.ic_default_image)
-                .placeholder(R.drawable.ic_default_image)
-                .into(img);
+        popularList.add(new TourPackageModel(
+            R.drawable.dest_manali, null,
+            "Manali Getaway",
+            "Mountains, Snow & Serenity",
+            "4 Days \u2022 3 Nights",
+            "Manali, Himachal Pradesh",
+            "5+ People",
+            "18,999",
+            4.6f, "856", "Popular"));
 
+        popularList.add(new TourPackageModel(
+            R.drawable.dest_kashmir, null,
+            "Kashmir Winter Holiday",
+            "Snowy Peaks & Serene Lakes",
+            "6 Days \u2022 5 Nights",
+            "Srinagar, Kashmir",
+            "5+ People",
+            "24,999",
+            4.7f, "1.1k", "Festival Special"));
 
-        //set window
-        dialog.getWindow().setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
+        popularList.add(new TourPackageModel(
+            R.drawable.dest_rajasthan, null,
+            "Rajasthan Cultural Tour",
+            "Royal Heritage & Timeless Beauty",
+            "5 Days \u2022 4 Nights",
+            "Jaipur - Jodhpur - Udaipur",
+            "5+ People",
+            "18,999",
+            4.6f, "742", "Holiday Package"));
 
+        popularList.add(new TourPackageModel(
+            R.drawable.dest_kerala, null,
+            "Kerala Backwater Retreat",
+            "Relax, Explore & Experience Kerala",
+            "4 Days \u2022 3 Nights",
+            "Alleppey - Munnar",
+            "5+ People",
+            "19,999",
+            4.7f, "918", "Holiday Package"));
 
-        packageName.setText(tourModel.getPack_name());
-        packageStatus.setText(tourModel.getPack_status());
-        duration.setText(String.valueOf(tourModel.getPack_duration_day()));
-        rating.setText(String.valueOf(tourModel.getTourPackageRating()));
-        price.setText(String.valueOf(tourModel.getPack_price()));
-        days.setText(String.valueOf(tourModel.getPack_duration_day()));
-        nights.setText(String.valueOf(tourModel.getPack_duration_night()));
-        remainingSeats.setText(String.valueOf(tourModel.getPack_max_capacity()-5));
-        description.setText(tourModel.getPack_description());
+        popularList.add(new TourPackageModel(
+            R.drawable.dest_andaman, null,
+            "Andaman Island Escape",
+            "Crystal Waters & Tropical Bliss",
+            "5 Days \u2022 4 Nights",
+            "Port Blair - Havelock",
+            "5+ People",
+            "22,999",
+            4.9f, "1.2k", "Popular"));
+    }
 
-
-        bookTourBtn.setOnClickListener(v->{
-            dialog.dismiss();
-        });
-
-
-        closeBtn.setOnClickListener(v->{
-            dialog.dismiss();
-        });
-
-
-        dialog.show();
-
+    // ─────────────────────────────────────────────────────────────────────────
+    // Helpers
+    // ─────────────────────────────────────────────────────────────────────────
+    private String formatDate(long ms) {
+        return new SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                .format(new Date(ms));
     }
 }
